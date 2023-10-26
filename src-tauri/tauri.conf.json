@@ -36,7 +36,7 @@
     "windows": [
       {
         "fullscreen": false,
-        "resizable": true,
+        "resizable": false,
         "title": "Development version ~ ITS NOT THE FINAL VERSION",
         "width": 980,
         "height": 560,

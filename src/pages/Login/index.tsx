@@ -14,6 +14,16 @@ export const LoginPage = () => {
                     <C.Left>
                         <C.WelcomeText>Bem vindo(a) de volta 👋</C.WelcomeText>
                         <C.WelcomeSecondText>Estamos felizes em vê-lo(a) novamente</C.WelcomeSecondText>
+
+                        <C.FormContainer>
+                            <C.Form>
+                                <C.Label>Endereço de email *</C.Label>
+                                <C.Input type="email"/>
+
+                                <C.Label>Palavra passe</C.Label>
+                                <C.Input type="email"/>
+                            </C.Form>
+                        </C.FormContainer>
                     </C.Left>    
                     <div>
                         <C.RightImage src={RightImg} alt="RightImg" />

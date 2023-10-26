@@ -46,7 +46,7 @@ export const Left = styled.div`
 
 export const RightImage = styled.img`
     width: 590px;
-    height: 474px;
+    height: 450px;
 `
 
 export const WelcomeText = styled.span`
@@ -65,4 +65,43 @@ export const WelcomeSecondText = styled.span`
     font-style: normal;
     font-weight: 400;
     line-height: 28px;
+`
+
+export const FormContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+`
+
+export const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+`
+
+export const Label = styled.label`
+    color: #696F79;
+    font-family: "Poppins", sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    margin-bottom: 7px;
+
+`
+
+export const Input = styled.input`
+    width: 203px;
+    height: 30px;
+    flex-shrink: 0;
+    background-color: #282A2F;
+    border: none;
+    outline: #17B4BB solid 0.5px;
+    border-radius: 6px;
+    stroke-width: 0.5px;
+    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.11));
+    padding: 5px;
+    color: #FFF;
+    margin-bottom: 25px;
+    
 `
