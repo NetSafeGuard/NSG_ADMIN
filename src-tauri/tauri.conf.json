@@ -38,8 +38,9 @@
         "fullscreen": false,
         "resizable": true,
         "title": "test",
-        "width": 800,
-        "height": 600
+        "width": 980,
+        "height": 535,
+        "center": true
       }
     ]
   }

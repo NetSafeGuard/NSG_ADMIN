@@ -1,9 +1,11 @@
-
+import * as C from './style';
 
 export const LoginPage = () => {
     return (
-        <>
-            Hello Page
-        </>
+        <C.LoginContainer>
+            <C.Content>
+                Hello Page
+            </C.Content>
+        </C.LoginContainer>
     )
 }
