@@ -86,6 +86,8 @@ export const LoginPage = () => {
                                 </C.Button>
 
                                 <Error error={errors.email?.message || errors.password?.message ? 'Email ou palavra-passe inválida' : ''}/>
+
+                                {error && <Error error={error}/>}
                             </C.Form>
                         </C.FormContainer>
 
