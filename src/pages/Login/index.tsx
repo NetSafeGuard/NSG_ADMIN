@@ -1,6 +1,7 @@
 import * as C from './style';
 import Logo from '../../assets/Logo.png';
 import RightImg from '../../assets/rightimg.png';
+import { AiOutlineMail } from 'react-icons/ai';
 
 export const LoginPage = () => {
     return (
@@ -17,13 +18,38 @@ export const LoginPage = () => {
 
                         <C.FormContainer>
                             <C.Form>
-                                <C.Label>Endereço de email *</C.Label>
-                                <C.Input type="email"/>
+                                <C.LabelContainer>
+                                    <C.Label>Endereço de email</C.Label>
+                                    <C.Required>*</C.Required>
+                                </C.LabelContainer>
+                                <C.Input type="email" maxLength={40}/>
 
-                                <C.Label>Palavra passe</C.Label>
-                                <C.Input type="email"/>
+                                <C.LabelContainer>
+                                    <C.Label>Palavra passe</C.Label>
+                                    <C.Required>*</C.Required>
+                                </C.LabelContainer>
+                                <C.Input type="password" maxLength={30}/>
+
+                                <C.CheckBoxContainer>
+                                    <div className="customcheckbox">
+                                        <input type="checkbox" id="remember"/>
+                                        <label htmlFor="remember">Eu concordo com os termos e condições</label>
+                                    </div>
+                                </C.CheckBoxContainer>
+
+                                <C.Button>Login</C.Button>
                             </C.Form>
                         </C.FormContainer>
+
+                        <C.DividerContainer>
+                            <C.Divider />
+                            <C.DividerText>Alguma dificuldade?</C.DividerText>
+                            <C.Divider />
+                        </C.DividerContainer>
+                        <C.Button color='#000'>
+                            <AiOutlineMail size={15} style={{marginRight: '10px'}}/>
+                            Contacte-nos
+                        </C.Button>
                     </C.Left>    
                     <div>
                         <C.RightImage src={RightImg} alt="RightImg" />
