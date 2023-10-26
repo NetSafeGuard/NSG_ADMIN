@@ -39,14 +39,15 @@ export const LogoText = styled.span`
 export const Separator = styled.div`
     display: flex;
     justify-content: space-between;
+    margin-left: 25px
 `
 
 export const Left = styled.div`
     width: 257px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 25px;
+    gap: 9px;
+    margin-top: 35px;
 `
 
 export const RightImage = styled.img`
