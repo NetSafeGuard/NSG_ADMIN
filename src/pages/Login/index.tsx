@@ -53,7 +53,6 @@ export const LoginPage = () => {
 
                         <C.FormContainer>
                             <C.Form onSubmit={handleSubmit(handleLogin)}>
-                                <Error error={errors.email?.message} />
                                 <C.LabelContainer>
                                     <C.Label>Endereço de email</C.Label>
                                     <C.Required>*</C.Required>
@@ -64,7 +63,6 @@ export const LoginPage = () => {
                                     {...register("email")}
                                     onFocus={() => watch("email") ? true : false}
                                 />
-                                <Error error={errors.password?.message} />
                                 <C.LabelContainer>
                                     <C.Label>Palavra-passe</C.Label>
                                     <C.Required>*</C.Required>
@@ -85,6 +83,8 @@ export const LoginPage = () => {
                                 <C.Button >
                                     {loading ? <Spinner/> : 'Login'}
                                 </C.Button>
+
+                                <Error error={errors.email?.message || errors.password?.message ? 'Email ou palavra-passe inválida' : ''}/>
                             </C.Form>
                         </C.FormContainer>
 

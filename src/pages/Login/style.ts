@@ -206,7 +206,7 @@ export const Button = styled.button<Button>`
 export const DividerContainer = styled.div`
     display: flex;
     flex-direction: row;
-    margin-top: 15px;
+    margin-top: 6px;
     gap: 12px;
     align-items: center;
 `
