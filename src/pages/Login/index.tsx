@@ -2,8 +2,43 @@ import * as C from './style';
 import Logo from '../../assets/Logo.png';
 import RightImg from '../../assets/rightimg.png';
 import { AiOutlineMail } from 'react-icons/ai';
+import { api } from '../../services/api';
+import { useState } from 'react';
+import { Spinner } from '../../components/spinner';
+import { LoginSchema } from '../../schemas/LoginSchema';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { Error } from '../../components/error';
+
+type LoginData = {
+    email: string;
+    password: string;
+};
 
 export const LoginPage = () => {
+    const [loading, setLoading] = useState(false);
+
+    const {register,handleSubmit,watch,formState: { errors}} = useForm<LoginData>({
+        resolver: yupResolver(LoginSchema),
+    });
+
+    const handleLogin: SubmitHandler<LoginData> = (data) => {
+        if(loading) return;
+        setLoading(true);
+
+        api.post('/auth/login', {
+            email: data.email,
+            password: data.password
+        }).then((response) => {
+            console.log(response.data)
+        }).catch((error) => {
+            console.log(error)
+        }).finally(() => {
+            setLoading(false)
+        });
+    }
+    
+
     return (
         <C.LoginContainer>
             <C.Content>
@@ -17,18 +52,28 @@ export const LoginPage = () => {
                         <C.WelcomeSecondText>Estamos felizes em vê-lo(a) novamente</C.WelcomeSecondText>
 
                         <C.FormContainer>
-                            <C.Form>
+                            <C.Form onSubmit={handleSubmit(handleLogin)}>
+                                <Error error={errors.email?.message} />
                                 <C.LabelContainer>
                                     <C.Label>Endereço de email</C.Label>
                                     <C.Required>*</C.Required>
                                 </C.LabelContainer>
-                                <C.Input type="email" maxLength={40}/>
-
+                                <C.Input 
+                                    type="email" 
+                                    maxLength={40} 
+                                    {...register("email")}
+                                    onFocus={() => watch("email") ? true : false}
+                                />
+                                <Error error={errors.password?.message} />
                                 <C.LabelContainer>
-                                    <C.Label>Palavra passe</C.Label>
+                                    <C.Label>Palavra-passe</C.Label>
                                     <C.Required>*</C.Required>
                                 </C.LabelContainer>
-                                <C.Input type="password" maxLength={30}/>
+                                <C.Input 
+                                    type="password" 
+                                    maxLength={30} 
+                                    {...register("password")}
+                                />
 
                                 <C.CheckBoxContainer>
                                     <div className="customcheckbox">
@@ -37,7 +82,9 @@ export const LoginPage = () => {
                                     </div>
                                 </C.CheckBoxContainer>
 
-                                <C.Button>Login</C.Button>
+                                <C.Button >
+                                    {loading ? <Spinner/> : 'Login'}
+                                </C.Button>
                             </C.Form>
                         </C.FormContainer>
 
