@@ -44,11 +44,25 @@ export const Left = styled.div`
     margin-top: 48px;
 `
 
+export const RightImage = styled.img`
+    width: 590px;
+    height: 474px;
+`
+
 export const WelcomeText = styled.span`
     color: #FFF;
     font-family: 'Poppins', sans-serif;
-    font-size: 15px;
+    font-size: 17px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+`
+
+export const WelcomeSecondText = styled.span`
+    color: #8692A6;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 28px;
 `

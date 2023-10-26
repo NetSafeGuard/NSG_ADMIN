@@ -13,9 +13,10 @@ export const LoginPage = () => {
                 <C.Separator>
                     <C.Left>
                         <C.WelcomeText>Bem vindo(a) de volta 👋</C.WelcomeText>
+                        <C.WelcomeSecondText>Estamos felizes em vê-lo(a) novamente</C.WelcomeSecondText>
                     </C.Left>    
                     <div>
-                        <img src={RightImg} alt="RightImg" />
+                        <C.RightImage src={RightImg} alt="RightImg" />
                     </div>
                 </C.Separator>  
             </C.Content>
