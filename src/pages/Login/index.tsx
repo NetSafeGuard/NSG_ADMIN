@@ -17,6 +17,7 @@ type LoginData = {
 
 export const LoginPage = () => {
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const {register,handleSubmit,watch,formState: { errors}} = useForm<LoginData>({
         resolver: yupResolver(LoginSchema),
@@ -32,7 +33,7 @@ export const LoginPage = () => {
         }).then((response) => {
             console.log(response.data)
         }).catch((error) => {
-            console.log(error)
+            setError(error.response.data.message)
         }).finally(() => {
             setLoading(false)
         });
