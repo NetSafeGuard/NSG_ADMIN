@@ -31,3 +31,24 @@ export const LogoText = styled.span`
     font-weight: 600;
     line-height: normal;
 `
+
+export const Separator = styled.div`
+    display: flex;
+    justify-content: space-between;
+`
+
+export const Left = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 48px;
+`
+
+export const WelcomeText = styled.span`
+    color: #FFF;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+`
