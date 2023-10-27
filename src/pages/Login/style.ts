@@ -39,7 +39,7 @@ export const LogoText = styled.span`
 export const Separator = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-left: 25px
+    margin-left: 25px;
 `
 
 export const Left = styled.div`
@@ -225,4 +225,13 @@ export const DividerText = styled.span`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+`
+
+export const GlobalLoading = styled.div`
+    background-color: #202227;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
 `
