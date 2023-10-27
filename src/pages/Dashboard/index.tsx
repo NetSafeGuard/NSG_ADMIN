@@ -12,7 +12,7 @@ export const DashboardPage = () => {
 
     return (
         <>
-            <h1>User Email: {user.email}</h1>
+             <h1>Dashboard Temporary: User Email: {user.email}</h1>
         </>
     )
 

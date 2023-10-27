@@ -20,7 +20,8 @@ api.interceptors.response.use(
         return response;
     },
     (error) => {
-        if(error.response?.status == 401) {
+        console.log(error.response)
+        if(error.response?.status == 401 || error.response?.status == 403) {
             Logout()
         }
         return Promise.reject(error);
