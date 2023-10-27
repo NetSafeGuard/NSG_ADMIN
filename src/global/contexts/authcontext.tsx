@@ -56,7 +56,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
         let token = localStorage.getItem('nsg_token');
         if(!token) return setGlobalLoading(false);
 
-        api.post('/auth/verify').then((response) => {
+        api.post('/auth/verify').then(() => {
             navigate('/dashboard')
         }).catch((error) => {
             if(!error.response) return setError('Erro de conexão com o servidor');
