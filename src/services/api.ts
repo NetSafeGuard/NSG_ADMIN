@@ -5,10 +5,10 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use(async config => {
-    const token = localStorage.getItem('@nsg_token')
+    const token = localStorage.getItem('nsg_token')
 
     if (token) {
-        config.headers.Authorization = `Bearer ${token}`
+        config.headers.authorization = `Bearer ${token}`
     }
 
     return config

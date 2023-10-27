@@ -33,7 +33,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
             email: data.email,
             password: data.password
         }).then((response) => {
-            localStorage.setItem('@nsg_token', response.data.token);
+            localStorage.setItem('nsg_token', response.data.data.token);
             setLoading(false);
         }).catch((error) => {
             setLoading(false);
@@ -43,17 +43,17 @@ export const AuthProvider = ({children}: ProviderProps) => {
     }
 
     const Verify = async () => {
-        let token = localStorage.getItem('@nsg_token');
+        let token = localStorage.getItem('nsg_token');
         console.log(token)
         if(!token) return setGlobalLoading(false);
 
-        api.get('/auth/verify').then((response) => {
-            setLoading(false);
+        api.post('/auth/verify').then((response) => {
+            // TODO - Redirect to dashboard
         }).catch((error) => {
-            setLoading(false);
             if(!error.response) return setError('Erro de conexão com o servidor');
-            setError(error.response.data.message);
-        })
+        }).finally(() => {
+            setGlobalLoading(false);
+        });
     }
 
     return (
