@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Error } from '../../components/error';
 import { LoginData } from '../../@types/LoginData';
-import { AuthContext } from '../../global/contexts/authcontext';
+import { AuthContext } from '../../global/contexts/AuthContext';
 import {HashLoader} from 'react-spinners'
 
 export const LoginPage = () => {

@@ -3,7 +3,6 @@ import { LoginData } from '../../@types/LoginData';
 import { api } from '../../services/api';
 import { useNavigate } from "react-router-dom";
 
-
 interface AuthContextType {
     Login: (data: LoginData) => void;
     isLoading: boolean;
@@ -14,6 +13,7 @@ interface AuthContextType {
     user: {
         email: string;
     }
+    Logout : () => void;
 }
 
 
@@ -24,6 +24,11 @@ type ProviderProps = {
 
 export const AuthContext = createContext({} as AuthContextType);
 
+export const Logout = () => {
+    localStorage.removeItem('nsg_token');
+    window.location.href = '/';
+}
+
 
 export const AuthProvider = ({children}: ProviderProps) => {
     const navigate = useNavigate();
@@ -31,7 +36,6 @@ export const AuthProvider = ({children}: ProviderProps) => {
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [isGlobalLoading, setGlobalLoading] = useState(true);
-    const [user, setUser] = useState({} as AuthContextType['user']);
 
     const Login = async (data: LoginData) => {
         if(isLoading) return;
@@ -44,7 +48,6 @@ export const AuthProvider = ({children}: ProviderProps) => {
             localStorage.setItem('nsg_token', response.data.data.token);
             setLoading(false);
             navigate('/dashboard')
-            setUser(response.data.data.user)
         }).catch((error) => {
             setLoading(false);
             if(!error.response) return setError('Erro de conexão com o servidor');
@@ -57,7 +60,6 @@ export const AuthProvider = ({children}: ProviderProps) => {
         if(!token) return setGlobalLoading(false);
 
         api.post('/auth/verify').then((response) => {
-            setUser(response.data.data.user)
             navigate('/dashboard')
         }).catch((error) => {
             if(!error.response) return setError('Erro de conexão com o servidor');
@@ -74,7 +76,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
             error,
             Verify,
             isGlobalLoading,
-            user
+            Logout
         }}>
             {children}
         </AuthContext.Provider>
