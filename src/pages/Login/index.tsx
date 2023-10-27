@@ -10,7 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Error } from '../../components/error';
 import { LoginData } from '../../@types/LoginData';
 import { AuthContext } from '../../global/contexts/AuthContext';
-import {HashLoader} from 'react-spinners'
+import { Loading } from '../../components/loading';
 
 export const LoginPage = () => {
 
@@ -25,9 +25,7 @@ export const LoginPage = () => {
     });
     
     if(isGlobalLoading) return (
-        <C.GlobalLoading>
-            <HashLoader color='white' size={100} />
-        </C.GlobalLoading>
+        <Loading/>
     )
     
     return (
