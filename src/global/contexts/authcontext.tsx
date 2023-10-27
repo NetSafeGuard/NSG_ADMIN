@@ -10,9 +10,6 @@ interface AuthContextType {
     error: string;
     Verify: () => void;
     isGlobalLoading: boolean;
-    user: {
-        email: string;
-    }
     Logout : () => void;
 }
 
