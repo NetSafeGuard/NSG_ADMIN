@@ -10,7 +10,6 @@ type AuthContextType = {
     error: string;
     Verify: () => void;
     isGlobalLoading: boolean;
-    setGlobalLoading: (value: boolean) => void;
 }
 
 type ProviderProps = {
@@ -64,7 +63,6 @@ export const AuthProvider = ({children}: ProviderProps) => {
             error,
             Verify,
             isGlobalLoading,
-            setGlobalLoading
         }}>
             {children}
         </AuthContext.Provider>
