@@ -43,6 +43,8 @@ export const AuthProvider = ({children}: ProviderProps) => {
         }).then((response) => {
             localStorage.setItem('nsg_token', response.data.data.token);
             setLoading(false);
+            navigate('/dashboard')
+            setUser(response.data.data.user)
         }).catch((error) => {
             setLoading(false);
             if(!error.response) return setError('Erro de conexão com o servidor');
@@ -52,14 +54,12 @@ export const AuthProvider = ({children}: ProviderProps) => {
 
     const Verify = async () => {
         let token = localStorage.getItem('nsg_token');
-        console.log(token)
         if(!token) return setGlobalLoading(false);
 
         api.post('/auth/verify').then((response) => {
-            setUser(response.data.data.user.email)
+            setUser(response.data.data.user)
             navigate('/dashboard')
         }).catch((error) => {
-            console.log(error)
             if(!error.response) return setError('Erro de conexão com o servidor');
         }).finally(() => {
             setGlobalLoading(false);
