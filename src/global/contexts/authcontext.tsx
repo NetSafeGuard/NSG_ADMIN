@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState } from "react";
 import { LoginData } from '../../@types/LoginData';
 import { api } from '../../services/api';
+import { useNavigate } from "react-router-dom";
 
 
 type AuthContextType = {
@@ -20,6 +21,7 @@ export const AuthContext = createContext({} as AuthContextType);
 
 
 export const AuthProvider = ({children}: ProviderProps) => {
+    const navigate = useNavigate();
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [isGlobalLoading, setGlobalLoading] = useState(true);
@@ -47,8 +49,9 @@ export const AuthProvider = ({children}: ProviderProps) => {
         if(!token) return setGlobalLoading(false);
 
         api.post('/auth/verify').then((response) => {
-            // TODO - Redirect to dashboard
+            navigate('/dashboard')
         }).catch((error) => {
+            console.log(error)
             if(!error.response) return setError('Erro de conexão com o servidor');
         }).finally(() => {
             setGlobalLoading(false);
