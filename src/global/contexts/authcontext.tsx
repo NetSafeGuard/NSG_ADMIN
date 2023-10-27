@@ -4,14 +4,19 @@ import { api } from '../../services/api';
 import { useNavigate } from "react-router-dom";
 
 
-type AuthContextType = {
+interface AuthContextType {
     Login: (data: LoginData) => void;
     isLoading: boolean;
     setLoading: (value: boolean) => void;
     error: string;
     Verify: () => void;
     isGlobalLoading: boolean;
+    user: {
+        email: string;
+    }
 }
+
+
 
 type ProviderProps = {
     children: ReactNode;
@@ -22,9 +27,11 @@ export const AuthContext = createContext({} as AuthContextType);
 
 export const AuthProvider = ({children}: ProviderProps) => {
     const navigate = useNavigate();
+
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [isGlobalLoading, setGlobalLoading] = useState(true);
+    const [user, setUser] = useState({} as AuthContextType['user']);
 
     const Login = async (data: LoginData) => {
         if(isLoading) return;
@@ -49,6 +56,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
         if(!token) return setGlobalLoading(false);
 
         api.post('/auth/verify').then((response) => {
+            setUser(response.data.data.user.email)
             navigate('/dashboard')
         }).catch((error) => {
             console.log(error)
@@ -66,6 +74,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
             error,
             Verify,
             isGlobalLoading,
+            user
         }}>
             {children}
         </AuthContext.Provider>
