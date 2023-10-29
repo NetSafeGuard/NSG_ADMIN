@@ -39,7 +39,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
         setLoading(true);
 
         api.post('/auth/login', {
-            email: data.email,
+            user: data.user,
             password: data.password
         }).then((response) => {
             localStorage.setItem('nsg_token', response.data.data.token);

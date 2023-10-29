@@ -43,14 +43,13 @@ export const LoginPage = () => {
                         <C.FormContainer>
                             <C.Form onSubmit={handleSubmit(Login)}>
                                 <C.LabelContainer>
-                                    <C.Label>Endereço de email</C.Label>
+                                    <C.Label>Nome de utilizador/Email</C.Label>
                                     <C.Required>*</C.Required>
                                 </C.LabelContainer>
                                 <C.Input 
-                                    type="email" 
                                     maxLength={40} 
-                                    {...register("email")}
-                                    onFocus={() => watch("email") ? true : false}
+                                    {...register("user")}
+                                    onFocus={() => watch("user") ? true : false}
                                 />
                                 <C.LabelContainer>
                                     <C.Label>Palavra-passe</C.Label>
@@ -73,7 +72,7 @@ export const LoginPage = () => {
                                     {isLoading ? <Spinner/> : 'Login'}
                                 </C.Button>
 
-                                <Error error={errors.email?.message || errors.password?.message ? 'Email ou palavra-passe inválida' : ''}/>
+                                <Error error={errors.user?.message || errors.password?.message ? 'Utilizador/Email ou palavra-passe inválida' : ''}/>
 
                                 {error && <Error error={error}/>}
                             </C.Form>
