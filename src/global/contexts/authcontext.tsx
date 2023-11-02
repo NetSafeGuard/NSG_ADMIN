@@ -11,6 +11,8 @@ interface AuthContextType {
     Verify: () => void;
     isGlobalLoading: boolean;
     Logout : () => void;
+    selected: string;
+    setSelected: (value: string) => void;
 }
 
 
@@ -33,6 +35,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
     const [isLoading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [isGlobalLoading, setGlobalLoading] = useState(true);
+    const [selected, setSelected] = useState("home");
 
     const Login = async (data: LoginData) => {
         if(isLoading) return;
@@ -73,7 +76,9 @@ export const AuthProvider = ({children}: ProviderProps) => {
             error,
             Verify,
             isGlobalLoading,
-            Logout
+            Logout,
+            selected,
+            setSelected
         }}>
             {children}
         </AuthContext.Provider>
