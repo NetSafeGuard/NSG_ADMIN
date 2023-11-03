@@ -9,8 +9,10 @@ export const DashboardPage = () => {
     console.log(user)
     
     if(isLoading) return <Loading />
-    if(error) return (<h1>{error}</h1>)
-    if(!user) return (<Navigate to="/" />)
+    console.log(error)
+    if(error) return (<Loading text={error.message} />)
+
+    if(!user || !user.username) return (<Navigate to="/" />)
 
     return (
         <C.Container>
