@@ -13,7 +13,8 @@ import { Error } from '../../components/error';
 export const LoginPage = () => {
 
     const { Login, Verify, isLoading, isGlobalLoading } = useContext(AuthContext);
-    
+
+
     useEffect(() => {
         Verify();
     }, [])
@@ -25,7 +26,6 @@ export const LoginPage = () => {
     if(isGlobalLoading) return (
         <Loading/>
     )
-    console.log(errors)
     
     return (
         <C.LoginContainer>
