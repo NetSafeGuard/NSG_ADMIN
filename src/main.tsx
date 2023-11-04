@@ -3,10 +3,13 @@ import { BrowserRouter } from "react-router-dom";
 import { RoutesList } from "./router/routes";
 import './global/global.css';
 import { AuthProvider } from "./global/contexts/AuthContext";
+import 'react-notifications-component/dist/theme.css'
+import { ReactNotifications } from "react-notifications-component";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
     <AuthProvider>
+      <ReactNotifications />
       <RoutesList />
     </AuthProvider>
   </BrowserRouter>
