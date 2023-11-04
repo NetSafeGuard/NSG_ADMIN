@@ -9,7 +9,6 @@ export const Error = ({error} : Props) => {
     return (
         <C.ErrorContainer>
             <C.ErrorContent>
-                {error && <BiError color={"D14444"} size={15}/>} 
                 {error}
             </C.ErrorContent>
         </C.ErrorContainer>
