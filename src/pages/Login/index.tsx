@@ -12,7 +12,7 @@ import { Error } from '../../components/error';
 
 export const LoginPage = () => {
 
-    const { Login, Verify, isLoading, isGlobalLoading, error } = useContext(AuthContext);
+    const { Login, Verify, isLoading, isGlobalLoading } = useContext(AuthContext);
     
     useEffect(() => {
         Verify();

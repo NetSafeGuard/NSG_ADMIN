@@ -13,7 +13,6 @@ interface AuthContextType {
     Logout : () => void;
     selected: string;
     setSelected: (value: string) => void;
-    error: string;
 }
 
 type ProviderProps = {
@@ -62,7 +61,6 @@ function VerifyError() {
 export const AuthProvider = ({children}: ProviderProps) => {
     const navigate = useNavigate();
     
-    const [error, setError] = useState('');
     const [isLoading, setLoading] = useState(false);
     const [isGlobalLoading, setGlobalLoading] = useState(true);
     const [selected, setSelected] = useState("home");
@@ -107,7 +105,6 @@ export const AuthProvider = ({children}: ProviderProps) => {
             Logout,
             selected,
             setSelected,
-            error
         }}>
             {children}
         </AuthContext.Provider>
