@@ -1,30 +1,31 @@
+import { useEffect, useContext } from 'react';
 import * as C from './style';
 import { RiLoginCircleLine } from 'react-icons/ri';
-// import { useContext, useEffect } from 'react';
-// import { Spinner } from '../../components/spinner';
-// import { LoginSchema } from '../../schemas/LoginSchema';
-// import { useForm } from 'react-hook-form';
-// import { yupResolver } from '@hookform/resolvers/yup';
-// import { Error } from '../../components/error';
-// import { LoginData } from '../../@types/LoginData';
-// import { AuthContext } from '../../global/contexts/AuthContext';
-// import { Loading } from '../../components/loading';
+import { LoginSchema } from '../../schemas/LoginSchema';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { LoginData } from '../../@types/LoginData';
+import { AuthContext } from '../../global/contexts/AuthContext';
+import { Loading } from '../../components/loading';
+import { Spinner } from '../../components/spinner';
+import { Error } from '../../components/error';
 
 export const LoginPage = () => {
 
-    // const { Login, isLoading, error, Verify, isGlobalLoading } = useContext(AuthContext);
-
-    // useEffect(() => {
-    //     Verify();
-    // }, [])
-
-    // const {register,handleSubmit,watch,formState: { errors}} = useForm<LoginData>({
-    //     resolver: yupResolver(LoginSchema),
-    // });
+    const { Login, Verify, isLoading, isGlobalLoading, error } = useContext(AuthContext);
     
-    // if(isGlobalLoading) return (
-    //     <Loading/>
-    // )
+    useEffect(() => {
+        Verify();
+    }, [])
+
+    const {register,handleSubmit,watch, formState:{errors}} = useForm<LoginData>({
+        resolver: yupResolver(LoginSchema),
+    });
+
+    if(isGlobalLoading) return (
+        <Loading/>
+    )
+    console.log(errors)
     
     return (
         <C.LoginContainer>
@@ -36,14 +37,30 @@ export const LoginPage = () => {
                     <C.FormTitle>Bem vindo(a) novamente!</C.FormTitle>
                     <C.FormDescription>Use os dados fornecidos para entrar</C.FormDescription>
                 </C.FormHeader>
-                <C.Form>
-                    <C.Label>Utilizador/E-mail</C.Label>
-                    <C.Input type='text' placeholder='email@gmail.com'/>
+                <C.Form onSubmit={handleSubmit(Login)}>
+                    <C.Label>
+                        Utilizador/E-mail 
+                        {errors.user && <Error error={'*'}/>}
+                    </C.Label>
+                    <C.Input 
+                        type='text' 
+                        placeholder='email@gmail.com'
+                        {...register("user")}
+                        onFocus={() => watch("user") ? true : false}
+                    />
                     
-                    <C.Label>Palavra-Passe</C.Label>
-                    <C.Input type='password' placeholder='Palavra-passe'/>
+                    <C.Label>
+                        Palavra-Passe
+                        {errors.password && <Error error={'*'}/>}
+                    </C.Label>
+                    <C.Input 
+                        type='password' 
+                        placeholder='Palavra-passe'
+                        {...register("password")}
+                        onFocus={() => watch("password") ? true : false}
+                    />
                     
-                    <C.Button>Entrar</C.Button>
+                    <C.Button>{isLoading ? <Spinner/> : 'Entrar'}</C.Button>
                     <C.ForgotPassword>Esqueceu-se da palavra-passe?</C.ForgotPassword>
                 </C.Form>
             </C.FormContainer>

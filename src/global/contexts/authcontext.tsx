@@ -2,20 +2,19 @@ import { createContext, ReactNode, useState } from "react";
 import { LoginData } from '../../@types/LoginData';
 import { api } from '../../services/api';
 import { useNavigate } from "react-router-dom";
+import { Store } from 'react-notifications-component';
 
 interface AuthContextType {
     Login: (data: LoginData) => void;
     isLoading: boolean;
     setLoading: (value: boolean) => void;
-    error: string;
     Verify: () => void;
     isGlobalLoading: boolean;
     Logout : () => void;
     selected: string;
     setSelected: (value: string) => void;
+    error: string;
 }
-
-
 
 type ProviderProps = {
     children: ReactNode;
@@ -28,12 +27,43 @@ export const Logout = () => {
     window.location.href = '/';
 }
 
+function LoginError() {
+    Store.addNotification({
+        title: "Problemas na autenticação",
+        message: "Parece que houve um problema na autenticação, tente novamente mais tarde.",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 15000,
+          onScreen: true
+        }
+    });
+}
+
+function VerifyError() {
+    Store.addNotification({
+        title: "Problemas na verificação",
+        message: "Parece que houve um problema na verificação, tente novamente mais tarde.",
+        type: "warning",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 15000,
+          onScreen: true
+        }
+    });
+}
 
 export const AuthProvider = ({children}: ProviderProps) => {
     const navigate = useNavigate();
-
-    const [isLoading, setLoading] = useState(false);
+    
     const [error, setError] = useState('');
+    const [isLoading, setLoading] = useState(false);
     const [isGlobalLoading, setGlobalLoading] = useState(true);
     const [selected, setSelected] = useState("home");
 
@@ -50,8 +80,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
             navigate('/dashboard')
         }).catch((error) => {
             setLoading(false);
-            if(!error.response) return setError('Erro de conexão com o servidor');
-            setError(error.response.data.message);
+            if(!error.response) return LoginError();
         })
     }
 
@@ -62,7 +91,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
         api.post('/auth/verify').then(() => {
             navigate('/dashboard')
         }).catch((error) => {
-            if(!error.response) return setError('Erro de conexão com o servidor');
+            if(!error.response) return VerifyError();
         }).finally(() => {
             setGlobalLoading(false);
         });
@@ -73,12 +102,12 @@ export const AuthProvider = ({children}: ProviderProps) => {
             Login,
             isLoading,
             setLoading,
-            error,
             Verify,
             isGlobalLoading,
             Logout,
             selected,
-            setSelected
+            setSelected,
+            error
         }}>
             {children}
         </AuthContext.Provider>

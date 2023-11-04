@@ -73,6 +73,8 @@ export const Form = styled.form`
 `
 
 export const Label = styled.label`
+    display: flex;
+    align-items: center;
     color: #181E25;
     font-family: 'Inter', sans-serif;
     font-size: 14px;
@@ -81,13 +83,13 @@ export const Label = styled.label`
     line-height: 19.992px;
     margin-bottom: 8px;
     margin-top: 23px;
+    gap: 5px;
 `
 
 export const Input = styled.input`
     height: 40px;
     padding: 11px 13px 12px 13px;
     align-items: center;
-    align-self: stretch;
     border-radius: 6px;
     border: 1px solid #DEE4ED;
     background: #FFF;
@@ -97,6 +99,13 @@ export const Input = styled.input`
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    outline: none;
+
+    transition: border-color 0.5s;
+
+    &:focus {
+        border: 1px solid #624DE3;
+    }
 
     &::placeholder {
         color: #788BA5;

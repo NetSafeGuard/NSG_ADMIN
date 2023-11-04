@@ -1,5 +1,4 @@
 import * as C from './style';
-import { BiError } from 'react-icons/bi';
 
 type Props = {
     error: string | undefined;

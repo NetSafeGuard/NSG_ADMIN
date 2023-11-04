@@ -10,8 +10,7 @@ export const ErrorContainer = styled.div`
 export const ErrorContent = styled.div`
     font-family: 'Poppins', sans-serif;
     color: #CE524D;
-    font-size: 11px;
-    margin-top: 1px;
+    font-size: 16px;
 
     display: flex;
     align-items: center;
