@@ -11,7 +11,7 @@ export const Spinner = styled.div`
     height: 20px;
     border: 1px solid #f3f3f3;
     border-radius: 50%;
-    border-top: 1px solid #3498db;
+    border-top: 1px solid #931ce3;
     animation: spin 1s linear infinite;
 
     @keyframes spin {
