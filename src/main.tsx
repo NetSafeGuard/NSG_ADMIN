@@ -7,6 +7,7 @@ import 'react-notifications-component/dist/theme.css'
 import { ReactNotifications } from "react-notifications-component";
 import { NoContextMenu } from "./components/nocontext";
 
+
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
     <AuthProvider>
