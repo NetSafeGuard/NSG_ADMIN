@@ -9,7 +9,7 @@ export const DashboardPage = () => {
     console.log(user)
     
     if(isLoading) return <Loading />
-    console.log(error)
+    
     if(error) return (<Loading text={error.message} />)
 
     if(!user || !user.username) return (<Navigate to="/" />)
