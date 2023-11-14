@@ -58,6 +58,22 @@ function VerifyError() {
     });
 }
 
+function SendAlert(title: string, message: string) {
+    Store.addNotification({
+        title: title,
+        message: message,
+        type: "warning",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 15000,
+          onScreen: true
+        }
+    });
+}
+
 export const AuthProvider = ({children}: ProviderProps) => {
     const navigate = useNavigate();
     
@@ -79,6 +95,8 @@ export const AuthProvider = ({children}: ProviderProps) => {
         }).catch((error) => {
             setLoading(false);
             if(!error.response) return LoginError();
+            SendAlert("Problemas na autenticação", error.response.data.message)
+            
         })
     }
 
