@@ -5,10 +5,10 @@ interface SelectedProps {
 }
 
 export const Container = styled.div`
-    width: 64px;
+    width: 70px;
     height: 100vh;
     display: flex;
-    background-color: #202227;
+    background-color: white;
     flex-direction: column;
     align-items: center;
     padding-top: 24px;
@@ -23,7 +23,7 @@ export const Icons = styled.div`
 
 `
 
-export const Icon = styled.div<SelectedProps>`
+export const Icon = styled.a<SelectedProps>`
     width: 40px;
     height: 40px;
     display: flex;
@@ -34,7 +34,6 @@ export const Icon = styled.div<SelectedProps>`
     transition: all 0.5s ease-in-out;
 
     ${({ menuselected }) => menuselected && `
-        background-color: #F8FAFC;
         svg * {
             color: black
         }

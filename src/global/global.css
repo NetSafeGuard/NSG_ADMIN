@@ -8,3 +8,7 @@
     -ms-user-select: none;
     -webkit-user-drag: none;
 }
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
