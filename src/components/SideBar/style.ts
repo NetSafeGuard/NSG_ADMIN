@@ -35,7 +35,7 @@ export const Icon = styled.a<SelectedProps>`
 
     ${({ menuselected }) => menuselected && `
         svg * {
-            color: black
+            color: #48B1A5
         }
 
     `}

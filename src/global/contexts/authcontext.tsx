@@ -79,7 +79,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
     
     const [isLoading, setLoading] = useState(false);
     const [isGlobalLoading, setGlobalLoading] = useState(true);
-    const [selected, setSelected] = useState("home");
+    const [selected, setSelected] = useState("char");
 
     const Login = async (data: LoginData) => {
         if(isLoading) return;

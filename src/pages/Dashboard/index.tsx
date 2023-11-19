@@ -18,7 +18,7 @@ export const DashboardPage = () => {
         <C.Container>
             <SideBar />
             <C.Content>
-                <C.WelcomeText>👋 Olá {user.username}</C.WelcomeText>
+                <C.WelcomeText>👋 Olá Z4</C.WelcomeText>
             </C.Content>
         </C.Container>
     )

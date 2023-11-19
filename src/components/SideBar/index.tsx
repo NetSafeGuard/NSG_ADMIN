@@ -1,13 +1,13 @@
 import * as C from './style';
 import Logo from '../../assets/logo.png';
-import { PiHouse } from 'react-icons/pi';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import { BiCalendarEvent, BiHelpCircle } from 'react-icons/bi';
-import { FiSettings } from 'react-icons/fi';
-import { AiOutlineUser } from 'react-icons/ai';
 import { useContext } from 'react';
 import { AuthContext } from '../../global/contexts/AuthContext';
 import { Tooltip } from 'react-tooltip';
+import { BiSolidBarChartSquare } from "react-icons/bi";
+import { AiFillSetting } from "react-icons/ai";
+import { FaUserAlt } from "react-icons/fa";
 
 export const SideBar = () => {
     const { selected, setSelected } = useContext(AuthContext);
@@ -20,13 +20,13 @@ export const SideBar = () => {
                     <Tooltip id="my-tooltip" arrowColor='#17B4BB' opacity={0.5} style={{backgroundColor: '#FFFFFF'}}/>
                     <C.Icon 
                         data-tooltip-id="my-tooltip"
-                        data-tooltip-content="Ínicio"
+                        data-tooltip-content="Estatísticas"
                         data-tooltip-variant='light'
                         data-tooltip-place="right"
-                        menuselected={selected === "home" ? true : false}
-                        onClick={() => setSelected("home")}
+                        menuselected={selected === "char" ? true : false}
+                        onClick={() => setSelected("char")}
                     >
-                        <PiHouse size={26} color={"CCCCCC"} />
+                        <BiSolidBarChartSquare size={26} color={"A6ABC8"} />
                     </C.Icon>
                     <C.Icon
                         data-tooltip-id="my-tooltip"
@@ -36,17 +36,17 @@ export const SideBar = () => {
                         menuselected={selected === "calendar" ? true : false}
                         onClick={() => setSelected("calendar")}
                     >
-                        <AiOutlineCalendar size={26} color={"CCCCCC"} />
+                        <AiOutlineCalendar size={26} color={"A6ABC8"} />
                     </C.Icon>
                     <C.Icon
                         data-tooltip-id="my-tooltip"
-                        data-tooltip-content="Evento"
+                        data-tooltip-content="Eventos"
                         data-tooltip-variant='light'
                         data-tooltip-place="right"
                         menuselected={selected === "events" ? true : false}
                         onClick={() => setSelected("events")}
                     >
-                        <BiCalendarEvent size={26} color={"CCCCCC"} />
+                        <BiCalendarEvent size={26} color={"A6ABC8"} />
                     </C.Icon>
                     <C.Icon
                         data-tooltip-id="my-tooltip"
@@ -56,7 +56,7 @@ export const SideBar = () => {
                         menuselected={selected === "users" ? true : false}
                         onClick={() => setSelected("users")}
                     >
-                        <AiOutlineUser size={26} color={"CCCCCC"} />
+                        <FaUserAlt size={21} color={"A6ABC8"} />
                     </C.Icon>
                 </C.TopIcons>
                 <C.BottomIcons>
@@ -68,7 +68,7 @@ export const SideBar = () => {
                         menuselected={selected === "settings" ? true : false}
                         onClick={() => setSelected("settings")}
                     >
-                        <FiSettings size={25} color={"CCCCCC"} />
+                        <AiFillSetting size={26} color={"A6ABC8"} />
                     </C.Icon>
                     <C.Icon
                         data-tooltip-id="my-tooltip"
@@ -76,7 +76,7 @@ export const SideBar = () => {
                         data-tooltip-variant='light'
                         data-tooltip-place="right"
                     >
-                        <BiHelpCircle size={25} color={"CCCCCC"} />
+                        <BiHelpCircle size={26} color={"A6ABC8"} />
                     </C.Icon>
                 </C.BottomIcons>
             </C.Icons>
