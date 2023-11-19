@@ -30,8 +30,7 @@ export const Icon = styled.a<SelectedProps>`
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-
-    transition: all 0.5s ease-in-out;
+    cursor: pointer;
 
     ${({ menuselected }) => menuselected && `
         svg * {
@@ -40,10 +39,13 @@ export const Icon = styled.a<SelectedProps>`
 
     `}
 
-    &:hover {
-        cursor: pointer;
-        transform: scale(0.98);
-        filter: drop-shadow(1px 1px 3px rgba(255, 255, 255, 0.3));
+    & svg {
+        transition: 0.3s;
+    }
+
+    & svg:hover {
+        filter: brightness(0.8);
+        transform: scale(0.95);
     }
 
 `

@@ -6,7 +6,6 @@ import { SideBar } from '../../components/SideBar';
 
 export const DashboardPage = () => {
     const { user, isLoading, error } = UserHook();
-    console.log(user)
     
     if(isLoading) return <Loading />
     
@@ -18,7 +17,7 @@ export const DashboardPage = () => {
         <C.Container>
             <SideBar />
             <C.Content>
-                <C.WelcomeText>👋 Olá Z4</C.WelcomeText>
+                <C.WelcomeText>👋 Olá {user.username}</C.WelcomeText>
             </C.Content>
         </C.Container>
     )
