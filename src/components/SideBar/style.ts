@@ -6,7 +6,7 @@ interface SelectedProps {
 
 export const Container = styled.div`
     width: 70px;
-    height: 100vh;
+    height: calc(100vh - 32px);
     display: flex;
     background-color: white;
     flex-direction: column;
@@ -57,6 +57,10 @@ export const TopIcons = styled.div`
     justify-content: space-between;
     gap: 24px;
     margin-top: 50px;
+
+    @media(max-height: 500px) {
+        gap: 12px;
+    }
 `
 
 export const BottomIcons = styled.div`
@@ -66,4 +70,8 @@ export const BottomIcons = styled.div`
     justify-content: space-between;
     gap: 24px;
     margin-bottom: 20px;
+
+    @media(max-height: 500px) {
+        gap: 12px;
+    }
 `

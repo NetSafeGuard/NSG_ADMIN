@@ -12,3 +12,10 @@
 * {
     font-family: 'Poppins', sans-serif;
 }
+
+html, body {
+    border-radius: 7px 7px 0px 0px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}

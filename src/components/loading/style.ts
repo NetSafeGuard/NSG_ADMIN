@@ -8,7 +8,7 @@ export const GlobalLoading = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 32px);
 `
 
 export const Text = styled(ErrorContent)`

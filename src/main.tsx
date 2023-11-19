@@ -6,14 +6,18 @@ import { AuthProvider } from "./global/contexts/AuthContext";
 import { ReactNotifications } from "react-notifications-component";
 import { NoContextMenu } from "./components/nocontext";
 import 'react-notifications-component/dist/theme.css'
-import 'react-tooltip/dist/react-tooltip.css'
+import 'react-tooltip/dist/react-tooltip.css';
+import { TitleBar } from "./components/titlebar";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <BrowserRouter>
-    <AuthProvider>
-      <NoContextMenu />
-      <ReactNotifications />
-      <RoutesList />
-    </AuthProvider>
-  </BrowserRouter>
+  <>
+    <TitleBar/>
+    <BrowserRouter>
+      <AuthProvider>
+        <NoContextMenu />
+        <ReactNotifications />
+        <RoutesList />
+      </AuthProvider>
+    </BrowserRouter>
+  </>
 );

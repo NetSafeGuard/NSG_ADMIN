@@ -8,7 +8,7 @@
   },
   "package": {
     "productName": "nsg",
-    "version": "0.0.0"
+    "version": "0.0.1"
   },
   "tauri": {
     "allowlist": {
@@ -16,11 +16,23 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "window": {
+        "all": false,
+        "close": true,
+        "hide": true,
+        "show": true,
+        "maximize": true,
+        "minimize": true,
+        "unmaximize": true,
+        "unminimize": true,
+        "startDragging": true
       }
     },
     "bundle": {
       "active": true,
       "targets": "all",
+      "shortDescription": "Admin NetSafeGuard",
       "identifier": "admin.netsafeguard.developers",
       "icon": [
         "icons/32x32.png",
@@ -37,12 +49,14 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "Development version ~ ITS NOT THE FINAL VERSION",
+        "title": "Admin NetSafeGuard",
         "width": 1090,
         "height": 624,
         "center": true,
         "minWidth": 640,
-        "minHeight": 480
+        "minHeight": 480,
+        "decorations": false,
+        "transparent": true
       }
     ]
   }
