@@ -42,6 +42,35 @@ function LoginError() {
     });
 }
 
+export function RemoveNotification() {
+    Store.removeAllNotifications();
+    Store.addNotification({
+        title: "Conexão retomada",
+        message: "A sua conexão foi retormada, pode ocorrer algum atraso mas logo será normalizado.",
+        type: "success",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+    });
+}
+
+export function InternalError() {
+    Store.addNotification({
+        title: "Problemas internos",
+        message: "Parece que houve um problema interno, tente novamente mais tarde.",
+        type: "danger",
+        insert: "top",
+        container: "top-right",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 90000,
+          onScreen: true
+        }
+    });
+}
+
 function VerifyError() {
     Store.addNotification({
         title: "Problemas na verificação",

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ErrorContent } from "../error/style";
 
 export const GlobalLoading = styled.div`
-    background-color: #202227;
+    background-color: white;
     display: flex;
     justify-content: center;
     flex-direction: column;
