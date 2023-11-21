@@ -2,7 +2,7 @@ import { createContext, ReactNode, useState } from "react";
 import { LoginData } from '../../@types/LoginData';
 import { api } from '../../services/api';
 import { useNavigate } from "react-router-dom";
-import { Store } from 'react-notifications-component';
+import { NOTIFICATION_TYPE, Store } from 'react-notifications-component';
 
 interface AuthContextType {
     Login: (data: LoginData) => void;
@@ -26,85 +26,26 @@ export const Logout = () => {
     window.location.href = '/';
 }
 
-function LoginError() {
-    Store.addNotification({
-        title: "Problemas na autenticação",
-        message: "Parece que houve um problema na autenticação, tente novamente mais tarde.",
-        type: "danger",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 15000,
-          onScreen: true
-        }
-    });
-}
-
-export function RemoveNotification() {
+export const RemoveNotification = () => {
     Store.removeAllNotifications();
-    Store.addNotification({
-        title: "Conexão retomada",
-        message: "A sua conexão foi retormada, pode ocorrer algum atraso mas logo será normalizado.",
-        type: "success",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-            duration: 5000,
-            onScreen: true
-        }
-    });
+    sendAlert("Conexão retomada", "A sua conexão foi retormada, pode ocorrer algum atraso mas logo será normalizado.", "success", 5000)
 }
 
-export function InternalError() {
+export const sendAlert = (title: string, message: string, type: NOTIFICATION_TYPE, duration: number) => {
     Store.addNotification({
-        title: "Problemas internos",
-        message: "Parece que houve um problema interno, tente novamente mais tarde.",
-        type: "danger",
+        title,
+        message,
+        type,
         insert: "top",
         container: "top-right",
         animationIn: ["animate__animated", "animate__fadeIn"],
         animationOut: ["animate__animated", "animate__fadeOut"],
         dismiss: {
-          duration: 90000,
+          duration,
           onScreen: true
         }
     });
-}
 
-function VerifyError() {
-    Store.addNotification({
-        title: "Problemas na verificação",
-        message: "Parece que houve um problema na verificação, tente novamente mais tarde.",
-        type: "warning",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 15000,
-          onScreen: true
-        }
-    });
-}
-
-function SendAlert(title: string, message: string) {
-    Store.addNotification({
-        title: title,
-        message: message,
-        type: "warning",
-        insert: "top",
-        container: "top-right",
-        animationIn: ["animate__animated", "animate__fadeIn"],
-        animationOut: ["animate__animated", "animate__fadeOut"],
-        dismiss: {
-          duration: 15000,
-          onScreen: true
-        }
-    });
 }
 
 export const AuthProvider = ({children}: ProviderProps) => {
@@ -127,11 +68,10 @@ export const AuthProvider = ({children}: ProviderProps) => {
             navigate('/dashboard')
         }).catch((error) => {
             setLoading(false);
-            if(!error.response) return LoginError();
-            SendAlert("Problemas na autenticação", error.response.data.message)
-            
+            if(!error.response) return sendAlert("Problemas na autenticação", "Parece que houve um problema na autenticação, tente novamente mais tarde.", "danger", 15000)
+            sendAlert("Problemas na autenticação", error.response.data.message, "danger", 15000)
         })
-    }
+    };
 
     const Verify = async () => {
         let token = localStorage.getItem('nsg_token');
@@ -140,7 +80,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
         api.post('/auth/verify').then(() => {
             navigate('/dashboard')
         }).catch((error) => {
-            if(!error.response) return VerifyError();
+            if(!error.response) return sendAlert("Problemas na verificação", "Parece que houve um problema na verificação, tente novamente mais tarde.", "danger", 15000)
         }).finally(() => {
             setGlobalLoading(false);
         });
