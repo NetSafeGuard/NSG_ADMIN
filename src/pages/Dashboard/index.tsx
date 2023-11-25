@@ -1,25 +1,27 @@
-import * as C from './style';
-import { UserHook } from '../../services/hooks/UserHook';
-import { Navigate } from 'react-router-dom';
-import { Loading } from '../../components/loading';
-import { SideBar } from '../../components/SideBar';
+import * as C from "./style";
+import { UserHook } from "../../services/hooks/UserHook";
+import { Navigate } from "react-router-dom";
+import { Loading } from "../../components/loading";
+import { SideBar } from "../../components/SideBar";
+import { Profile } from "../../components/profile";
 
 export const DashboardPage = () => {
-    const { user, isLoading, error } = UserHook();
-    
-    if(isLoading) return <Loading />
-    
-    if(error) return (<Loading text={error.message} />)
+  const { user, isLoading, error } = UserHook();
 
-    if(!user || !user.username) return (<Navigate to="/" />)
+  if (isLoading) return <Loading />;
 
-    return (
-        <C.Container>
-            <SideBar />
-            <C.Content>
-                <C.WelcomeText>👋 Olá {user.username}</C.WelcomeText>
-            </C.Content>
-        </C.Container>
-    )
+  if (error) return <Loading text={error.message} />;
 
+  if (!user || !user.username) return <Navigate to="/" />;
+
+  return (
+    <C.Container>
+      <SideBar />
+      <C.Content>
+        <C.ProfileContainer>
+          <Profile />
+        </C.ProfileContainer>
+      </C.Content>
+    </C.Container>
+  );
 };

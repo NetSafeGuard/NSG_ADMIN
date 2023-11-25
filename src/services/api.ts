@@ -2,8 +2,8 @@ import axios from 'axios';
 import { Logout } from '../global/contexts/AuthContext'
 
 export const api = axios.create({
-    baseURL: 'https://vitti.cloud/api/v1/'
-    //baseURL: 'http://localhost:8080/api/v1/'
+    // baseURL: 'https://vitti.cloud/api/v1/'
+    baseURL: 'http://localhost:8080/api/v1/'
 });
 
 api.interceptors.request.use(async config => {
