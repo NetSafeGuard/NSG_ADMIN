@@ -11,7 +11,7 @@ export const Profile = () => {
     <C.Container>
       <C.Avatar src={user.avatar} alt={"asdada"} />
       <C.Column>
-        <C.Username>{user?.username}</C.Username>
+        <C.Username>{user.username}</C.Username>
         <C.Role>{user.role}</C.Role>
       </C.Column>
     </C.Container>
