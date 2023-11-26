@@ -6,36 +6,38 @@ import { appWindow } from '@tauri-apps/api/window';
 
 export const TitleBar = () => {
     return (
-        <C.TitleBarContainer data-tauri-drag-region>
-            <div>
-                <C.TitleBarTitle>NetSafeGuard</C.TitleBarTitle>
-            </div>
+        <C.MainContent>
+            <C.TitleBarContainer data-tauri-drag-region>
+                <div>
+                    <C.TitleBarTitle>NetSafeGuard</C.TitleBarTitle>
+                </div>
 
-            <C.ButtonContainer>
-                <C.Button
-                    onClick={async () => await appWindow.minimize()}
-                >
-                    <img src={minimize} alt="close" />
-                </C.Button>
-                <C.Button
-                    onClick={async () => {
-                        const maximize = await appWindow.isMaximized()
-                        if(!maximize) {
-                            await appWindow.maximize()
-                        }
-                        else {
-                            await appWindow.unmaximize()
-                        }
-                    }}
-                >
-                    <img src={maximize} alt="close" />
-                </C.Button>
-                <C.Button
-                    onClick={async () => await appWindow.close()}
-                >
-                    <img src={close} alt="close" />
-                </C.Button>
-            </C.ButtonContainer>
-        </C.TitleBarContainer>
+                <C.ButtonContainer>
+                    <C.Button
+                        onClick={async () => await appWindow.minimize()}
+                    >
+                        <img src={minimize} alt="close" />
+                    </C.Button>
+                    <C.Button
+                        onClick={async () => {
+                            const maximize = await appWindow.isMaximized()
+                            if(!maximize) {
+                                await appWindow.maximize()
+                            }
+                            else {
+                                await appWindow.unmaximize()
+                            }
+                        }}
+                    >
+                        <img src={maximize} alt="close" />
+                    </C.Button>
+                    <C.Button
+                        onClick={async () => await appWindow.close()}
+                    >
+                        <img src={close} alt="close" />
+                    </C.Button>
+                </C.ButtonContainer>
+            </C.TitleBarContainer>
+        </C.MainContent>
     )
 }

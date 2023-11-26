@@ -22,6 +22,7 @@ export const DashboardPage = () => {
 
   return (
     <C.Container>
+      
       <SideBar />
       <C.Content>
         <C.Row>
