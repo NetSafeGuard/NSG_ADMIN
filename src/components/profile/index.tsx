@@ -5,6 +5,17 @@ import { IoMdArrowDropup } from "react-icons/io";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useState, useRef } from "react";
 import { Logout } from "../../global/contexts/AuthContext";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 export const Profile = () => {
   const { user, isLoading } = UserHook();
@@ -47,12 +58,28 @@ export const Profile = () => {
         align="center"
         transition
       >
-        <C.MenuItem onClick={handleLogout}>
-          <C.MenuText>
-            <IoLogOutOutline size={18} />
-            Sair
-          </C.MenuText>
-        </C.MenuItem>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <C.MenuItem>
+              <C.MenuText>
+                <IoLogOutOutline size={18} />
+                Sair
+              </C.MenuText>
+            </C.MenuItem>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Tens realmente a certeza?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Esta ação fará com que te desconectes da tua conta.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancelar</AlertDialogCancel>
+              <AlertDialogAction onClick={handleLogout}>Confirmar</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </ControlledMenu>
     </C.Container>
   );

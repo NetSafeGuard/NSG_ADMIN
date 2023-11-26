@@ -9,11 +9,15 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   width: 100vw;
+  height: calc(100% - 50px);
+`;
+
+export const Row = styled.div`
+  width: 100%;
+  height: 50px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-right: 32px;
-  margin-top: 15px;
 `;
 
 export const ProfileContainer = styled.div`
@@ -21,4 +25,6 @@ export const ProfileContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  margin-right: 32px;
+  margin-top: 15px;
 `;
