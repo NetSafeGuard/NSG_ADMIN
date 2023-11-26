@@ -69,9 +69,9 @@ export const Profile = () => {
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Tens realmente a certeza?</AlertDialogTitle>
+              <AlertDialogTitle>Tem realmente a certeza?</AlertDialogTitle>
               <AlertDialogDescription>
-                Esta ação fará com que te desconectes da tua conta.
+                Esta ação fará com que você seja desconectado da sua conta.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
