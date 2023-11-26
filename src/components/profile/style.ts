@@ -47,6 +47,13 @@ export const MenuContainer = styled.div`
   background-color: #c5cdd7;
   opacity: 1;
   border-radius: 8px;
+  cursor: pointer;
+
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    opacity: 0.9;
+  }
 `;
 
 export const MenuIconContainer = styled(motion.div)`

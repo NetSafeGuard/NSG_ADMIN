@@ -134,18 +134,3 @@ export const Button = styled.button`
         background-color: #4938C3;
     }
 `
-
-export const ForgotPassword = styled.a`
-    margin-top: 11px;
-    align-self: flex-end;
-    color: #117DF9;
-    font-family: 'Inter', sans-serif;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 19.992px;
-    cursor: pointer;
-    &:hover {
-        text-decoration: underline;
-    }
-`

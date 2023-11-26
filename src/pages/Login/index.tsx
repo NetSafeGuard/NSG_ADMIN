@@ -61,7 +61,6 @@ export const LoginPage = () => {
                     />
                     
                     <C.Button>{isLoading ? <Spinner/> : 'Entrar'}</C.Button>
-                    <C.ForgotPassword>Esqueceu-se da palavra-passe?</C.ForgotPassword>
                 </C.Form>
             </C.FormContainer>
         </C.LoginContainer>
