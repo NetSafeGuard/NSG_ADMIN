@@ -11,12 +11,5 @@ export const Title = styled.h1`
   font-size: 20px;
   font-weight: normal;
   color: #333333;
-`;
-
-export const CardsContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  margin-top: 20px;
-  gap: 35px;
+  margin-bottom: 30px;
 `;

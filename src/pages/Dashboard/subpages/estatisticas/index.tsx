@@ -1,11 +1,11 @@
 import * as C from "./style";
-import { Button } from "@/components/ui/button"
+import { Cards } from "@/components/cards";
 
 export const EstatisticasPage = () => {
   return (
     <C.Container>
       <C.Title>Estatísticas</C.Title>
-      <Button>Teste</Button>
+      <Cards />
     </C.Container>
   );
 };
