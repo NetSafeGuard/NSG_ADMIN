@@ -1,20 +1,26 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    user-select: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -webkit-user-drag: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-user-drag: none;
 }
 
 * {
-    font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    border: 0;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.menuaccount {
+  margin-left: -10px !important;
+  margin-top: 5px !important;
 }

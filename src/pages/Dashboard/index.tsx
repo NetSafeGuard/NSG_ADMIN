@@ -4,6 +4,8 @@ import { Navigate } from "react-router-dom";
 import { Loading } from "../../components/loading";
 import { SideBar } from "../../components/SideBar";
 import { Profile } from "../../components/profile";
+import "@szhsin/react-menu/dist/index.css";
+import "@szhsin/react-menu/dist/transitions/slide.css";
 
 export const DashboardPage = () => {
   const { user, isLoading, error } = UserHook();
