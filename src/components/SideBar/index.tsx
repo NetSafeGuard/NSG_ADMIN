@@ -8,9 +8,14 @@ import { Tooltip } from "react-tooltip";
 import { BiSolidBarChartSquare } from "react-icons/bi";
 import { AiFillSetting } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
+import { UserHook } from '../../services/hooks/UserHook';
+import { Loading } from "../loading";
 
 export const SideBar = () => {
-  const { selected, setSelected } = useContext(AuthContext);
+  const { selected, setSelected, } = useContext(AuthContext);
+  const { user, isLoading } = UserHook();
+
+  if(!user || isLoading) return <Loading/>;
 
   return (
     <C.MainContent>
@@ -54,16 +59,19 @@ export const SideBar = () => {
             >
               <BiCalendarEvent size={26} color={"A6ABC8"} />
             </C.Icon>
-            <C.Icon
-              data-tooltip-id="my-tooltip"
-              data-tooltip-content="Utilizadores"
-              data-tooltip-variant="light"
-              data-tooltip-place="right"
-              menuselected={selected === "users" ? true : false}
-              onClick={() => setSelected("users")}
-            >
-              <FaUserAlt size={21} color={"A6ABC8"} />
-            </C.Icon>
+            {user.role == "NSG TEAM" &&
+              <C.Icon
+                data-tooltip-id="my-tooltip"
+                data-tooltip-content="Utilizadores"
+                data-tooltip-variant="light"
+                data-tooltip-place="right"
+                menuselected={selected === "users" ? true : false}
+                onClick={() => setSelected("users")}
+              >
+                <FaUserAlt size={21} color={"A6ABC8"} />
+              </C.Icon>
+            }
+
           </C.TopIcons>
           <C.BottomIcons>
             <C.Icon

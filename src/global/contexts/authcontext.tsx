@@ -65,6 +65,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
         }).then((response) => {
             localStorage.setItem('nsg_token', response.data.data.token);
             setLoading(false);
+            Store.removeAllNotifications();
             navigate('/dashboard')
         }).catch((error) => {
             setLoading(false);
