@@ -5,12 +5,6 @@ export const NoContextMenu = () => {
     e.preventDefault();
   };  
 
-  useEffect(() => {
-    document.addEventListener('contextmenu', disableContextMenu); 
-    return () => {
-      document.removeEventListener('contextmenu', disableContextMenu);
-    };
-  }, []);
 
   return null;
 };

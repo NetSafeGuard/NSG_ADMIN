@@ -16,6 +16,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import Skeleton from 'react-loading-skeleton';
 
 export const Profile = () => {
   const { user, isLoading } = UserHook();
@@ -23,9 +24,15 @@ export const Profile = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const anchorProps = useClick(isMenuOpen, setIsMenuOpen);
 
-  if (isLoading) {
-    return <div>Carregando...</div>;
-  }
+  if(isLoading) return <div className="flex items-center">
+    <div className="flex flex-row ">
+      <Skeleton count={1} circle={true} width={40} height={40}/>
+      <div className="flex flex-col">
+        <Skeleton count={1} width={100} height={20}/>
+        <Skeleton count={1} width={100} height={20}/>
+      </div>
+    </div>
+  </div>
 
   const handleLogout = () => {
     setIsMenuOpen(false);

@@ -4,11 +4,19 @@ import CountUp from "react-countup";
 import { MdOutlineSecurity } from "react-icons/md";
 import { StyledCard } from "./style";
 import { InfoHook } from "@/services/hooks/InfoHook";
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 
 export const Cards = () => {
   const {users, isLoading} = InfoHook();
 
-  if(isLoading) return <h1>Loading...</h1>
+  if(isLoading) return <SkeletonTheme width={220} height={140}>
+  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 flex-row flex-wrap">
+    <Skeleton count={1} />
+    <Skeleton count={1} />
+    <Skeleton count={1} />
+    <Skeleton count={1} />
+  </div>
+</SkeletonTheme>
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
