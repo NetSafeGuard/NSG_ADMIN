@@ -16,7 +16,7 @@ export const SideBar = () => {
   const { user, isLoading } = UserHook();
 
   if(!user || isLoading) return <Loading/>;
-
+  
   return (
     <C.MainContent>
       <C.Container>

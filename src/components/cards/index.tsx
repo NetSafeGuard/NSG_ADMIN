@@ -2,11 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MdEventAvailable } from "react-icons/md";
 import CountUp from "react-countup";
 import { MdOutlineSecurity } from "react-icons/md";
+import { StyledCard } from "./style";
 
 export const Cards = () => {
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-      <Card>
+      <StyledCard>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
             Exames Registrados
@@ -21,8 +22,8 @@ export const Cards = () => {
             +20.1% que o mês passado
           </p>
         </CardContent>
-      </Card>
-      <Card>
+      </StyledCard>
+      <StyledCard>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">Utilizadores</CardTitle>
           <svg
@@ -49,8 +50,8 @@ export const Cards = () => {
             mês
           </p>
         </CardContent>
-      </Card>
-      <Card>
+      </StyledCard>
+      <StyledCard>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
             Participações nos exames
@@ -65,8 +66,8 @@ export const Cards = () => {
             +<CountUp start={0} end={50} duration={3} /> este mês
           </p>
         </CardContent>
-      </Card>
-      <Card>
+      </StyledCard>
+      <StyledCard>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
             Detecções Inseguras
@@ -90,7 +91,7 @@ export const Cards = () => {
           </div>
           <p className="text-xs text-muted-foreground">Desde o inicio do ano</p>
         </CardContent>
-      </Card>
+      </StyledCard>
     </div>
   );
 };
