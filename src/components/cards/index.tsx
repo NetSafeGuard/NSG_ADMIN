@@ -1,10 +1,15 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MdEventAvailable } from "react-icons/md";
 import CountUp from "react-countup";
 import { MdOutlineSecurity } from "react-icons/md";
 import { StyledCard } from "./style";
+import { InfoHook } from "@/services/hooks/InfoHook";
 
 export const Cards = () => {
+  const {users, isLoading} = InfoHook();
+
+  if(isLoading) return <h1>Loading...</h1>
+
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
       <StyledCard>
@@ -43,10 +48,10 @@ export const Cards = () => {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            <CountUp start={0} end={3000} duration={4} />
+            <CountUp start={0} end={users.length} duration={4} />
           </div>
           <p className="text-xs text-muted-foreground">
-            <CountUp start={0} end={5} duration={6} /> novos utilizadores este
+            <CountUp start={0} end={0} duration={6} /> novos utilizadores este
             mês
           </p>
         </CardContent>
