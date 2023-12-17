@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose
+  DialogClose,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -20,7 +20,7 @@ import { Error } from "@/components/error";
 import { useState } from "react";
 
 export const UsersPage = () => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const DataSchema = yup.object().shape({
     name: yup.string().required(),
@@ -43,8 +43,8 @@ export const UsersPage = () => {
   });
 
   const Create = (data: FormData) => {
-    setOpen(false)
-    reset()
+    setOpen(false);
+    reset();
   };
 
   return (
@@ -96,7 +96,9 @@ export const UsersPage = () => {
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit">Adicionar</Button>
+                <Button type="submit" style={{ background: "#17B4BB" }}>
+                  Adicionar
+                </Button>
               </DialogFooter>
             </form>
           </DialogContent>
