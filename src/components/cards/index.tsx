@@ -10,7 +10,7 @@ export const Cards = () => {
   const {users, isLoading} = InfoHook();
 
   if(isLoading) return <SkeletonTheme width={220} height={140}>
-  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 flex-row flex-wrap">
+  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 flex-row flex-wrap ">
     <Skeleton count={1} />
     <Skeleton count={1} />
     <Skeleton count={1} />
