@@ -8,7 +8,9 @@ import { useContext } from "react";
 import { AuthContext } from "../../global/contexts/AuthContext";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
-import { EstatisticasPage } from "./subpages/estatisticas";
+import { EstatisticasPage } from "./subpages/statistics";
+import { UsersPage } from "./subpages/users";
+import { SettingsPage } from "./subpages/settings";
 
 export const DashboardPage = () => {
   const { user, isLoading, error } = UserHook();
@@ -22,15 +24,18 @@ export const DashboardPage = () => {
 
   return (
     <C.Container>
-      
       <SideBar />
       <C.Content>
-        <C.Row>
-          <C.ProfileContainer>
-            <Profile />
-          </C.ProfileContainer>
-        </C.Row>
+        {selected !== "settings" && (
+          <C.Row>
+            <C.ProfileContainer>
+              <Profile />
+            </C.ProfileContainer>
+          </C.Row>
+        )}
         {selected === "char" && <EstatisticasPage />}
+        {selected === "users" && <UsersPage />}
+        {selected == "settings" && <SettingsPage />}
       </C.Content>
     </C.Container>
   );
