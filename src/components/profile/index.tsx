@@ -16,7 +16,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import Skeleton from 'react-loading-skeleton';
+import Skeleton from "react-loading-skeleton";
 
 export const Profile = () => {
   const { user, isLoading } = UserHook();
@@ -24,20 +24,23 @@ export const Profile = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const anchorProps = useClick(isMenuOpen, setIsMenuOpen);
 
-  if(isLoading) return <div className="flex items-center">
-    <div className="flex flex-row ">
-      <Skeleton count={1} circle={true} width={40} height={40}/>
-      <div className="flex flex-col">
-        <Skeleton count={1} width={100} height={20}/>
-        <Skeleton count={1} width={100} height={20}/>
+  if (isLoading)
+    return (
+      <div className="flex items-center">
+        <div className="flex flex-row ">
+          <Skeleton count={1} circle={true} width={40} height={40} />
+          <div className="flex flex-col">
+            <Skeleton count={1} width={100} height={20} />
+            <Skeleton count={1} width={100} height={20} />
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+    );
 
   const handleLogout = () => {
     setIsMenuOpen(false);
     Logout();
-  }
+  };
 
   return (
     <C.Container>
@@ -69,7 +72,7 @@ export const Profile = () => {
           <AlertDialogTrigger asChild>
             <C.MenuItem>
               <C.MenuText>
-                <IoLogOutOutline size={18} />
+                <IoLogOutOutline size={18}/>
                 Sair
               </C.MenuText>
             </C.MenuItem>
@@ -83,7 +86,9 @@ export const Profile = () => {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction onClick={handleLogout}>Confirmar</AlertDialogAction>
+              <AlertDialogAction onClick={handleLogout} style={{background: "#17B4BB"}}>
+                Confirmar
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
