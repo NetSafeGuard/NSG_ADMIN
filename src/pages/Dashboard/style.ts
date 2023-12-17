@@ -12,12 +12,21 @@ export const Content = styled.div`
   height: calc(100% - 50px);
 `;
 
+export const MainContent = styled.div`
+  position: relative;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+
 export const Row = styled.div`
   width: 100%;
   height: 50px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-end;
 `;
 
 export const ProfileContainer = styled.div`
