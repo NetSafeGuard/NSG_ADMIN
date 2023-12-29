@@ -15,9 +15,13 @@ export const Title = styled.h1`
 
 export const Buttons = styled.div`
   display: flex;
-  gap: 15px;
+  gap: 50px;
   align-items: center;
   margin-top: 30px;
+
+  @media (max-width: 768px) {
+    gap: 20px;
+  }
 `;
 
 export const Button = styled.button`
@@ -45,6 +49,7 @@ export const InputContainer = styled.div`
 `;
 
 export const Input = styled.input`
+  width: 400px;
   height: 35px;
   display: flex;
   padding-left: 5px;
@@ -67,5 +72,11 @@ export const Input = styled.input`
 
   &::placeholder {
     color: #788ba5;
+  }
+
+  @media (max-width: 768px) {
+    & {
+      width: 200px;
+    }
   }
 `;
