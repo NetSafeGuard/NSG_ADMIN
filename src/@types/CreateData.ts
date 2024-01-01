@@ -1,4 +1,4 @@
 export type CreateData = {
-    user: string;
+    username: string;
     email: string;
 };
