@@ -16,31 +16,34 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Error } from "@/components/error";
-import { useState, useRef } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { TableData } from "@/components/table";
 import { InfoHook } from "@/services/hooks/InfoHook";
 import { User } from "@/@types/User";
-
-type Users = User[];
+import { AuthContext } from "@/global/contexts/AuthContext";
+import { CreateData } from "@/@types/CreateData";
 
 export const UsersPage = () => {
+  type Users = User[];
+
+  const DataSchema = yup.object().shape({
+    username: yup.string().required(),
+    email: yup.string().required(),
+  });
+
   const { users, isLoading, error } = InfoHook();
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error...</div>;
 
+  const Context = useContext(AuthContext);
+
   const [open, setOpen] = useState(false);
   const [userdata, setUser] = useState<Users>(users);
 
-  const DataSchema = yup.object().shape({
-    name: yup.string().required(),
-    email: yup.string().required(),
-  });
-
-  interface FormData {
-    name: string;
-    email: string;
-  }
+  useEffect(() => {
+    setUser(users);
+  }, [users]);
 
   const {
     register,
@@ -48,15 +51,15 @@ export const UsersPage = () => {
     watch,
     reset,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<CreateData>({
     resolver: yupResolver(DataSchema),
   });
 
-  const Create = (data: FormData) => {
-    setOpen(false);
-    reset();
-    
-
+  const Create = (data: CreateData) => {
+    Context.createUser(data).then(() => {
+      setOpen(false);
+      reset();
+    });
   };
 
   const searchref = useRef<HTMLInputElement>(null);
@@ -103,13 +106,13 @@ export const UsersPage = () => {
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label htmlFor="name" className="text-right flex gap-1">
                     Nome
-                    {errors.name && <Error error={"*"} />}
+                    {errors.username && <Error error={"*"} />}
                   </Label>
                   <Input
                     id="name"
-                    onFocus={() => (watch("name") ? true : false)}
+                    onFocus={() => (watch("username") ? true : false)}
                     className="col-span-3"
-                    {...register("name")}
+                    {...register("username")}
                   />
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
@@ -128,7 +131,7 @@ export const UsersPage = () => {
               </div>
               <DialogFooter>
                 <Button type="submit" style={{ background: "#17B4BB" }}>
-                  Adicionar
+                  {Context.isLoading ? "A criar..." : "Criar"}
                 </Button>
               </DialogFooter>
             </form>
