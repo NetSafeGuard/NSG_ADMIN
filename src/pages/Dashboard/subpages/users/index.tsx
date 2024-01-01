@@ -16,10 +16,21 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Error } from "@/components/error";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { TableData } from "@/components/table";
+import { InfoHook } from "@/services/hooks/InfoHook";
+import { User } from "@/@types/User";
+
+type Users = User[];
 
 export const UsersPage = () => {
+  const { users, isLoading, error } = InfoHook();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error...</div>;
+
   const [open, setOpen] = useState(false);
+  const [userdata, setUser] = useState<Users>(users);
 
   const DataSchema = yup.object().shape({
     name: yup.string().required(),
@@ -42,16 +53,36 @@ export const UsersPage = () => {
   });
 
   const Create = (data: FormData) => {
-    console.log(data);
     setOpen(false);
     reset();
+    
+
+  };
+
+  const searchref = useRef<HTMLInputElement>(null);
+
+  const Search = () => {
+    const value = searchref.current?.value;
+    if (!value || value == "") setUser(users);
+    setUser(
+      users.filter(
+        (user: User) =>
+          user.username.toLowerCase().includes(value?.toLowerCase()!) ||
+          user.email.toLowerCase().includes(value?.toLowerCase()!)
+      )
+    );
   };
 
   return (
     <C.Container>
       <C.Title>Utilizadores</C.Title>
-      <C.Buttons>
-        <C.Input type="text" placeholder="Pesquisar utilizadores..." />
+      <C.Buttons className="mb-3">
+        <C.Input
+          type="text"
+          placeholder="Pesquisar utilizadores..."
+          onChange={Search}
+          ref={searchref}
+        />
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <button className="w-40 gap-1 inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground rounded-md px-3 text-xs h-8 border-dashed sm:w-28">
@@ -104,6 +135,9 @@ export const UsersPage = () => {
           </DialogContent>
         </Dialog>
       </C.Buttons>
+      <C.TableContainer>
+        <TableData users={userdata} />
+      </C.TableContainer>
     </C.Container>
   );
 };
