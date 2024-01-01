@@ -3,6 +3,7 @@ import { LoginData } from '../../@types/LoginData';
 import { api } from '../../services/api';
 import { useNavigate } from "react-router-dom";
 import { NOTIFICATION_TYPE, Store } from 'react-notifications-component';
+import { CreateData } from "@/@types/CreateData";
 
 interface AuthContextType {
     Login: (data: LoginData) => void;
@@ -13,6 +14,7 @@ interface AuthContextType {
     Logout : () => void;
     selected: string;
     setSelected: (value: string) => void;
+    createUser: (data: CreateData) => Promise<any>;
 }
 
 type ProviderProps = {
@@ -87,6 +89,31 @@ export const AuthProvider = ({children}: ProviderProps) => {
         });
     }
 
+    const createUser = async (data: CreateData) => {
+        return new Promise((resolve, reject) => {
+            if(isLoading) return;
+            setLoading(true);
+    
+            api.post('/account/create', {
+                username: data.username,
+                email: data.email
+            }).then((response) => {
+                Store.removeAllNotifications();
+                sendAlert("Usuário criado", "O usuário foi criado com sucesso.", "success", 5000);
+                resolve(response);
+            }
+            ).catch((error) => {
+                if(!error.response) return sendAlert("Problemas na criação", "Parece que houve um problema na criação, tente novamente mais tarde.", "danger", 15000)
+                sendAlert("Problemas na criação", error.response.data.message, "danger", 15000)
+                reject(error);
+            })
+            .finally(() => {
+                setLoading(false);
+            }
+            );
+        })
+    }
+
     return (
         <AuthContext.Provider value={{
             Login,
@@ -97,6 +124,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
             Logout,
             selected,
             setSelected,
+            createUser
         }}>
             {children}
         </AuthContext.Provider>
