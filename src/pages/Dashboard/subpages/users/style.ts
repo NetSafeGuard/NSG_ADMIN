@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const Container = styled.div`
   width: 100%;
   height: 100%;
-  padding: 50px 80px;
+  padding: 50px 80px 0px 80px;
 `;
 
 export const Title = styled.h1`
@@ -15,13 +15,9 @@ export const Title = styled.h1`
 
 export const Buttons = styled.div`
   display: flex;
-  gap: 50px;
+  justify-content: space-between;
   align-items: center;
   margin-top: 30px;
-
-  @media (max-width: 768px) {
-    gap: 20px;
-  }
 `;
 
 export const Button = styled.button`
@@ -79,4 +75,12 @@ export const Input = styled.input`
       width: 200px;
     }
   }
+`;
+
+export const TableContainer = styled.div`
+  width: 100%;
+  display: flex;
+  overflow-y: hidden;
+  max-height: calc(100vh - 280px);
+  margin-top: 20px;
 `;

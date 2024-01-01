@@ -1,29 +1,29 @@
-import axios from 'axios';
-import { Logout } from '../global/contexts/AuthContext'
+import axios from "axios";
+import { Logout } from "../global/contexts/AuthContext";
 
 export const api = axios.create({
-    baseURL: 'https://vitti.cloud/api/v1/'
-    //baseURL: 'http://localhost:8080/api/v1/'
+  //baseURL: 'https://vitti.cloud/api/v1/'
+  baseURL: "http://localhost:8080/api/v1/",
 });
 
-api.interceptors.request.use(async config => {
-    const token = localStorage.getItem('nsg_token')
+api.interceptors.request.use(async (config) => {
+  const token = localStorage.getItem("nsg_token");
 
-    if (token) {
-        config.headers.authorization = `Bearer ${token}`
-    }
+  if (token) {
+    config.headers.authorization = `Bearer ${token}`;
+  }
 
-    return config
-})
+  return config;
+});
 
 api.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    (error) => {
-        if(error.response?.status == 401 || error.response?.status == 403) {
-            Logout()
-        }
-        return Promise.reject(error);
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response?.status == 401 || error.response?.status == 403) {
+      Logout();
     }
+    return Promise.reject(error);
+  }
 );

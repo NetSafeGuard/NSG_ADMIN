@@ -33,9 +33,11 @@ export const DashboardPage = () => {
             </C.ProfileContainer>
           </C.Row>
         )}
-        {selected === "char" && <EstatisticasPage />}
-        {selected === "users" && <UsersPage />}
-        {selected == "settings" && <SettingsPage />}
+        <C.Pages>
+          {selected === "char" && <EstatisticasPage />}
+          {selected === "users" && <UsersPage />}
+          {selected == "settings" && <SettingsPage />}
+        </C.Pages>
       </C.Content>
     </C.Container>
   );

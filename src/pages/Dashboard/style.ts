@@ -9,7 +9,15 @@ export const Container = styled.div`
 
 export const Content = styled.div`
   width: 100vw;
-  height: calc(100% - 50px);
+  height: 100%;
+`;
+
+export const Pages = styled.div`
+  width: 100%;
+  display: flex;
+  overflow-y: scroll;
+  max-height: calc(100vh - 60px);
+  margin-top: 20px;
 `;
 
 export const MainContent = styled.div`
