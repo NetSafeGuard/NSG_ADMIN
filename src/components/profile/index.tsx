@@ -17,6 +17,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import Skeleton from "react-loading-skeleton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const Profile = () => {
   const { user, isLoading } = UserHook();
@@ -44,7 +45,10 @@ export const Profile = () => {
 
   return (
     <C.Container>
-      <C.Avatar src={user.avatar} alt={"asdada"} />
+      <Avatar>
+        <AvatarImage src={user.avatar} alt={user.username} />
+        <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
+      </Avatar>
       <C.Column>
         <C.Username>{user.username}</C.Username>
         <C.Role>{user.role}</C.Role>
@@ -72,7 +76,7 @@ export const Profile = () => {
           <AlertDialogTrigger asChild>
             <C.MenuItem>
               <C.MenuText>
-                <IoLogOutOutline size={18}/>
+                <IoLogOutOutline size={18} />
                 Sair
               </C.MenuText>
             </C.MenuItem>
@@ -86,7 +90,10 @@ export const Profile = () => {
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction onClick={handleLogout} style={{background: "#17B4BB"}}>
+              <AlertDialogAction
+                onClick={handleLogout}
+                style={{ background: "#17B4BB" }}
+              >
                 Confirmar
               </AlertDialogAction>
             </AlertDialogFooter>
