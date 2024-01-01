@@ -84,9 +84,6 @@
   -moz-user-select: none;
   -ms-user-select: none;
   -webkit-user-drag: none;
-}
-
-* {
   font-family: "Poppins", sans-serif;
 }
 
@@ -95,6 +92,8 @@ body {
   margin: 0;
   padding: 0;
   border: 0;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .menuaccount {
@@ -103,5 +102,16 @@ body {
 }
 
 ::-webkit-scrollbar {
-  display: none;
+  width: 5px;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
 }
