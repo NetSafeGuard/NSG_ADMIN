@@ -31,9 +31,9 @@ export const TableData = ({users}: Props) => {
             <TableCell>
               <Avatar>
                 <AvatarImage src={user.avatar} alt={user.username} />
-                <AvatarFallback>{`${user.username.split(" ").join("")[0]}${
-                  user.username.split(" ").join("")[1]
-                }`}</AvatarFallback>
+                <AvatarFallback>
+                    {user.username[0].toUpperCase()}
+                </AvatarFallback>
               </Avatar>
             </TableCell>
             <TableCell>{user.username}</TableCell>
