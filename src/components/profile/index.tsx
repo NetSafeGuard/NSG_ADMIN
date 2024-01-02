@@ -45,7 +45,7 @@ export const Profile = () => {
 
   return (
     <C.Container>
-      <Avatar>
+      <Avatar style={{ marginRight: "8px" }}>
         <AvatarImage src={user.avatar} alt={user.username} />
         <AvatarFallback>{user.username[0].toUpperCase()}</AvatarFallback>
       </Avatar>
