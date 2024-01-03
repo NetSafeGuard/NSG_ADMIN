@@ -99,7 +99,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
                 email: data.email
             }).then((response) => {
                 Store.removeAllNotifications();
-                sendAlert("Usuário criado", "O usuário foi criado com sucesso.", "success", 5000);
+                sendAlert("Usuário criado", "O utilizador " + data.username + " foi criado com sucesso.", "success", 5000);
                 resolve(response);
             }
             ).catch((error) => {

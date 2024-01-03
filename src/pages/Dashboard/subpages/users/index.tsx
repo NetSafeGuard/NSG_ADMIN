@@ -97,7 +97,7 @@ export const UsersPage = () => {
             <DialogHeader>
               <DialogTitle>Adicionar Utilizador</DialogTitle>
               <DialogDescription>
-                Adicione um utilizador à equipa. Clique em adicionar para salvar
+                Adicione um utilizador à equipa. Clique em Criar para salvar
                 as alterações.
               </DialogDescription>
             </DialogHeader>
