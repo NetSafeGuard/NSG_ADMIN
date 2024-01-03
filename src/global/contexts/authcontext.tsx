@@ -94,7 +94,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
             if(isLoading) return;
             setLoading(true);
     
-            api.post('/account/create', {
+            api.post('/account/', {
                 username: data.username,
                 email: data.email
             }).then((response) => {
