@@ -4,6 +4,7 @@ import { api } from '../../services/api';
 import { useNavigate } from "react-router-dom";
 import { NOTIFICATION_TYPE, Store } from 'react-notifications-component';
 import { CreateData } from "@/@types/CreateData";
+import { User } from "@/@types/User";
 
 interface AuthContextType {
     Login: (data: LoginData) => void;
@@ -15,6 +16,7 @@ interface AuthContextType {
     selected: string;
     setSelected: (value: string) => void;
     createUser: (data: CreateData) => Promise<any>;
+    editUser: (old_data: User, data: CreateData) => Promise<any>;
 }
 
 type ProviderProps = {
@@ -62,7 +64,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
         setLoading(true);
 
         api.post('/auth/login', {
-            user: data.user,
+            username: data.user,
             password: data.password
         }).then((response) => {
             localStorage.setItem('nsg_token', response.data.data.token);
@@ -114,6 +116,33 @@ export const AuthProvider = ({children}: ProviderProps) => {
         })
     }
 
+    const editUser = async (old_data: User, data: CreateData) => {
+        return new Promise((resolve, reject) => {
+            if(isLoading) return;
+            setLoading(true);
+    
+            api.put('/account/', {
+                old_email: old_data.email,
+                username: data.username,
+                email: data.email
+            }).then((response) => {
+                Store.removeAllNotifications();
+                sendAlert("Usuário editado", "O utilizador " + old_data.username + " foi editado com sucesso.", "success", 5000);
+                resolve(response);
+            }
+            ).catch((error) => {
+                if(!error.response) return sendAlert("Problemas na edição", "Parece que houve um problema na edição, tente novamente mais tarde.", "danger", 15000)
+                sendAlert("Problemas na edição", error.response.data.message, "danger", 15000)
+                reject(error);
+            })
+            .finally(() => {
+                setLoading(false);
+            }
+            );
+        })
+    }
+
+
     return (
         <AuthContext.Provider value={{
             Login,
@@ -124,7 +153,8 @@ export const AuthProvider = ({children}: ProviderProps) => {
             Logout,
             selected,
             setSelected,
-            createUser
+            createUser,
+            editUser
         }}>
             {children}
         </AuthContext.Provider>
