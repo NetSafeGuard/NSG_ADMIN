@@ -15,6 +15,10 @@ type Props = {
 
 export const TableData = ({users}: Props) => {
 
+  const handleEdit = () => {
+    console.log("Edit");
+  };
+
   return (
     <Table> 
       <TableHeader>
@@ -39,7 +43,7 @@ export const TableData = ({users}: Props) => {
             <TableCell>{user.username}</TableCell>
             <TableCell>{user.email}</TableCell>
             <TableCell className="text-right">
-              <button className="text-black text-xl">...</button>
+              <button className="text-black text-xl" onClick={handleEdit}>...</button>
             </TableCell>
           </TableRow>
         ))}
