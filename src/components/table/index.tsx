@@ -55,7 +55,10 @@ export const TableData = ({ users }: Props) => {
   });
 
   const Edit = (data: CreateData) => {
-    console.log(data);
+    Context.editUser(editedUser!, data).then(() => {
+      setOpen(false);
+      reset();
+    });
   };
 
   return (
