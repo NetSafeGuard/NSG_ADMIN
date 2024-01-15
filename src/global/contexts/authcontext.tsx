@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { NOTIFICATION_TYPE, Store } from 'react-notifications-component';
 import { CreateData } from "@/@types/CreateData";
 import { User } from "@/@types/User";
+import { EditData } from "@/@types/EditData";
 
 interface AuthContextType {
     Login: (data: LoginData) => void;
@@ -16,7 +17,7 @@ interface AuthContextType {
     selected: string;
     setSelected: (value: string) => void;
     createUser: (data: CreateData) => Promise<any>;
-    editUser: (old_data: User, data: CreateData) => Promise<any>;
+    editUser: (old_data: User, data: EditData) => Promise<any>;
     deleteUser: (data: User) => Promise<any>;
     isLoading2: boolean;
 }
@@ -119,7 +120,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
         })
     }
 
-    const editUser = async (old_data: User, data: CreateData) => {
+    const editUser = async (old_data: User, data: EditData) => {
         return new Promise((resolve, reject) => {
             if(isLoading || isLoading2) return;
             setLoading(true);

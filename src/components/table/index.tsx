@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { CreateData } from "@/@types/CreateData";
+import { EditData } from "@/@types/EditData";
 import { Error } from "@/components/error";
 import { useContext, useState } from "react";
 import { Input } from "@/components/ui/input";
@@ -50,11 +50,11 @@ export const TableData = ({ users }: Props) => {
     watch,
     reset,
     formState: { errors },
-  } = useForm<CreateData>({
+  } = useForm<EditData>({
     resolver: yupResolver(DataSchema),
   });
 
-  const Edit = (data: CreateData) => {
+  const Edit = (data: EditData) => {
     Context.editUser(editedUser!, data).then(() => {
       setOpen(false);
       reset();
