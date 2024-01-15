@@ -135,7 +135,7 @@ export const TableData = ({ users }: Props) => {
                           className="col-span-3"
                           {...register("username")}
                           defaultValue={user.username}
-                          maxLength={50}
+                          maxLength={40}
                         />
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
@@ -145,7 +145,6 @@ export const TableData = ({ users }: Props) => {
                         >
                           Email
                           {errors.email && <Error error={"*"} />}
-                          maxLength={150}
                         </Label>
                         <Input
                           id="email"
@@ -153,6 +152,7 @@ export const TableData = ({ users }: Props) => {
                           className="col-span-3"
                           type="email"
                           defaultValue={user.email}
+                          maxLength={60}
                           {...register("email")}
                         />
                       </div>
