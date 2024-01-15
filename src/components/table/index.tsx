@@ -33,7 +33,6 @@ type Props = {
 };
 
 export const TableData = ({ users }: Props) => {
-
   const [open, setOpen] = useState(false);
   const [editedUser, setEditedUser] = useState<User | null>(null);
 
@@ -56,6 +55,13 @@ export const TableData = ({ users }: Props) => {
 
   const Edit = (data: CreateData) => {
     Context.editUser(editedUser!, data).then(() => {
+      setOpen(false);
+      reset();
+    });
+  };
+
+  const deleteUser = () => {
+    Context.deleteUser(editedUser!).then(() => {
       setOpen(false);
       reset();
     });
@@ -139,6 +145,13 @@ export const TableData = ({ users }: Props) => {
                       </div>
                     </div>
                     <DialogFooter>
+                      <Button
+                        onClick={() => deleteUser()}
+                        type="button"
+                        style={{ background: "#f5766f" }}
+                      >
+                        {Context.isLoading2 ? "A Apagar..." : "Apagar"}
+                      </Button>
                       <Button type="submit" style={{ background: "#17B4BB" }}>
                         {Context.isLoading ? "A editar..." : "Editar"}
                       </Button>

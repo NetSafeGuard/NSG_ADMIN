@@ -59,7 +59,7 @@ export const SideBar = () => {
             >
               <BiCalendarEvent size={26} color={"A6ABC8"} />
             </C.Icon>
-            {user.role == "NSG TEAM" &&
+            {user.role == "ADMIN" &&
               <C.Icon
                 data-tooltip-id="my-tooltip"
                 data-tooltip-content="Utilizadores"

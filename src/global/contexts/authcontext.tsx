@@ -17,6 +17,8 @@ interface AuthContextType {
     setSelected: (value: string) => void;
     createUser: (data: CreateData) => Promise<any>;
     editUser: (old_data: User, data: CreateData) => Promise<any>;
+    deleteUser: (data: User) => Promise<any>;
+    isLoading2: boolean;
 }
 
 type ProviderProps = {
@@ -56,6 +58,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
     const navigate = useNavigate();
     
     const [isLoading, setLoading] = useState(false);
+    const [isLoading2, setLoading2] = useState(false);
     const [isGlobalLoading, setGlobalLoading] = useState(true);
     const [selected, setSelected] = useState("char");
 
@@ -118,7 +121,7 @@ export const AuthProvider = ({children}: ProviderProps) => {
 
     const editUser = async (old_data: User, data: CreateData) => {
         return new Promise((resolve, reject) => {
-            if(isLoading) return;
+            if(isLoading || isLoading2) return;
             setLoading(true);
     
             api.put('/account/', {
@@ -142,6 +145,31 @@ export const AuthProvider = ({children}: ProviderProps) => {
         })
     }
 
+    const deleteUser = async (data: User) => {
+        return new Promise((resolve, reject) => {
+            if(isLoading || isLoading2) return;
+            setLoading2(true);
+    
+            api.delete('/account/', {
+                data: {
+                    email: data.email
+                }
+            }).then((response) => {
+                Store.removeAllNotifications();
+                sendAlert("Usuário deletado", "O utilizador " + data.username + " foi deletado com sucesso.", "success", 5000);
+                resolve(response);
+            }
+            ).catch((error) => {
+                if(!error.response) return sendAlert("Problemas na deleção", "Parece que houve um problema na deleção, tente novamente mais tarde.", "danger", 15000)
+                sendAlert("Problemas na deleção", error.response.data.message, "danger", 15000)
+                reject(error);
+            })
+            .finally(() => {
+                setLoading2(false);
+            }
+            );
+        })
+    }
 
     return (
         <AuthContext.Provider value={{
@@ -154,7 +182,9 @@ export const AuthProvider = ({children}: ProviderProps) => {
             selected,
             setSelected,
             createUser,
-            editUser
+            editUser,
+            deleteUser,
+            isLoading2
         }}>
             {children}
         </AuthContext.Provider>
