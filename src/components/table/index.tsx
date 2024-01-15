@@ -167,6 +167,7 @@ export const TableData = ({ users }: Props) => {
                           onFocus={() => (watch("avatar") ? true : false)}
                           className="col-span-3"
                           type="text"
+                          maxLength={200}
                           defaultValue={user.avatar}
                           {...register("avatar")}
                         />
