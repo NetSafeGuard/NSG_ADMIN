@@ -39,6 +39,7 @@ export const TableData = ({ users }: Props) => {
   const DataSchema = yup.object().shape({
     username: yup.string().required(),
     email: yup.string().required(),
+    avatar: yup.string().required(),
   });
 
   const Context = useContext(AuthContext);
@@ -141,6 +142,23 @@ export const TableData = ({ users }: Props) => {
                           type="email"
                           defaultValue={user.email}
                           {...register("email")}
+                        />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label
+                          htmlFor="avatar"
+                          className="text-right flex gap-1"
+                        >
+                          Avatar
+                          {errors.avatar && <Error error={"*"} />}
+                        </Label>
+                        <Input
+                          id="avatar"
+                          onFocus={() => (watch("avatar") ? true : false)}
+                          className="col-span-3"
+                          type="text"
+                          defaultValue={user.avatar}
+                          {...register("avatar")}
                         />
                       </div>
                     </div>

@@ -127,7 +127,8 @@ export const AuthProvider = ({children}: ProviderProps) => {
             api.put('/account/', {
                 old_email: old_data.email,
                 username: data.username,
-                email: data.email
+                email: data.email,
+                avatar: data.avatar
             }).then((response) => {
                 Store.removeAllNotifications();
                 sendAlert("Usuário editado", "O utilizador " + old_data.username + " foi editado com sucesso.", "success", 5000);
