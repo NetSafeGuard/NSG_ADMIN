@@ -59,6 +59,12 @@ export const UsersPage = () => {
     Context.createUser(data).then(() => {
       setOpen(false);
       reset();
+      users.push({
+        avatar: "Não Definido",
+        email: data.email,
+        role: "USER",
+        username: data.username,
+      })
     });
   };
 

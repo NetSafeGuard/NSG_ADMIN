@@ -58,6 +58,12 @@ export const TableData = ({ users }: Props) => {
     Context.editUser(editedUser!, data).then(() => {
       setOpen(false);
       reset();
+      const user = users.find((user) => user.email === editedUser?.email);
+      if (user) {
+        user.username = data.username;
+        user.email = data.email;
+        user.avatar = data.avatar;
+      }
     });
   };
 
@@ -65,6 +71,10 @@ export const TableData = ({ users }: Props) => {
     Context.deleteUser(editedUser!).then(() => {
       setOpen(false);
       reset();
+      const user = users.find((user) => user.email === editedUser?.email);
+      if (user) {
+        users.splice(users.indexOf(user), 1);
+      }
     });
   };
 
