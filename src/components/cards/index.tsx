@@ -4,19 +4,22 @@ import CountUp from "react-countup";
 import { MdOutlineSecurity } from "react-icons/md";
 import { StyledCard } from "./style";
 import { InfoHook } from "@/services/hooks/InfoHook";
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { User } from "@/@types/User";
 
 export const Cards = () => {
-  const {users, isLoading} = InfoHook();
-
-  if(isLoading) return <SkeletonTheme width={220} height={140}>
-  <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 flex-row flex-wrap ">
-    <Skeleton count={1} />
-    <Skeleton count={1} />
-    <Skeleton count={1} />
-    <Skeleton count={1} />
-  </div>
-</SkeletonTheme>
+  const { users, isLoading } = InfoHook();
+  if (isLoading)
+    return (
+      <SkeletonTheme width={220} height={140}>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 flex-row flex-wrap ">
+          <Skeleton count={1} />
+          <Skeleton count={1} />
+          <Skeleton count={1} />
+          <Skeleton count={1} />
+        </div>
+      </SkeletonTheme>
+    );
 
   return (
     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -59,7 +62,17 @@ export const Cards = () => {
             <CountUp start={0} end={users.length} duration={4} />
           </div>
           <p className="text-xs text-muted-foreground">
-            <CountUp start={0} end={0} duration={6} /> novos utilizadores este
+            <CountUp 
+              start={0} 
+              end={
+                users.filter((user: User) => {
+                  const userCreateAt = new Date(user.createdAt)
+                  userCreateAt.setMonth(userCreateAt.getMonth() + 1)
+
+                  if(userCreateAt > new Date()) return true
+                }).length
+              } 
+              duration={6} /> novos utilizadores este
             mês
           </p>
         </CardContent>
