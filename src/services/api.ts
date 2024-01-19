@@ -2,7 +2,7 @@ import axios from "axios";
 import { Logout } from "../contextapi/global.context";
 
 export const api = axios.create({
-  baseURL: "https://api.netsafeguard.cloud/",
+  baseURL: "https://api.netsafeguard.cloud/api/v1/",
   //baseURL: "http://localhost:8080/api/v1/",
 });
 
