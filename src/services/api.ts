@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Logout } from "../global/contexts/AuthContext";
+import { Logout } from "../contextapi/AuthContext";
 
 export const api = axios.create({
   //baseURL: "https://vitti.cloud/api/v1/",

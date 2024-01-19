@@ -3,20 +3,20 @@ import Logo from "../../assets/logo.png";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { BiCalendarEvent, BiHelpCircle } from "react-icons/bi";
 import { useContext } from "react";
-import { AuthContext } from "../../global/contexts/AuthContext";
+import { AuthContext } from "../../contextapi/AuthContext";
 import { Tooltip } from "react-tooltip";
 import { BiSolidBarChartSquare } from "react-icons/bi";
 import { AiFillSetting } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
-import { UserHook } from '../../services/hooks/UserHook';
+import { UserHook } from "../../services/hooks/UserHook";
 import { Loading } from "../loading";
 
 export const SideBar = () => {
-  const { selected, setSelected, } = useContext(AuthContext);
+  const { selected, setSelected } = useContext(AuthContext);
   const { user, isLoading } = UserHook();
 
-  if(!user || isLoading) return <Loading/>;
-  
+  if (!user || isLoading) return <Loading />;
+
   return (
     <C.MainContent>
       <C.Container>
@@ -59,7 +59,7 @@ export const SideBar = () => {
             >
               <BiCalendarEvent size={26} color={"A6ABC8"} />
             </C.Icon>
-            {user.role == "ADMIN" &&
+            {user.role == "ADMIN" && (
               <C.Icon
                 data-tooltip-id="my-tooltip"
                 data-tooltip-content="Utilizadores"
@@ -70,8 +70,7 @@ export const SideBar = () => {
               >
                 <FaUserAlt size={21} color={"A6ABC8"} />
               </C.Icon>
-            }
-
+            )}
           </C.TopIcons>
           <C.BottomIcons>
             <C.Icon

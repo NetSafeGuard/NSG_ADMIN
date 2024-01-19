@@ -5,7 +5,7 @@ import { Loading } from "../../components/loading";
 import { SideBar } from "../../components/SideBar";
 import { Profile } from "../../components/profile";
 import { useContext } from "react";
-import { AuthContext } from "../../global/contexts/AuthContext";
+import { AuthContext } from "../../contextapi/AuthContext";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
 import { EstatisticasPage } from "./subpages/statistics";

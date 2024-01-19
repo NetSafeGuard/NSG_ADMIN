@@ -20,7 +20,7 @@ import { useState, useRef, useContext, useEffect } from "react";
 import { TableData } from "@/components/table";
 import { InfoHook } from "@/services/hooks/InfoHook";
 import { User } from "@/@types/User";
-import { AuthContext } from "@/global/contexts/AuthContext";
+import { AuthContext } from "@/contextapi/AuthContext";
 import { CreateData } from "@/@types/CreateData";
 
 export const UsersPage = () => {
@@ -64,7 +64,7 @@ export const UsersPage = () => {
         email: data.email,
         role: "USER",
         username: data.username,
-      })
+      });
     });
   };
 
