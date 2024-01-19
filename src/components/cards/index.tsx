@@ -59,21 +59,24 @@ export const Cards = () => {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            <CountUp start={0} end={users.length} duration={4} />
+            <CountUp start={0} end={users ? users.length : 0} duration={4} />
           </div>
           <p className="text-xs text-muted-foreground">
-            <CountUp 
-              start={0} 
+            <CountUp
+              start={0}
               end={
-                users.filter((user: User) => {
-                  const userCreateAt = new Date(user.createdAt)
-                  userCreateAt.setMonth(userCreateAt.getMonth() + 1)
+                users
+                  ? users.filter((user: User) => {
+                      const userCreateAt = new Date(user.createdAt);
+                      userCreateAt.setMonth(userCreateAt.getMonth() + 1);
 
-                  if(userCreateAt > new Date()) return true
-                }).length
-              } 
-              duration={6} /> novos utilizadores este
-            mês
+                      if (userCreateAt > new Date()) return true;
+                    }).length
+                  : 0
+              }
+              duration={6}
+            />{" "}
+            novos utilizadores este mês
           </p>
         </CardContent>
       </StyledCard>
