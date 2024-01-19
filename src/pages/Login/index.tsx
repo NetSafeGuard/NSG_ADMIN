@@ -5,7 +5,7 @@ import { LoginSchema } from "../../schemas/LoginSchema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginData } from "../../@types/LoginData";
-import { AuthContext } from "../../contextapi/AuthContext";
+import { AuthContext } from "../../contextapi/global.context";
 import { Loading } from "../../components/loading";
 import { Spinner } from "../../components/spinner";
 import { Error } from "../../components/error";

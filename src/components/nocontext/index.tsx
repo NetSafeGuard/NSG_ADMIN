@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 
 export const NoContextMenu = () => {
   // const disableContextMenu = (e: { preventDefault: () => void; }) => {

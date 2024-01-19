@@ -3,7 +3,7 @@ import Logo from "../../assets/logo.png";
 import { AiOutlineCalendar } from "react-icons/ai";
 import { BiCalendarEvent, BiHelpCircle } from "react-icons/bi";
 import { useContext } from "react";
-import { AuthContext } from "../../contextapi/AuthContext";
+import { AuthContext } from "../../contextapi/global.context";
 import { Tooltip } from "react-tooltip";
 import { BiSolidBarChartSquare } from "react-icons/bi";
 import { AiFillSetting } from "react-icons/ai";

@@ -26,7 +26,7 @@ import { Error } from "@/components/error";
 import { useContext, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AuthContext } from "@/contextapi/AuthContext";
+import { AuthContext } from "@/contextapi/global.context";
 
 type Props = {
   users: User[];

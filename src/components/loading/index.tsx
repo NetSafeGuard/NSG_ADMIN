@@ -1,7 +1,7 @@
 import * as C from "./style";
 import { HashLoader } from "react-spinners";
 import { useEffect } from "react";
-import { sendAlert, RemoveNotification } from "../../contextapi/AuthContext";
+import { sendAlert, RemoveNotification } from "../../contextapi/global.context";
 
 interface LoadingProps {
   text?: string;

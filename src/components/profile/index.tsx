@@ -4,7 +4,7 @@ import { ControlledMenu, useClick } from "@szhsin/react-menu";
 import { IoMdArrowDropup } from "react-icons/io";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useState, useRef } from "react";
-import { Logout } from "../../contextapi/AuthContext";
+import { Logout } from "../../contextapi/global.context";
 import {
   AlertDialog,
   AlertDialogAction,
