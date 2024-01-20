@@ -63,6 +63,7 @@ export const TableData = ({ users }: Props) => {
         user.username = data.username;
         user.email = data.email;
         user.avatar = data.avatar;
+        user.createdAt = new Date().getTime();
       }
     });
   };
@@ -85,6 +86,7 @@ export const TableData = ({ users }: Props) => {
           <TableHead className="w-[100px]">Avatar</TableHead>
           <TableHead>Nome de utilizador</TableHead>
           <TableHead>Email</TableHead>
+          <TableHead>Criado há</TableHead>
           <TableHead className="text-right">Editar</TableHead>
         </TableRow>
       </TableHeader>
@@ -101,6 +103,7 @@ export const TableData = ({ users }: Props) => {
             </TableCell>
             <TableCell>{user.username}</TableCell>
             <TableCell>{user.email}</TableCell>
+            <TableCell>{formatDate(new Date(user.createdAt))}</TableCell>
             <TableCell className="text-right">
               <Dialog open={open && editedUser === user} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
@@ -197,3 +200,28 @@ export const TableData = ({ users }: Props) => {
     </Table>
   );
 };
+
+function formatDate(data: Date): string {
+  const now = new Date();
+
+  const seconds = Math.floor((now.getTime() - data.getTime()) / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+  const weeks = Math.floor(days / 7);
+  const months = Math.floor(weeks / 4);
+
+  if (months > 0) {
+    return `${months} mês${months === 1 ? "" : "es"} atrás`;
+  } else if (weeks > 0) {
+    return `${weeks} semana${weeks === 1 ? "" : "s"} atrás`;
+  } else if (days > 0) {
+    return `${days} dia${days === 1 ? "" : "s"} atrás`;
+  } else if (hours > 0) {
+    return `${hours} hora${hours === 1 ? "" : "s"} atrás`;
+  } else if (minutes > 0) {
+    return `${minutes} minuto${minutes === 1 ? "" : "s"} atrás`;
+  } else {
+    return `${seconds} segundo${seconds === 1 ? "" : "s"} atrás`;
+  }
+}

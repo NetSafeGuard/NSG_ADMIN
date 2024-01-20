@@ -1,8 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useState,
-} from "react";
+import { createContext, ReactNode, useState } from "react";
 import { LoginData } from "../@types/LoginData";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
@@ -110,7 +106,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         .then((response) => {
           toast.dismiss();
 
-          toast("Usuário criado", {
+          toast("Utilizador criado", {
             description:
               "O utilizador " + data.username + " foi criado com sucesso.",
             duration: 5000,
@@ -152,7 +148,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         })
         .then((response) => {
           toast.dismiss();
-          toast("Usuário editado", {
+          toast.info("Utilizador editado", {
             description:
               "O utilizador " + old_data.username + " foi editado com sucesso.",
             duration: 5000,
@@ -161,7 +157,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         })
         .catch((error) => {
           if (!error.response)
-            return toast("Problemas na edição", {
+            return toast.error("Problemas na edição", {
               description:
                 "Parece que houve um problema na edição, tente novamente mais tarde.",
               duration: 15000,
@@ -192,7 +188,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         })
         .then((response) => {
           toast.dismiss();
-         toast("Usuário deletado", {
+          toast("Utilizador deletado", {
             description:
               "O utilizador " + data.username + " foi deletado com sucesso.",
             duration: 5000,
