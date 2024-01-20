@@ -20,7 +20,7 @@ interface AuthContextType {
   editUser: (old_data: User, data: EditData) => Promise<any>;
   deleteUser: (data: User) => Promise<any>;
   isLoading2: boolean;
-  Active: (data: LoginData) => void;
+  Active: (data: LoginData) => Promise<any>;
 }
 
 type ProviderProps = {
@@ -216,36 +216,40 @@ export const AuthProvider = ({ children }: ProviderProps) => {
   };
 
   const Active = async (data: LoginData) => {
-    if (isLoading) return;
-    setLoading(true);
+    return new Promise((resolve, reject) => {
+      if (isLoading) return;
+      setLoading(true);
 
-    api
-      .post("/auth/active", {
-        email: data.user,
-        password: data.password,
-      })
-      .then(() => {
-        setLoading(false);
-        toast.dismiss();
-
-        toast.success("Conta Ativada", {
-          description: "A sua conta foi ativada com sucesso.",
-          duration: 5000,
-        });
-      })
-      .catch((error) => {
-        setLoading(false);
-        if (!error.response)
-          return toast("Problemas na ativação", {
-            description:
-              "Parece que houve um problema na ativação, tente novamente mais tarde.",
+      api
+        .post("/auth/active", {
+          email: data.user,
+          password: data.password,
+        })
+        .then((response) => {
+          toast.dismiss();
+          toast.success("Conta ativada", {
+            description: "A sua conta foi ativada com sucesso.",
             duration: 5000,
           });
-        toast("Problemas na ativação", {
-          description: error.response.data.message,
-          duration: 10000,
+          resolve(response);
+        })
+        .catch((error) => {
+          if (!error.response)
+            return toast("Problemas na ativação", {
+              description:
+                "Parece que houve um problema na ativação, tente novamente mais tarde.",
+              duration: 15000,
+            });
+          toast("Problemas na ativação", {
+            description: error.response.data.message,
+            duration: 15000,
+          });
+          reject(error);
+        })
+        .finally(() => {
+          setLoading(false);
         });
-      });
+    });
   }
 
   return (

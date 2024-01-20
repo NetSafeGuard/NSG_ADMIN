@@ -61,6 +61,8 @@ export const DashboardPage = () => {
     Context.Active({
       user: user!.email,
       password: e.password,
+    }).then(() => {
+      user!.defaultpassword = false;
     });
   };
 
