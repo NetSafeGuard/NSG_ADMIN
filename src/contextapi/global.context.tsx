@@ -20,6 +20,7 @@ interface AuthContextType {
   editUser: (old_data: User, data: EditData) => Promise<any>;
   deleteUser: (data: User) => Promise<any>;
   isLoading2: boolean;
+  Active: (data: LoginData) => void;
 }
 
 type ProviderProps = {
@@ -59,12 +60,12 @@ export const AuthProvider = ({ children }: ProviderProps) => {
       .catch((error) => {
         setLoading(false);
         if (!error.response)
-          return toast("Problemas na autenticação", {
+          return toast.error("Problemas na autenticação", {
             description:
               "Parece que houve um problema na autenticação, tente novamente mais tarde.",
             duration: 5000,
           });
-        toast("Problemas na autenticação", {
+        toast.error("Problemas na autenticação", {
           description: error.response.data.message,
           duration: 10000,
         });
@@ -106,7 +107,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         .then((response) => {
           toast.dismiss();
 
-          toast("Utilizador criado", {
+          toast.success("Utilizador criado", {
             description:
               "O utilizador " + data.username + " foi criado com sucesso.",
             duration: 5000,
@@ -188,9 +189,9 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         })
         .then((response) => {
           toast.dismiss();
-          toast("Utilizador deletado", {
+          toast.info("Utilizador apagado", {
             description:
-              "O utilizador " + data.username + " foi deletado com sucesso.",
+              "O utilizador " + data.username + " foi apagado com sucesso.",
             duration: 5000,
           });
           resolve(response);
@@ -214,6 +215,39 @@ export const AuthProvider = ({ children }: ProviderProps) => {
     });
   };
 
+  const Active = async (data: LoginData) => {
+    if (isLoading) return;
+    setLoading(true);
+
+    api
+      .post("/auth/active", {
+        email: data.user,
+        password: data.password,
+      })
+      .then(() => {
+        setLoading(false);
+        toast.dismiss();
+
+        toast.success("Conta Ativada", {
+          description: "A sua conta foi ativada com sucesso.",
+          duration: 5000,
+        });
+      })
+      .catch((error) => {
+        setLoading(false);
+        if (!error.response)
+          return toast("Problemas na ativação", {
+            description:
+              "Parece que houve um problema na ativação, tente novamente mais tarde.",
+            duration: 5000,
+          });
+        toast("Problemas na ativação", {
+          description: error.response.data.message,
+          duration: 10000,
+        });
+      });
+  }
+
   return (
     <AuthContext.Provider
       value={{
@@ -229,6 +263,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         editUser,
         deleteUser,
         isLoading2,
+        Active
       }}
     >
       {children}

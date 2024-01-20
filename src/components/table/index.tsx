@@ -221,7 +221,9 @@ function formatDate(data: Date): string {
     return `${hours} hora${hours === 1 ? "" : "s"} atrás`;
   } else if (minutes > 0) {
     return `${minutes} minuto${minutes === 1 ? "" : "s"} atrás`;
-  } else {
+  } else if (seconds > 0) {
     return `${seconds} segundo${seconds === 1 ? "" : "s"} atrás`;
+  } else {
+    return "agora mesmo";
   }
 }
