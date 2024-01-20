@@ -3,13 +3,12 @@ import { BrowserRouter } from "react-router-dom";
 import { RoutesList } from "./router/routes";
 import "./global/global.css";
 import { AuthProvider } from "./contextapi/global.context";
-import { ReactNotifications } from "react-notifications-component";
 import { NoContextMenu } from "./components/nocontext";
 import "react-notifications-component/dist/theme.css";
 import "react-tooltip/dist/react-tooltip.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import { TitleBar } from "./components/titlebar";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner"
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <>
@@ -17,7 +16,6 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <BrowserRouter>
       <AuthProvider>
         <NoContextMenu />
-        <ReactNotifications />
         <Toaster />
         <RoutesList />
       </AuthProvider>

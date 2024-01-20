@@ -76,7 +76,7 @@ export const Cards = () => {
               }
               duration={6}
             />{" "}
-            novos utilizadores este mês
+            novo(s) utilizadores este mês
           </p>
         </CardContent>
       </StyledCard>

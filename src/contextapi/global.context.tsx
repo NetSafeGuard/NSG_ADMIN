@@ -1,11 +1,15 @@
-import { createContext, ReactNode, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useState,
+} from "react";
 import { LoginData } from "../@types/LoginData";
 import { api } from "../services/api";
 import { useNavigate } from "react-router-dom";
-import { NOTIFICATION_TYPE, Store } from "react-notifications-component";
 import { CreateData } from "@/@types/CreateData";
 import { User } from "@/@types/User";
 import { EditData } from "@/@types/EditData";
+import { toast } from "sonner";
 
 interface AuthContextType {
   Login: (data: LoginData) => void;
@@ -33,37 +37,6 @@ export const Logout = () => {
   window.location.href = "/";
 };
 
-export const RemoveNotification = () => {
-  Store.removeAllNotifications();
-  sendAlert(
-    "Conexão retomada",
-    "A sua conexão foi retormada, pode ocorrer algum atraso mas logo será normalizado.",
-    "success",
-    5000
-  );
-};
-
-export const sendAlert = (
-  title: string,
-  message: string,
-  type: NOTIFICATION_TYPE,
-  duration: number
-) => {
-  Store.addNotification({
-    title,
-    message,
-    type,
-    insert: "top",
-    container: "top-right",
-    animationIn: ["animate__animated", "animate__fadeIn"],
-    animationOut: ["animate__animated", "animate__fadeOut"],
-    dismiss: {
-      duration,
-      onScreen: true,
-    },
-  });
-};
-
 export const AuthProvider = ({ children }: ProviderProps) => {
   const navigate = useNavigate();
 
@@ -84,24 +57,21 @@ export const AuthProvider = ({ children }: ProviderProps) => {
       .then((response) => {
         localStorage.setItem("nsg_token", response.data.data.token);
         setLoading(false);
-        Store.removeAllNotifications();
+        toast.dismiss();
         navigate("/dashboard");
       })
       .catch((error) => {
         setLoading(false);
         if (!error.response)
-          return sendAlert(
-            "Problemas na autenticação",
-            "Parece que houve um problema na autenticação, tente novamente mais tarde.",
-            "danger",
-            15000
-          );
-        sendAlert(
-          "Problemas na autenticação",
-          error.response.data.message,
-          "danger",
-          15000
-        );
+          return toast("Problemas na autenticação", {
+            description:
+              "Parece que houve um problema na autenticação, tente novamente mais tarde.",
+            duration: 5000,
+          });
+        toast("Problemas na autenticação", {
+          description: error.response.data.message,
+          duration: 10000,
+        });
       });
   };
 
@@ -116,12 +86,11 @@ export const AuthProvider = ({ children }: ProviderProps) => {
       })
       .catch((error) => {
         if (!error.response)
-          return sendAlert(
-            "Problemas na verificação",
-            "Parece que houve um problema na verificação, tente novamente mais tarde.",
-            "danger",
-            15000
-          );
+          return toast("Problemas na verificação", {
+            description:
+              "Parece que houve um problema na verificação, tente novamente mais tarde.",
+            duration: 15000,
+          });
       })
       .finally(() => {
         setGlobalLoading(false);
@@ -139,29 +108,28 @@ export const AuthProvider = ({ children }: ProviderProps) => {
           email: data.email,
         })
         .then((response) => {
-          Store.removeAllNotifications();
-          sendAlert(
-            "Usuário criado",
-            "O utilizador " + data.username + " foi criado com sucesso.",
-            "success",
-            5000
-          );
+          toast.dismiss();
+
+          toast("Usuário criado", {
+            description:
+              "O utilizador " + data.username + " foi criado com sucesso.",
+            duration: 5000,
+          });
+
           resolve(response);
         })
         .catch((error) => {
           if (!error.response)
-            return sendAlert(
-              "Problemas na criação",
-              "Parece que houve um problema na criação, tente novamente mais tarde.",
-              "danger",
-              15000
-            );
-          sendAlert(
-            "Problemas na criação",
-            error.response.data.message,
-            "danger",
-            15000
-          );
+            return toast("Problemas na criação", {
+              description:
+                "Parece que houve um problema na criação, tente novamente mais tarde.",
+              duration: 15000,
+            });
+
+          toast("Problemas na criação", {
+            description: error.response.data.message,
+            duration: 15000,
+          });
           reject(error);
         })
         .finally(() => {
@@ -183,29 +151,26 @@ export const AuthProvider = ({ children }: ProviderProps) => {
           avatar: data.avatar,
         })
         .then((response) => {
-          Store.removeAllNotifications();
-          sendAlert(
-            "Usuário editado",
-            "O utilizador " + old_data.username + " foi editado com sucesso.",
-            "success",
-            5000
-          );
+          toast.dismiss();
+          toast("Usuário editado", {
+            description:
+              "O utilizador " + old_data.username + " foi editado com sucesso.",
+            duration: 5000,
+          });
           resolve(response);
         })
         .catch((error) => {
           if (!error.response)
-            return sendAlert(
-              "Problemas na edição",
-              "Parece que houve um problema na edição, tente novamente mais tarde.",
-              "danger",
-              15000
-            );
-          sendAlert(
-            "Problemas na edição",
-            error.response.data.message,
-            "danger",
-            15000
-          );
+            return toast("Problemas na edição", {
+              description:
+                "Parece que houve um problema na edição, tente novamente mais tarde.",
+              duration: 15000,
+            });
+
+          toast("Problemas na edição", {
+            description: error.response.data.message,
+            duration: 15000,
+          });
           reject(error);
         })
         .finally(() => {
@@ -226,29 +191,25 @@ export const AuthProvider = ({ children }: ProviderProps) => {
           },
         })
         .then((response) => {
-          Store.removeAllNotifications();
-          sendAlert(
-            "Usuário deletado",
-            "O utilizador " + data.username + " foi deletado com sucesso.",
-            "success",
-            5000
-          );
+          toast.dismiss();
+         toast("Usuário deletado", {
+            description:
+              "O utilizador " + data.username + " foi deletado com sucesso.",
+            duration: 5000,
+          });
           resolve(response);
         })
         .catch((error) => {
           if (!error.response)
-            return sendAlert(
-              "Problemas na deleção",
-              "Parece que houve um problema na deleção, tente novamente mais tarde.",
-              "danger",
-              15000
-            );
-          sendAlert(
-            "Problemas na deleção",
-            error.response.data.message,
-            "danger",
-            15000
-          );
+            return toast("Problemas na deleção", {
+              description:
+                "Parece que houve um problema na deleção, tente novamente mais tarde.",
+              duration: 15000,
+            });
+          toast("Problemas na deleção", {
+            description: error.response.data.message,
+            duration: 15000,
+          });
           reject(error);
         })
         .finally(() => {

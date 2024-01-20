@@ -1,7 +1,7 @@
 import * as C from "./style";
 import { HashLoader } from "react-spinners";
 import { useEffect } from "react";
-import { sendAlert, RemoveNotification } from "../../contextapi/global.context";
+import { toast } from "sonner";
 
 interface LoadingProps {
   text?: string;
@@ -10,15 +10,20 @@ interface LoadingProps {
 export const Loading = ({ text }: LoadingProps) => {
   useEffect(() => {
     if (text) {
-      sendAlert(
-        "Problemas de conexão",
-        "Parece que houve um problema na conexão, tente novamente mais tarde.",
-        "danger",
-        150000
-      );
+
+      toast.error("Problemas de conexão", {
+        description:
+          "Parece que houve um problema na conexão, tente novamente mais tarde.",
+        duration: 15000,
+      });
 
       return () => {
-        RemoveNotification();
+        toast.dismiss();
+        toast.success("Conexão Retomada", {
+          description:
+            "A sua conexão foi retormada, pode ocorrer algum atraso mas logo será normalizado.",
+          duration: 5000,
+        });
       };
     }
   }, [text]);
