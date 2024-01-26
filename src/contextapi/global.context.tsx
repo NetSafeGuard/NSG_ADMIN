@@ -68,7 +68,8 @@ export const AuthProvider = ({ children }: ProviderProps) => {
           });
         toast.error("Problemas na autenticação", {
           description:
-            error.response.data.message && error.response.data.message.length > 0
+            error.response.data.message &&
+            error.response.data.message.length > 0
               ? error.response.data.message
               : "Contacte um administrador",
           duration: 10000,
@@ -84,7 +85,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
       .post("/auth/recover", {
         email,
       })
-      .then((response) => {
+      .then(() => {
         toast.dismiss();
         toast.success("Recuperação enviada", {
           description:
