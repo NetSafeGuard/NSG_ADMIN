@@ -1,7 +1,7 @@
 import { useEffect, useContext } from "react";
 import * as C from "./style";
 import { RiLoginCircleLine } from "react-icons/ri";
-import { LoginSchema } from "../../schemas/LoginSchema";
+import { LoginSchema } from "../../schemas/login.schema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LoginData } from "../../@types/LoginData";
@@ -9,9 +9,12 @@ import { AuthContext } from "../../contextapi/global.context";
 import { Loading } from "../../components/loading";
 import { Spinner } from "../../components/spinner";
 import { Error } from "../../components/error";
+import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
   const { Login, Verify, isLoading, isGlobalLoading } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     Verify();
@@ -27,6 +30,10 @@ export const LoginPage = () => {
   });
 
   if (isGlobalLoading) return <Loading />;
+
+  const RecoverPassword = () => {
+    navigate("/recover");
+  };
 
   return (
     <C.LoginContainer>
@@ -65,6 +72,11 @@ export const LoginPage = () => {
 
           <C.Button>{isLoading ? <Spinner /> : "Entrar"}</C.Button>
         </C.Form>
+        <C.RecoverPassword>
+          <C.RecoverPasswordLink onClick={RecoverPassword}>
+            Esqueceu-se da palavra-passe?
+          </C.RecoverPasswordLink>
+        </C.RecoverPassword>
       </C.FormContainer>
     </C.LoginContainer>
   );

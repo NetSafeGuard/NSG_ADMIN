@@ -62,7 +62,7 @@ export const DashboardPage = () => {
       user: user!.email,
       password: e.password,
     }).then(() => {
-      user!.defaultpassword = false;
+      user!.activated = false;
     });
   };
 
@@ -74,7 +74,7 @@ export const DashboardPage = () => {
 
   return (
     <C.Container>
-      {!user.defaultpassword ? (
+      {user.activated ? (
         <>
           <SideBar />
           <C.Content>

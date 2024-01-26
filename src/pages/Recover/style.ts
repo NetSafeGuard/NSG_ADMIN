@@ -63,6 +63,7 @@ export const FormDescription = styled.p`
   font-style: normal;
   font-weight: 400;
   line-height: 19.992px;
+  max-width: 300px;
 `;
 
 export const Form = styled.form`
@@ -112,7 +113,9 @@ export const Input = styled.input`
   }
 `;
 
-export const Button = styled.button`
+export const Button = styled.button<{
+  blocked: boolean;
+  }>`
   margin-top: 27px;
   height: 40px;
   border-radius: 6px;
@@ -128,7 +131,8 @@ export const Button = styled.button`
   font-style: normal;
   font-weight: 400;
   line-height: 19.992px;
-  cursor: pointer;
+  cursor: ${({ blocked }) => (blocked ? "not-allowed" : "pointer")};
+  opacity: ${({ blocked }) => (blocked ? "0.5" : "1")};
 
   transition: background-color 0.5s;
   &:hover {
@@ -136,7 +140,7 @@ export const Button = styled.button`
   }
 `;
 
-export const RecoverPassword = styled.div`
+export const Back = styled.div`
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -145,7 +149,7 @@ export const RecoverPassword = styled.div`
   margin-right: 25px;
 `;
 
-export const RecoverPasswordLink = styled.a`
+export const BackLink = styled.a`
   color: #117df9;
   font-family: Inter;
   font-size: 13px;

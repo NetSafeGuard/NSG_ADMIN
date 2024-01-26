@@ -4,5 +4,5 @@ export interface User {
   role: string;
   avatar: string;
   createdAt: number;
-  defaultpassword: boolean;
+  activated: boolean;
 }

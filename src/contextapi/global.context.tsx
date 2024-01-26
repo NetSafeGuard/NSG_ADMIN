@@ -21,6 +21,7 @@ interface AuthContextType {
   deleteUser: (data: User) => Promise<any>;
   isLoading2: boolean;
   Active: (data: LoginData) => Promise<any>;
+  Recover: (email: string) => void;
 }
 
 type ProviderProps = {
@@ -66,9 +67,50 @@ export const AuthProvider = ({ children }: ProviderProps) => {
             duration: 5000,
           });
         toast.error("Problemas na autenticação", {
-          description: error.response.data.message,
+          description:
+            error.response.data.message && error.response.data.message.length > 0
+              ? error.response.data.message
+              : "Contacte um administrador",
           duration: 10000,
         });
+      });
+  };
+
+  const Recover = async (email: string) => {
+    if (isLoading) return;
+    setLoading(true);
+
+    api
+      .post("/auth/recover", {
+        email,
+      })
+      .then((response) => {
+        toast.dismiss();
+        toast.success("Recuperação enviada", {
+          description:
+            "A sua recuperação foi enviada para o e-mail " + email + ".",
+          duration: 5000,
+        });
+      })
+      .catch((error) => {
+        if (!error.response)
+          return toast.error("Problemas na recuperação", {
+            description:
+              "Parece que houve um problema na recuperação, tente novamente mais tarde.",
+            duration: 15000,
+          });
+        else {
+          toast.error("Problemas na recuperação", {
+            description:
+              error.response.data.message.length > 0
+                ? error.response.data.message
+                : "Contacte um administrador",
+            duration: 15000,
+          });
+        }
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
@@ -124,7 +166,10 @@ export const AuthProvider = ({ children }: ProviderProps) => {
             });
 
           toast("Problemas na criação", {
-            description: error.response.data.message,
+            description:
+              error.response.data.message.length > 0
+                ? error.response.data.message
+                : "Contacte um administrador",
             duration: 15000,
           });
           reject(error);
@@ -165,7 +210,10 @@ export const AuthProvider = ({ children }: ProviderProps) => {
             });
 
           toast("Problemas na edição", {
-            description: error.response.data.message,
+            description:
+              error.response.data.message.length > 0
+                ? error.response.data.message
+                : "Contacte um administrador",
             duration: 15000,
           });
           reject(error);
@@ -204,7 +252,10 @@ export const AuthProvider = ({ children }: ProviderProps) => {
               duration: 15000,
             });
           toast("Problemas na deleção", {
-            description: error.response.data.message,
+            description:
+              error.response.data.message.length > 0
+                ? error.response.data.message
+                : "Contacte um administrador",
             duration: 15000,
           });
           reject(error);
@@ -241,7 +292,10 @@ export const AuthProvider = ({ children }: ProviderProps) => {
               duration: 15000,
             });
           toast("Problemas na ativação", {
-            description: error.response.data.message,
+            description:
+              error.response.data.message.length > 0
+                ? error.response.data.message
+                : "Contacte um administrador",
             duration: 15000,
           });
           reject(error);
@@ -250,7 +304,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
           setLoading(false);
         });
     });
-  }
+  };
 
   return (
     <AuthContext.Provider
@@ -267,7 +321,8 @@ export const AuthProvider = ({ children }: ProviderProps) => {
         editUser,
         deleteUser,
         isLoading2,
-        Active
+        Active,
+        Recover,
       }}
     >
       {children}
