@@ -51,11 +51,11 @@ export const SideBar = () => {
             </C.Icon>
             <C.Icon
               data-tooltip-id="my-tooltip"
-              data-tooltip-content="Exames"
+              data-tooltip-content="Atividades"
               data-tooltip-variant="light"
               data-tooltip-place="right"
-              menuselected={selected === "exams" ? true : false}
-              onClick={() => setSelected("exams")}
+              menuselected={selected === "activity" ? true : false}
+              onClick={() => setSelected("activity")}
             >
               <BiCalendarEvent size={26} color={"A6ABC8"} />
             </C.Icon>

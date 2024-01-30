@@ -27,6 +27,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Error } from "@/components/error";
 import { toast } from "sonner";
+import { ActivityPage } from "./subpages/activity";
 
 export const DashboardPage = () => {
   const { user, isLoading, error } = UserHook();
@@ -86,10 +87,10 @@ export const DashboardPage = () => {
               </C.Row>
             )}
             <C.Pages>
-              {Context.selected === "char"}
               {Context.selected === "char" && <EstatisticasPage />}
               {Context.selected === "users" && <UsersPage />}
               {Context.selected == "settings" && <SettingsPage />}
+              {Context.selected == "activity" && <ActivityPage/>}
             </C.Pages>
           </C.Content>
         </>

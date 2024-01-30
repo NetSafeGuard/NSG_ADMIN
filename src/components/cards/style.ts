@@ -6,7 +6,7 @@ export const StyledCard = styled(Card)`
 
   &:hover {
     cursor: pointer;
-    transform: scale(1.05);
+    transform: scale(0.80);
     opacity: 0.8;
   }
 `;

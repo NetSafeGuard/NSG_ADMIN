@@ -15,7 +15,7 @@ export const Content = styled.div`
 export const Pages = styled.div`
   width: 100%;
   display: flex;
-  overflow-y: scroll;
+  overflow-y: hidden;
   max-height: calc(100vh - 60px);
   margin-top: 20px;
 `;

@@ -5,7 +5,10 @@ export const EstatisticasPage = () => {
   return (
     <C.Container>
       <C.Title>Estatísticas</C.Title>
-      <Cards />
+      <C.Scroll>
+        <Cards />
+      </C.Scroll>
+
     </C.Container>
   );
 };
