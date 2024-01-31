@@ -27,12 +27,13 @@ import { useContext, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AuthContext } from "@/contextapi/global.context";
-
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 type Props = {
   users: User[];
 };
 
 export const TableData = ({ users }: Props) => {
+  const [AnimationParent] = useAutoAnimate();
   const [open, setOpen] = useState(false);
   const [editedUser, setEditedUser] = useState<User | null>(null);
 
@@ -58,13 +59,6 @@ export const TableData = ({ users }: Props) => {
     Context.editUser(editedUser!, data).then(() => {
       setOpen(false);
       reset();
-      const user = users.find((user) => user.email === editedUser?.email);
-      if (user) {
-        user.username = data.username;
-        user.email = data.email;
-        user.avatar = data.avatar;
-        user.createdAt = new Date().getTime();
-      }
     });
   };
 
@@ -72,10 +66,6 @@ export const TableData = ({ users }: Props) => {
     Context.deleteUser(editedUser!).then(() => {
       setOpen(false);
       reset();
-      const user = users.find((user) => user.email === editedUser?.email);
-      if (user) {
-        users.splice(users.indexOf(user), 1);
-      }
     });
   };
 
@@ -90,7 +80,7 @@ export const TableData = ({ users }: Props) => {
           <TableHead className="text-right">Editar</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody>
+      <TableBody ref={AnimationParent}>
         {users.map((user: User) => (
           <TableRow key={user.email}>
             <TableCell>
@@ -101,6 +91,7 @@ export const TableData = ({ users }: Props) => {
                 </AvatarFallback>
               </Avatar>
             </TableCell>
+
             <TableCell>{user.username}</TableCell>
             <TableCell>{user.email}</TableCell>
             <TableCell>{formatDate(new Date(user.createdAt))}</TableCell>

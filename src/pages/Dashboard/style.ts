@@ -17,7 +17,6 @@ export const Pages = styled.div`
   display: flex;
   overflow-y: hidden;
   max-height: calc(100vh - 60px);
-  margin-top: 20px;
 `;
 
 export const MainContent = styled.div`

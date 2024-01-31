@@ -98,7 +98,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
           return toast.error("Problemas na recuperação", {
             description:
               "Parece que houve um problema na recuperação, tente novamente mais tarde.",
-            duration: 15000,
+            duration: 5000,
           });
         else {
           toast.error("Problemas na recuperação", {
@@ -106,7 +106,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
               error.response.data.message.length > 0
                 ? error.response.data.message
                 : "Contacte um administrador",
-            duration: 15000,
+            duration: 5000,
           });
         }
       })
@@ -129,7 +129,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
           return toast("Problemas na verificação", {
             description:
               "Parece que houve um problema na verificação, tente novamente mais tarde.",
-            duration: 15000,
+            duration: 5000,
           });
       })
       .finally(() => {
@@ -153,7 +153,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
           toast.success("Utilizador criado", {
             description:
               "O utilizador " + data.username + " foi criado com sucesso.",
-            duration: 5000,
+            duration: 2000,
           });
 
           resolve(response);
@@ -163,7 +163,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
             return toast("Problemas na criação", {
               description:
                 "Parece que houve um problema na criação, tente novamente mais tarde.",
-              duration: 15000,
+              duration: 2000,
             });
 
           toast("Problemas na criação", {
@@ -171,7 +171,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
               error.response.data.message.length > 0
                 ? error.response.data.message
                 : "Contacte um administrador",
-            duration: 15000,
+            duration: 5000,
           });
           reject(error);
         })
@@ -198,7 +198,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
           toast.info("Utilizador editado", {
             description:
               "O utilizador " + old_data.username + " foi editado com sucesso.",
-            duration: 5000,
+            duration: 2000,
           });
           resolve(response);
         })
@@ -207,7 +207,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
             return toast.error("Problemas na edição", {
               description:
                 "Parece que houve um problema na edição, tente novamente mais tarde.",
-              duration: 15000,
+              duration: 5000,
             });
 
           toast("Problemas na edição", {
@@ -215,7 +215,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
               error.response.data.message.length > 0
                 ? error.response.data.message
                 : "Contacte um administrador",
-            duration: 15000,
+            duration: 5000,
           });
           reject(error);
         })
@@ -241,7 +241,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
           toast.info("Utilizador apagado", {
             description:
               "O utilizador " + data.username + " foi apagado com sucesso.",
-            duration: 5000,
+            duration: 2000,
           });
           resolve(response);
         })
@@ -250,14 +250,14 @@ export const AuthProvider = ({ children }: ProviderProps) => {
             return toast("Problemas na deleção", {
               description:
                 "Parece que houve um problema na deleção, tente novamente mais tarde.",
-              duration: 15000,
+              duration: 5000,
             });
           toast("Problemas na deleção", {
             description:
               error.response.data.message.length > 0
                 ? error.response.data.message
                 : "Contacte um administrador",
-            duration: 15000,
+            duration: 5000,
           });
           reject(error);
         })
@@ -281,7 +281,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
           toast.dismiss();
           toast.success("Conta ativada", {
             description: "A sua conta foi ativada com sucesso.",
-            duration: 5000,
+            duration: 2000,
           });
           resolve(response);
         })
@@ -290,14 +290,14 @@ export const AuthProvider = ({ children }: ProviderProps) => {
             return toast("Problemas na ativação", {
               description:
                 "Parece que houve um problema na ativação, tente novamente mais tarde.",
-              duration: 15000,
+              duration: 5000,
             });
           toast("Problemas na ativação", {
             description:
               error.response.data.message.length > 0
                 ? error.response.data.message
                 : "Contacte um administrador",
-            duration: 15000,
+            duration: 5000,
           });
           reject(error);
         })

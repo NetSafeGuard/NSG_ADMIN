@@ -3,13 +3,15 @@ import { MdEventAvailable } from "react-icons/md";
 import CountUp from "react-countup";
 import { MdOutlineSecurity } from "react-icons/md";
 import { StyledCard } from "./style";
-import { InfoHook } from "@/services/hooks/InfoHook";
+import { UsersContext } from "@/contextapi/users.context";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { User } from "@/@types/User";
+import { useContext } from "react";
 
 export const Cards = () => {
-  const { users, isLoading } = InfoHook();
-  if (isLoading)
+  const { users, loaded, setUsers, setLoaded } = useContext(UsersContext);
+
+  if (!loaded)
     return (
       <SkeletonTheme width={220} height={140}>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 flex-row flex-wrap ">

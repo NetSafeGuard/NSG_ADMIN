@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import { Loading } from "../../components/loading";
 import { SideBar } from "../../components/SideBar";
 import { Profile } from "../../components/profile";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contextapi/global.context";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
@@ -28,9 +28,25 @@ import * as yup from "yup";
 import { Error } from "@/components/error";
 import { toast } from "sonner";
 import { ActivityPage } from "./subpages/activity";
+import { UsersContext } from "@/contextapi/users.context";
+import { socket } from "@/services/socket";
+import { User } from "@/@types/User";
 
 export const DashboardPage = () => {
   const { user, isLoading, error } = UserHook();
+
+  const { setUsers, loaded, setLoaded } = useContext(UsersContext);
+
+  useEffect(() => {
+    socket.emit("getUsers");
+    console.log(0)
+    socket.on("users", (users: User[]) => {
+      setUsers(users.reverse());
+      console.log(1)
+      if (!loaded) setLoaded(true);
+    });
+
+  }, []);
 
   const Context = useContext(AuthContext);
 
@@ -66,7 +82,6 @@ export const DashboardPage = () => {
       user!.activated = false;
     });
   };
-
   if (isLoading) return <Loading />;
 
   if (error) return <Loading text={error.message} />;
@@ -90,7 +105,7 @@ export const DashboardPage = () => {
               {Context.selected === "char" && <EstatisticasPage />}
               {Context.selected === "users" && <UsersPage />}
               {Context.selected == "settings" && <SettingsPage />}
-              {Context.selected == "activity" && <ActivityPage/>}
+              {Context.selected == "activity" && <ActivityPage />}
             </C.Pages>
           </C.Content>
         </>

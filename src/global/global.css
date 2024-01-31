@@ -85,6 +85,7 @@
   -ms-user-select: none;
   -webkit-user-drag: none;
   font-family: "Poppins", sans-serif;
+  scroll-behavior: smooth;
 }
 
 html,
@@ -114,9 +115,4 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #888;
   border-radius: 3px;
-}
-
-
-* {
-  scroll-behavior: smooth;
 }

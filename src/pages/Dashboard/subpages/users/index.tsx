@@ -16,34 +16,30 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Error } from "@/components/error";
-import { useState, useRef, useContext, useEffect } from "react";
+import { useState, useRef, useContext } from "react";
 import { TableData } from "@/components/table";
-import { InfoHook } from "@/services/hooks/InfoHook";
 import { User } from "@/@types/User";
 import { AuthContext } from "@/contextapi/global.context";
 import { CreateData } from "@/@types/CreateData";
+import { UsersContext } from "@/contextapi/users.context";
+import { useEffect } from "react";
 
 export const UsersPage = () => {
-  type Users = User[];
+  const { users } = useContext(UsersContext);
+  const [userSearch, setUserSearch] = useState<User[]>(users);
+
+  useEffect(() => {
+    setUserSearch(users);
+  }, [users]);
 
   const DataSchema = yup.object().shape({
     username: yup.string().required(),
     email: yup.string().required(),
   });
 
-  const { users, isLoading, error } = InfoHook();
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error...</div>;
-
   const Context = useContext(AuthContext);
 
   const [open, setOpen] = useState(false);
-  const [userdata, setUser] = useState<Users>(users);
-
-  useEffect(() => {
-    setUser(users);
-  }, [users]);
 
   const {
     register,
@@ -59,12 +55,6 @@ export const UsersPage = () => {
     Context.createUser(data).then(() => {
       setOpen(false);
       reset();
-      users.push({
-        avatar: "Não Definido",
-        email: data.email,
-        role: "USER",
-        username: data.username,
-      });
     });
   };
 
@@ -72,19 +62,19 @@ export const UsersPage = () => {
 
   const Search = () => {
     const value = searchref.current?.value;
-    if (!value || value == "") setUser(users);
-    setUser(
-      users.filter(
-        (user: User) =>
-          user.username.toLowerCase().includes(value?.toLowerCase()!) ||
-          user.email.toLowerCase().includes(value?.toLowerCase()!)
-      )
+    if (!value || value == "") return setUserSearch(users);
+
+    const result = users.filter((user) =>
+      user.username.toLowerCase().includes(value.toLowerCase())
     );
+
+    setUserSearch(result);
   };
 
   return (
     <C.Container>
       <C.Title>Utilizadores</C.Title>
+
       <C.Buttons className="mb-3">
         <C.Input
           type="text"
@@ -145,7 +135,7 @@ export const UsersPage = () => {
         </Dialog>
       </C.Buttons>
       <C.TableContainer>
-        <TableData users={userdata} />
+        <TableData users={userSearch} />
       </C.TableContainer>
     </C.Container>
   );

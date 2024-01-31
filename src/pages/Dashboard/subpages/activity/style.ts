@@ -1,11 +1,10 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100%;
   height: calc(100% - 32px);
   padding: 50px 80px;
   scroll-behavior: smooth;
-
 `;
 
 export const Title = styled.h1`
@@ -13,39 +12,37 @@ export const Title = styled.h1`
   font-size: 20px;
   font-weight: normal;
   color: #333333;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   position: sticky;
-
 `;
 
 export const ActivityDate = styled.h1`
   font-family: "Poppins", sans-serif;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
   color: #333333;
   margin-bottom: 10px;
 `;
 
-
 export const ActivityContainer = styled.div`
   width: 100%;
   display: flex;
-  margin-top: 20px;
+  height: 100%;
   flex-direction: column;
   overflow-y: scroll;
-  max-height: calc(100vh - 260px);
+  max-height: calc(100vh - 100px);
+  padding-left: 5px;
+  padding-right: 9px;
 
-  padding: 0 10px;
-  
   ::-webkit-scrollbar {
     width: 5px;
   }
-`
+`;
 
 export const ActivityCard = styled.div`
   flex-shrink: 0;
   width: 100%;
-  height: 80px;
+  height: 60px;
   background: #ffffff;
   border-radius: 10px;
   display: flex;
@@ -65,7 +62,7 @@ export const ActivityCard = styled.div`
 
 export const ActivityTitle = styled.h1`
   font-family: "Poppins", sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: normal;
   color: #333333;
 `;
