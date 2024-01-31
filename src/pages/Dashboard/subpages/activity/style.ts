@@ -30,7 +30,7 @@ export const ActivityContainer = styled.div`
   height: 100%;
   flex-direction: column;
   overflow-y: scroll;
-  max-height: calc(100vh - 100px);
+  max-height: calc(100vh - 210px);
   padding-left: 5px;
   padding-right: 9px;
 
