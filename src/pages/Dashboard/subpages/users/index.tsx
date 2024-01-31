@@ -68,7 +68,9 @@ export const UsersPage = () => {
       user.username.toLowerCase().includes(value.toLowerCase())
     );
 
-    setUserSearch(result);
+    setTimeout(() => {
+      setUserSearch(result);
+    }, 100);
   };
 
   return (

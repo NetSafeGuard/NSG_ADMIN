@@ -9,7 +9,7 @@ import { User } from "@/@types/User";
 import { useContext } from "react";
 
 export const Cards = () => {
-  const { users, loaded, setUsers, setLoaded } = useContext(UsersContext);
+  const { users, loaded } = useContext(UsersContext);
 
   if (!loaded)
     return (

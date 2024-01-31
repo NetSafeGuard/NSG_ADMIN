@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import { Loading } from "../../components/loading";
 import { SideBar } from "../../components/SideBar";
 import { Profile } from "../../components/profile";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../contextapi/global.context";
 import "@szhsin/react-menu/dist/index.css";
 import "@szhsin/react-menu/dist/transitions/slide.css";
