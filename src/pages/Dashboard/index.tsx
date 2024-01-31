@@ -39,10 +39,8 @@ export const DashboardPage = () => {
 
   useEffect(() => {
     socket.emit("getUsers");
-    console.log(0)
     socket.on("users", (users: User[]) => {
       setUsers(users.reverse());
-      console.log(1)
       if (!loaded) setLoaded(true);
     });
 
