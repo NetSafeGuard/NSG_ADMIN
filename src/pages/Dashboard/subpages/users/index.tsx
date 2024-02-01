@@ -23,21 +23,29 @@ import { AuthContext } from "@/contextapi/global.context";
 import { CreateData } from "@/@types/CreateData";
 import { UsersContext } from "@/contextapi/users.context";
 import { useEffect } from "react";
+import { UserHook } from "@/services/hooks/UserHook";
 
 export const UsersPage = () => {
   const { users } = useContext(UsersContext);
   const [userSearch, setUserSearch] = useState<User[]>(users);
 
+  const { user } = UserHook(); 
+  const Context = useContext(AuthContext);
+
+
   useEffect(() => {
     setUserSearch(users);
   }, [users]);
+  
+  useEffect(() => {
+    if(user.role == "USER") Context.setSelected("char")
+  }, [user] )
+
 
   const DataSchema = yup.object().shape({
     username: yup.string().required(),
     email: yup.string().required(),
   });
-
-  const Context = useContext(AuthContext);
 
   const [open, setOpen] = useState(false);
 
