@@ -29,8 +29,9 @@ import { Error } from "@/components/error";
 import { toast } from "sonner";
 import { ActivityPage } from "./subpages/activity";
 import { UsersContext } from "@/contextapi/users.context";
-import { socket } from "@/services/socket";
+import { getSocket } from "@/services/socket";
 import { User } from "@/@types/User";
+import { GroupsPage } from "./subpages/groups";
 
 export const DashboardPage = () => {
   const { user, isLoading, error } = UserHook();
@@ -38,18 +39,23 @@ export const DashboardPage = () => {
   const { setUsers, loaded, setLoaded } = useContext(UsersContext);
 
   useEffect(() => {
-    socket.emit("getUsers");
-    socket.on("users", (users: User[]) => {
-      setUsers(
-        users.sort((a, b) => {
-          if (a.createdAt > b.createdAt) return -1;
-          if (a.createdAt < b.createdAt) return 1;
-          return 0;
-        })
-      );
-      if (!loaded) setLoaded(true);
-    });
+    const setupSocket = async () => {
+      const socket = await getSocket();
 
+      socket.emit("getUsers");
+      socket.on("users", (users: User[]) => {
+        setUsers(
+          users.sort((a, b) => {
+            if (a.createdAt > b.createdAt) return -1;
+            if (a.createdAt < b.createdAt) return 1;
+            return 0;
+          })
+        );
+        if (!loaded) setLoaded(true);
+      });
+    };
+
+    setupSocket();
   }, []);
 
   const Context = useContext(AuthContext);
@@ -110,6 +116,7 @@ export const DashboardPage = () => {
               {Context.selected === "users" && <UsersPage />}
               {Context.selected == "settings" && <SettingsPage />}
               {Context.selected == "activity" && <ActivityPage />}
+              {Context.selected == "groups" && <GroupsPage />}
             </C.Pages>
           </C.Content>
         </>
@@ -160,7 +167,7 @@ export const DashboardPage = () => {
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit" style={{ background: "#17B4BB" }}>
+                <Button type="submit" style={{ background: "#1b4c70" }}>
                   {Context.isLoading ? "A definir..." : "Definir"}
                 </Button>
               </DialogFooter>

@@ -128,7 +128,7 @@ export const UsersPage = () => {
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit" style={{ background: "#17B4BB" }}>
+                <Button type="submit" style={{ background: "#1b4c70" }}>
                   {Context.isLoading ? "A criar..." : "Criar"}
                 </Button>
               </DialogFooter>

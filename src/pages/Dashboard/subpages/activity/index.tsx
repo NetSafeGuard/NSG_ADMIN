@@ -1,4 +1,31 @@
 import * as C from "./style";
+import { PlusIcon } from "@radix-ui/react-icons";
+
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 export const ActivityPage = () => {
   const activitys = [
@@ -6,26 +33,6 @@ export const ActivityPage = () => {
       title: "Formulario 1",
       description: "No dia 30 de Janeiro de 2024, foi lançado o formulário 1",
       date: new Date("2024-01-30"),
-    },
-    {
-      title: "Formulario 2",
-      description: "No dia 31 de Janeiro de 2024, foi lançado o formulário 2",
-      date: new Date("2024-01-31"),
-    },
-    {
-      title: "Formulario 3",
-      description: "No dia 1 de Fevereiro de 2024, foi lançado o formulário 3",
-      date: new Date("2024-02-01"),
-    },
-    {
-      title: "Formulario 3",
-      description: "No dia 1 de Fevereiro de 2024, foi lançado o formulário 3",
-      date: new Date("2024-02-01"),
-    },
-    {
-      title: "Formulario 3",
-      description: "No dia 1 de Fevereiro de 2024, foi lançado o formulário 3",
-      date: new Date("2024-02-01"),
     },
   ];
 
@@ -64,7 +71,67 @@ export const ActivityPage = () => {
           </>
         ))}
       </C.ActivityContainer>
-      ...
+      <C.ButtonContainer>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">
+              <PlusIcon />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56 mb-5 " side="right">
+            <DropdownMenuLabel>Criação de Atividade</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <Sheet>
+                <SheetTrigger asChild>
+                  <p className="flex items-center gap-2 px-2 py-2 text-sm rounded-md cursor-pointer hover:bg-accent hover:bg-opacity-10">
+                    <span>URL</span>
+                  </p>
+                </SheetTrigger>
+                <SheetContent className="w-[500px] sm:[100%] mt-8">
+                  <SheetHeader>
+                    <SheetTitle>Criar Atividade</SheetTitle>
+                    <SheetDescription>
+                      Preencha os campos abaixo para criar uma atividade
+                    </SheetDescription>
+                  </SheetHeader>
+                  <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="name" className="text-right">
+                        Name
+                      </Label>
+                      <Input
+                        id="name"
+                        value="Pedro Duarte"
+                        className="col-span-3"
+                      />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label htmlFor="username" className="text-right">
+                        Username
+                      </Label>
+                      <Input
+                        id="username"
+                        value="@peduarte"
+                        className="col-span-3"
+                      />
+                    </div>
+                  </div>
+                  <SheetFooter>
+                    <SheetClose asChild>
+                      <Button type="submit">Save changes</Button>
+                    </SheetClose>
+                  </SheetFooter>
+                </SheetContent>
+              </Sheet>
+              <DropdownMenuItem>
+                Arquivo (WIP)
+                <DropdownMenuShortcut>Desativado</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </C.ButtonContainer>
     </C.Container>
   );
 };

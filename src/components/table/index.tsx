@@ -28,6 +28,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AuthContext } from "@/contextapi/global.context";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
+import { Badge } from "@/components/ui/badge";
+import admin from "../../assets/admin.png";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 type Props = {
   users: User[];
 };
@@ -92,14 +101,38 @@ export const TableData = ({ users }: Props) => {
               </Avatar>
             </TableCell>
 
-            <TableCell>{user.username}</TableCell>
+            <TableCell>
+              {user.username}
+
+              {user.role == "ADMIN" && (
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Badge className="bg-transparent hover:bg-transparent shadow-none">
+                        <img
+                          src={admin}
+                          alt="Administrador"
+                          className="h-4 w-4"
+                        />
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent
+                      side="top"
+                      align="center"
+                    >
+                      <p className="text-sm">Administrador Verificado</p>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              )}
+            </TableCell>
             <TableCell>{user.email}</TableCell>
             <TableCell>{formatDate(new Date(user.createdAt))}</TableCell>
             <TableCell className="text-right">
               <Dialog open={open && editedUser === user} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                   <button
-                    className="text-[#17B4BB] hover:text-[#2D9CDB] focus:outline-none"
+                    className="text-[#1b4c70] hover:text-[#2D9CDB] focus:outline-none"
                     onClick={() => {
                       setEditedUser(user);
                       setOpen(true);
@@ -177,7 +210,7 @@ export const TableData = ({ users }: Props) => {
                       >
                         {Context.isLoading2 ? "A Apagar..." : "Apagar"}
                       </Button>
-                      <Button type="submit" style={{ background: "#17B4BB" }}>
+                      <Button type="submit" style={{ background: "#1b4c70" }}>
                         {Context.isLoading ? "A editar..." : "Editar"}
                       </Button>
                     </DialogFooter>

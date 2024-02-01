@@ -92,7 +92,7 @@ export const Profile = () => {
               <AlertDialogCancel>Cancelar</AlertDialogCancel>
               <AlertDialogAction
                 onClick={handleLogout}
-                style={{ background: "#17B4BB" }}
+                style={{ background: "#1b4c70" }}
               >
                 Confirmar
               </AlertDialogAction>

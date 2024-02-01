@@ -73,3 +73,9 @@ export const ActivityDescription = styled.h1`
   font-weight: normal;
   color: #333333;
 `;
+
+export const ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 10px;
+  left: 80px;
+`;

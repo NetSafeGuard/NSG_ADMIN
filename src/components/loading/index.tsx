@@ -2,6 +2,7 @@ import * as C from "./style";
 import { HashLoader } from "react-spinners";
 import { useEffect } from "react";
 import { toast } from "sonner";
+import Wave from "../../assets/wave.gif";
 
 interface LoadingProps {
   text?: string;
@@ -10,7 +11,6 @@ interface LoadingProps {
 export const Loading = ({ text }: LoadingProps) => {
   useEffect(() => {
     if (text) {
-
       toast.error("Problemas de conexão", {
         description:
           "Parece que houve um problema na conexão, tente novamente mais tarde.",
@@ -30,7 +30,15 @@ export const Loading = ({ text }: LoadingProps) => {
 
   return (
     <C.GlobalLoading>
-      <HashLoader color="#48B1A5" size={100} />
+      <HashLoader color="#015593" size={100} />
+
+      <C.Container>
+        <C.Inline>
+          <C.Note>Hey</C.Note>
+          <img src={Wave} alt="Wave" />
+        </C.Inline>
+        <C.Text>Este projeto foi feito por João Silva em 2024</C.Text>
+      </C.Container>
     </C.GlobalLoading>
   );
 };

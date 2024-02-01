@@ -17,7 +17,9 @@ export const LoginPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    Verify();
+    setTimeout(() => {
+      Verify();
+    }, 3000);
   }, []);
 
   const {

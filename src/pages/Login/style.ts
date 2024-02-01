@@ -116,8 +116,8 @@ export const Button = styled.button`
   margin-top: 27px;
   height: 40px;
   border-radius: 6px;
-  border: 1px solid #48b1a5;
-  background: #48b1a5;
+  border: 1px solid #015593;
+  background: #015593;
   border: none;
   box-shadow: 0px 1px 2px 0px rgba(21, 29, 40, 0.04),
     0px 2px 0px 1px rgba(255, 255, 255, 0.08) inset;
@@ -132,7 +132,7 @@ export const Button = styled.button`
 
   transition: background-color 0.5s;
   &:hover {
-    background-color: #3d9e92;
+    background-color: #016593;
   }
 `;
 

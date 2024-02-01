@@ -25,7 +25,7 @@ export const Button = styled.button`
   height: 40px;
   border: none;
   border-radius: 5px;
-  background-color: #17b4bb;
+  background-color: #1b4c70;
   color: #ffffff;
   font-family: "Poppins", sans-serif;
   font-size: 14px;

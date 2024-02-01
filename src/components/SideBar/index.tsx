@@ -1,6 +1,5 @@
 import * as C from "./style";
 import Logo from "../../assets/logo.png";
-import { AiOutlineCalendar } from "react-icons/ai";
 import { BiCalendarEvent, BiHelpCircle } from "react-icons/bi";
 import { useContext } from "react";
 import { AuthContext } from "../../contextapi/global.context";
@@ -10,6 +9,7 @@ import { AiFillSetting } from "react-icons/ai";
 import { FaUserAlt } from "react-icons/fa";
 import { UserHook } from "../../services/hooks/UserHook";
 import { Loading } from "../loading";
+import { MdGroups } from "react-icons/md";
 
 export const SideBar = () => {
   const { selected, setSelected } = useContext(AuthContext);
@@ -25,7 +25,7 @@ export const SideBar = () => {
           <C.TopIcons>
             <Tooltip
               id="my-tooltip"
-              arrowColor="#17B4BB"
+              arrowColor="#1b4c70"
               opacity={0.5}
               style={{ backgroundColor: "#FFFFFF" }}
             />
@@ -41,13 +41,13 @@ export const SideBar = () => {
             </C.Icon>
             <C.Icon
               data-tooltip-id="my-tooltip"
-              data-tooltip-content="Caléndario"
+              data-tooltip-content="Grupos"
               data-tooltip-variant="light"
               data-tooltip-place="right"
-              menuselected={selected === "calendar" ? true : false}
-              onClick={() => setSelected("calendar")}
+              menuselected={selected === "groups" ? true : false}
+              onClick={() => setSelected("groups")}
             >
-              <AiOutlineCalendar size={26} color={"A6ABC8"} />
+              <MdGroups size={26} color={"A6ABC8"} />
             </C.Icon>
             <C.Icon
               data-tooltip-id="my-tooltip"

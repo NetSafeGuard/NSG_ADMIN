@@ -20,6 +20,11 @@ export const Container = styled.div`
   align-items: center;
   padding-top: 24px;
   position: fixed;
+
+  img {
+    border-radius: 8px;
+    width: 80px;
+  }
 `;
 
 export const Icons = styled.div`
@@ -43,7 +48,7 @@ export const Icon = styled.a<SelectedProps>`
     menuselected &&
     `
 		svg * {
-			color: #48B1A5
+			color: #015593
 		}
 
 	`}

@@ -7,7 +7,7 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "nsg",
+    "productName": "NetSafeGuard Admin",
     "version": "0.0.0"
   },
   "tauri": {
