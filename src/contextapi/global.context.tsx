@@ -192,6 +192,7 @@ export const AuthProvider = ({ children }: ProviderProps) => {
           username: data.username,
           email: data.email,
           avatar: data.avatar,
+          role: data.role,
         })
         .then((response) => {
           toast.dismiss();

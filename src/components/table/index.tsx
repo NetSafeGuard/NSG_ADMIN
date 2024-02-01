@@ -18,7 +18,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { EditData } from "@/@types/EditData";
@@ -37,6 +37,14 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 type Props = {
   users: User[];
 };
@@ -50,11 +58,13 @@ export const TableData = ({ users }: Props) => {
     username: yup.string().required(),
     email: yup.string().required(),
     avatar: yup.string().required(),
+    role: yup.string().required(),
   });
 
   const Context = useContext(AuthContext);
 
   const {
+    control,
     register,
     handleSubmit,
     watch,
@@ -119,8 +129,11 @@ export const TableData = ({ users }: Props) => {
                     <TooltipContent
                       side="top"
                       align="center"
+                      className="whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground rounded-md px-3 text-xs h-8 border-dashed"
                     >
-                      <p className="text-sm">Administrador Verificado</p>
+                      <p className="text-sm text-black">
+                        Administrador Verificado
+                      </p>
                     </TooltipContent>
                   </Tooltip>
                 </TooltipProvider>
@@ -199,6 +212,35 @@ export const TableData = ({ users }: Props) => {
                           maxLength={200}
                           defaultValue={user.avatar}
                           {...register("avatar")}
+                        />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="role" className="text-right flex gap-1">
+                          Cargo
+                        </Label>
+                        <Controller
+                          name="role"
+                          control={control}
+                          defaultValue={user.role}
+                          render={({ field }) => (
+                            <Select
+                              {...field}
+                              defaultValue={user.role}
+                              onValueChange={(e) => {
+                                field.onChange(e);
+                              }}
+                            >
+                              <SelectTrigger className="col-span-3">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="USER">Utilizador</SelectItem>
+                                <SelectItem value="ADMIN">
+                                  Administrador
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
+                          )}
                         />
                       </div>
                     </div>
