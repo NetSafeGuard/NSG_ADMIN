@@ -3,8 +3,7 @@ import { io } from "socket.io-client";
 const createSocketInstance = async () => {
   const token = localStorage.getItem("nsg_token");
 
-  // Crie a instância do socket com a token
-  const socket = io("http://localhost:3001", {
+  const socket = io("https://wss.netsafeguard.cloud", {
     query: {
       token: token,
     },
