@@ -89,7 +89,7 @@ export const DashboardPage = () => {
       user: user!.email,
       password: e.password,
     }).then(() => {
-      user!.activated = false;
+      user!.activated = true;
     });
   };
   if (isLoading) return <Loading />;
