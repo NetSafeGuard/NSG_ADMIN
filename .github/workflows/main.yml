@@ -44,8 +44,6 @@ jobs:
         with:
           node-version: latest
           # node-version-file: '.nvmrc'
-        run: |
-          npm install -g tsc
 
       - name: Setup Rust
         run: |
@@ -59,6 +57,7 @@ jobs:
 
       - name: Build frontend
         run: |
+          npm i typescript -g
           npm --frozen-lockfile
           npm build
 
