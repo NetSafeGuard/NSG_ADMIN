@@ -49,10 +49,12 @@ jobs:
         run: |
           rustup update --no-self-update
 
+      - name: Install Frontend dependencies
+        run: |
+          npm install
+
       - name: Build frontend
         run: |
-          npm i typescript -g
-          npm i
           npm run build
 
       - name: Build Tauri app
