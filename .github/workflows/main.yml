@@ -29,7 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest, windows-latest]
+        platform: [windows-latest]
     runs-on: ${{ matrix.platform }}
     needs: changelog
     steps:
@@ -44,6 +44,8 @@ jobs:
         with:
           node-version: latest
           # node-version-file: '.nvmrc'
+        run: |
+          npm install -g tsc
 
       - name: Setup Rust
         run: |
@@ -57,8 +59,8 @@ jobs:
 
       - name: Build frontend
         run: |
-          yarn --frozen-lockfile
-          yarn build
+          npm --frozen-lockfile
+          npm build
 
       - name: Build Tauri app
         uses: tauri-apps/tauri-action@v0
