@@ -29,7 +29,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [macos-latest, ubuntu-latest, windows-latest]
+        platform: [windows-latest]
     runs-on: ${{ matrix.platform }}
     needs: changelog
     steps:
@@ -48,12 +48,6 @@ jobs:
       - name: Setup Rust
         run: |
           rustup update --no-self-update
-
-      - name: Install Ubuntu dependencies
-        if: matrix.platform == 'ubuntu-latest'
-        run: |
-          sudo apt update
-          xargs sudo apt install -y < environment/apt_packages.txt
 
       - name: Build frontend
         run: |
