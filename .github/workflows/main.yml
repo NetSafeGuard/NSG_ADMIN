@@ -58,8 +58,7 @@ jobs:
       - name: Build frontend
         run: |
           npm i typescript -g
-          npm --frozen-lockfile
-          npm build
+          npm run build
 
       - name: Build Tauri app
         uses: tauri-apps/tauri-action@v0
