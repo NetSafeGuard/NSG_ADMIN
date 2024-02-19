@@ -37,7 +37,7 @@ export const Loading = ({ text }: LoadingProps) => {
           <C.Note>Hey</C.Note>
           <img src={Wave} alt="Wave" />
         </C.Inline>
-        <C.Text>Este projeto foi desenvolvido por João Silva em 2024</C.Text>
+        <C.Text>Este projeto foi desenvolvido por João Silva</C.Text>
       </C.Container>
     </C.GlobalLoading>
   );
