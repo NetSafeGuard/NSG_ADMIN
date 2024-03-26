@@ -1,9 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 
-import { LoginPage } from "../pages/Login";
-import { RecoverPage } from "../pages/Recover";
-import { DashboardPage } from "../pages/Dashboard";
+import { LoginPage } from "@/pages/Login";
+import { RecoverPage } from "@/pages/Recover";
+import { DashboardPage } from "@/pages/Dashboard";
 import { UsersProvider } from "@/contextapi/users.context";
+import {GroupsProvider} from "@/contextapi/groups.context.tsx";
 
 export const RoutesList = () => {
   return (
@@ -13,7 +14,9 @@ export const RoutesList = () => {
         path="/dashboard"
         element={
           <UsersProvider>
-            <DashboardPage />
+              <GroupsProvider>
+                  <DashboardPage />
+              </GroupsProvider>
           </UsersProvider>
         }
       />

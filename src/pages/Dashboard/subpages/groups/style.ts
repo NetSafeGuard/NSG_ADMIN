@@ -13,3 +13,16 @@ export const Title = styled.h1`
   color: #333333;
   margin-bottom: 30px;
 `;
+
+export const ActivityDescription = styled.h1`
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  color: #333333;
+`;
+
+export const ButtonContainer = styled.div`
+  position: absolute;
+  bottom: 10px;
+  left: 80px;
+`;

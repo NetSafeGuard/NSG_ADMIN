@@ -1,9 +1,9 @@
 import * as C from "./style";
 import { UserHook } from "../../services/hooks/UserHook";
 import { Navigate } from "react-router-dom";
-import { Loading } from "../../components/loading";
-import { SideBar } from "../../components/SideBar";
-import { Profile } from "../../components/profile";
+import { Loading } from "@/components/loading";
+import { SideBar } from "@/components/SideBar";
+import { Profile } from "@/components/profile";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../../contextapi/global.context";
 import "@szhsin/react-menu/dist/index.css";
@@ -32,17 +32,20 @@ import { UsersContext } from "@/contextapi/users.context";
 import { getSocket } from "@/services/socket";
 import { User } from "@/@types/User";
 import { GroupsPage } from "./subpages/groups";
+import {Group} from "@/@types/Group.ts";
+import {GroupsContext} from "@/contextapi/groups.context.tsx";
 
 export const DashboardPage = () => {
   const { user, isLoading, error } = UserHook();
 
   const { setUsers, loaded, setLoaded } = useContext(UsersContext);
+  const { setGroups } = useContext(GroupsContext);
 
   useEffect(() => {
     const setupSocket = async () => {
       const socket = await getSocket();
 
-      socket.emit("getUsers");
+      socket.emit("getData");
       socket.on("users", (users: User[]) => {
         setUsers(
           users.sort((a, b) => {
@@ -52,6 +55,16 @@ export const DashboardPage = () => {
           })
         );
         if (!loaded) setLoaded(true);
+      });
+
+      socket.on("groups", (groups: Group[]) => {
+        setGroups(
+            groups.sort((a,b) => {
+              if(a.createdAt > b.createdAt) return -1;
+              if(a.createdAt < b.createdAt) return 1
+              return 0
+            })
+        )
       });
     };
 
@@ -143,7 +156,7 @@ export const DashboardPage = () => {
                   <Input
                     id="password"
                     type="password"
-                    onFocus={() => (watch("password") ? true : false)}
+                    onFocus={() => (!!watch("password"))}
                     placeholder="********"
                     className="col-span-3"
                     {...register("password")}
@@ -157,7 +170,7 @@ export const DashboardPage = () => {
                   </Label>
                   <Input
                     id="rsenha"
-                    onFocus={() => (watch("repeatpassword") ? true : false)}
+                    onFocus={() => (!!watch("repeatpassword"))}
                     className="col-span-3"
                     type="password"
                     placeholder="********"
