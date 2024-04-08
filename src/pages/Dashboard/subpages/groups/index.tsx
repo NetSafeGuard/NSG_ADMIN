@@ -7,6 +7,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { PlusIcon } from "@radix-ui/react-icons";
+import { IoTrashOutline } from "react-icons/io5";
+
 
 import {
   DropdownMenu,
@@ -30,7 +32,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {useContext} from "react";
+import {useContext, useState} from "react";
 import {GroupsContext} from "@/contextapi/groups.context.tsx";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -39,7 +41,7 @@ import { Group } from "@/@types/Group";
 
 
 export const GroupsPage = () => {
-  const {groups, Create, isLoading} = useContext(GroupsContext);
+  const {groups, Create, isLoading, Del} = useContext(GroupsContext);
 
   const DataSchema = yup.object().shape({
     name: yup.string().required(),
@@ -50,6 +52,11 @@ export const GroupsPage = () => {
       reset();
     });
   };
+
+  const deleteGroup = (data: Group) => {
+    Del(data)
+  };
+  
 
   const {
     register,
@@ -72,12 +79,19 @@ export const GroupsPage = () => {
               <h4 className="text-sm font-semibold">
                 {group.name}
               </h4>
-              <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm">
-                  <CaretSortIcon className="h-4 w-4" />
-                  <span className="sr-only">Toggle</span>
-                </Button>
-              </CollapsibleTrigger>
+              <div className="flex items-center">
+
+                <CollapsibleTrigger asChild>
+                  <Button variant="ghost" size="sm">
+                    <CaretSortIcon className="h-4 w-4" />
+                    <span className="sr-only">Toggle</span>
+                  </Button>
+                </CollapsibleTrigger>
+                <div className="w-12" onClick={()=> deleteGroup(group)}>
+                  <IoTrashOutline size={12} className="cursor-pointer hover:text-red-800"/>
+                </div>
+              
+              </div>
             </div>
             <CollapsibleContent className="space-y-2">
               <div className="rounded-md border px-4 py-2 font-mono text-sm shadow-sm">
@@ -87,7 +101,7 @@ export const GroupsPage = () => {
           </Collapsible>
       ))}
       <C.ButtonContainer>
-        <DropdownMenu>
+        <DropdownMenu >
           <DropdownMenuTrigger asChild>
             <Button variant="outline">
               <PlusIcon />
