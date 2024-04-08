@@ -44,7 +44,12 @@ export const Icon = styled.a<SelectedProps>`
   border-radius: 8px;
   cursor: pointer;
 
-  ${({ menuselected }) =>
+  @media (max-height: 550px) {
+    width: 30px;
+    height: 30px;
+  }
+
+  ${({ menuselected }: any) =>
     menuselected &&
     `
 		svg * {
@@ -71,8 +76,9 @@ export const TopIcons = styled.div`
   gap: 24px;
   margin-top: 50px;
 
-  @media (max-height: 500px) {
-    gap: 12px;
+  @media (max-height: 550px) {
+    margin-top: 15px;
+    gap: 20px;
   }
 `;
 
