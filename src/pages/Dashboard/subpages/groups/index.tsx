@@ -32,10 +32,34 @@ import {
 } from "@/components/ui/sheet";
 import {useContext} from "react";
 import {GroupsContext} from "@/contextapi/groups.context.tsx";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { Group } from "@/@types/Group";
 
 
 export const GroupsPage = () => {
-  const {groups} = useContext(GroupsContext);
+  const {groups, Create, isLoading} = useContext(GroupsContext);
+
+  const DataSchema = yup.object().shape({
+    name: yup.string().required(),
+  });
+
+  const CreateGroup = (data: Group) => {
+    Create(data).then(() => {
+      reset();
+    });
+  };
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm<Group>({
+    resolver: yupResolver(DataSchema),
+  });
 
   return (
     <C.Container>
@@ -86,33 +110,28 @@ export const GroupsPage = () => {
                       Preencha os campos abaixo para criar um grupo
                     </SheetDescription>
                   </SheetHeader>
-                  <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="name" className="text-right">
-                        Name
-                      </Label>
-                      <Input
-                        id="name"
-                        value="Pedro Duarte"
-                        className="col-span-3"
-                      />
+                  <form onSubmit={handleSubmit(CreateGroup)}>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-right">
+                          Nome
+                        </Label>
+                        <Input
+                          id="name"
+                          onFocus={() => (watch("name") ? true : false)}
+                          className="col-span-3"
+                          {...register("name")}
+                        />
+                      </div>
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="username" className="text-right">
-                        Username
-                      </Label>
-                      <Input
-                        id="username"
-                        value="@peduarte"
-                        className="col-span-3"
-                      />
-                    </div>
-                  </div>
-                  <SheetFooter>
-                    <SheetClose asChild>
-                      <Button type="submit">Save changes</Button>
-                    </SheetClose>
-                  </SheetFooter>
+                    <SheetFooter>
+                      <SheetClose asChild>
+                        <Button type="submit" style={{ background: "#1b4c70" }}>
+                          {isLoading ? "A criar..." : "Criar"}
+                        </Button>
+                      </SheetClose>
+                    </SheetFooter>
+                  </form>
                 </SheetContent>
               </Sheet>
             </DropdownMenuGroup>
