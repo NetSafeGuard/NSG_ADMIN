@@ -67,21 +67,29 @@ export const Cards = () => {
             <CountUp start={0} end={users ? users.length : 0} duration={4} />
           </div>
           <p className="text-xs text-muted-foreground">
-            <CountUp
-              start={0}
-              end={
-                users
-                  ? users.filter((user: User) => {
-                      const userCreateAt = new Date(user.createdAt);
-                      userCreateAt.setMonth(userCreateAt.getMonth() + 1);
+          {users.length == 0 ? `
+              Nenhum novo utilizador este mês
+            `  
+            : 
+            <>     
+              <span>+</span>    
+              <CountUp
+                start={0}
+                end={
+                  users
+                    ? users.filter((user: User) => {
+                        const userCreateAt = new Date(user.createdAt);
+                        userCreateAt.setMonth(userCreateAt.getMonth() + 1);
 
-                      if (userCreateAt > new Date()) return true;
-                    }).length
-                  : 0
-              }
-              duration={6}
-            />{" "}
-            novo(s) utilizadores este mês
+                        if (userCreateAt > new Date()) return true;
+                      }).length
+                    : 0
+                }
+                duration={6}
+              />
+              <span> novo(s) utilizadores este mês</span>
+            </>
+          }
           </p>
         </CardContent>
       </StyledCard>
@@ -98,7 +106,7 @@ export const Cards = () => {
           </div>
           <p className="text-xs text-muted-foreground">
             {groups.length == 0 ? `
-              Nenhum este mês
+              Nenhum novo grupo este mês
             `  
             : 
             <>     
