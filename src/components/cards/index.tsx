@@ -7,9 +7,12 @@ import { UsersContext } from "@/contextapi/users.context";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { User } from "@/@types/User";
 import { useContext } from "react";
+import { GroupsContext } from "@/contextapi/groups.context";
+import { Group } from "@/@types/Group";
 
 export const Cards = () => {
   const { users, loaded } = useContext(UsersContext);
+  const { groups } = useContext(GroupsContext)
 
   if (!loaded)
     return (
@@ -85,16 +88,38 @@ export const Cards = () => {
       <StyledCard>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-sm font-medium">
-            Participações nos exames
+            Grupos Criados
           </CardTitle>
           <MdOutlineSecurity className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            <CountUp start={0} end={30000} duration={3} />
+            <CountUp start={0} end={groups.length} duration={3} />
           </div>
           <p className="text-xs text-muted-foreground">
-            +<CountUp start={0} end={50} duration={3} /> este mês
+            {groups.length == 0 ? `
+              Nenhum este mês
+            `  
+            : 
+            <>     
+              <span>+</span>       
+              <CountUp 
+                start={0} 
+                end={
+                  groups ? groups.filter((group: Group) => {
+                    const groupCreateAt = new Date(group.createdAt);
+                    groupCreateAt.setMonth(groupCreateAt.getMonth() + 1);
+
+                    if (groupCreateAt > new Date()) return true;
+                  }).length
+                  : 0
+                } 
+                duration={3} 
+              /> 
+              <span> novo(s) grupos este mês</span>
+            </>
+            
+          }
           </p>
         </CardContent>
       </StyledCard>
