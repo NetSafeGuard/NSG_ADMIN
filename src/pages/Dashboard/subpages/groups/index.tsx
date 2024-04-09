@@ -101,7 +101,6 @@ export const GroupsPage = () => {
     resolver: yupResolver(DataSchema2),
   });
 
-  console.log(user.role)
   return (
     <C.Container>
       <C.Title>Grupos</C.Title>
