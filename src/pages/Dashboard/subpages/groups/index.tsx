@@ -48,11 +48,13 @@ import * as yup from "yup";
 import { EditData, Group } from "@/@types/Group";
 import { StudentsData } from "@/components/userlist";
 import { IoIosPersonAdd } from "react-icons/io";
+import { UserHook } from "@/services/hooks/UserHook";
 
 export const GroupsPage = () => {
   const {groups, Create, isLoading, Del, addStudent} = useContext(GroupsContext);
   const [open, setOpen] = useState(false);
   const [editedGroupName, setEditedGroupName] = useState<string | null>(null);
+  const { user } = UserHook();
 
   const DataSchema = yup.object().shape({
     name: yup.string().required(),
@@ -99,6 +101,7 @@ export const GroupsPage = () => {
     resolver: yupResolver(DataSchema2),
   });
 
+  console.log(user.role)
   return (
     <C.Container>
       <C.Title>Grupos</C.Title>
@@ -117,9 +120,11 @@ export const GroupsPage = () => {
                     <span className="sr-only">Toggle</span>
                   </Button>
                 </CollapsibleTrigger>
-                <div className="w-6" onClick={()=> deleteGroup(group)}>
-                  <IoTrashOutline size={12} className="cursor-pointer hover:text-red-800"/>
-                </div>
+                {user.role == "ADMIN" && (
+                  <div className="w-6" onClick={()=> deleteGroup(group)}>
+                    <IoTrashOutline size={12} className="cursor-pointer hover:text-red-800"/>
+                  </div>
+                )}
 
                 <Dialog open={open} onOpenChange={setOpen}>
                   <DialogTrigger asChild>
@@ -200,58 +205,60 @@ export const GroupsPage = () => {
             </CollapsibleContent>
           </Collapsible>
       ))}
-      <C.ButtonContainer>
-        <DropdownMenu >
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">
-              <PlusIcon />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56 mb-5" side="right">
-            <DropdownMenuLabel>Criação de Grupo</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <Sheet>
-                <SheetTrigger asChild>
-                  <p className="flex items-center gap-2 px-2 py-2 text-sm rounded-md cursor-pointer hover:bg-accent hover:bg-opacity-10">
-                    <span>Criar</span>
-                  </p>
-                </SheetTrigger>
-                <SheetContent className="w-[500px] sm:[100%] mt-8">
-                  <SheetHeader>
-                    <SheetTitle>Criar Grupo</SheetTitle>
-                    <SheetDescription>
-                      Preencha os campos abaixo para criar um grupo
-                    </SheetDescription>
-                  </SheetHeader>
-                  <form onSubmit={handleSubmit(CreateGroup)}>
-                    <div className="grid gap-4 py-4">
-                      <div className="grid grid-cols-4 items-center gap-4">
-                        <Label htmlFor="name" className="text-right">
-                          Nome
-                        </Label>
-                        <Input
-                          id="name"
-                          onFocus={() => (watch("name") ? true : false)}
-                          className="col-span-3"
-                          {...register("name")}
-                        />
+      {user.role == "ADMIN" && (
+        <C.ButtonContainer>
+          <DropdownMenu >
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline">
+                <PlusIcon />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56 mb-5" side="right">
+              <DropdownMenuLabel>Criação de Grupo</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <Sheet>
+                  <SheetTrigger asChild>
+                    <p className="flex items-center gap-2 px-2 py-2 text-sm rounded-md cursor-pointer hover:bg-accent hover:bg-opacity-10">
+                      <span>Criar</span>
+                    </p>
+                  </SheetTrigger>
+                  <SheetContent className="w-[500px] sm:[100%] mt-8">
+                    <SheetHeader>
+                      <SheetTitle>Criar Grupo</SheetTitle>
+                      <SheetDescription>
+                        Preencha os campos abaixo para criar um grupo
+                      </SheetDescription>
+                    </SheetHeader>
+                    <form onSubmit={handleSubmit(CreateGroup)}>
+                      <div className="grid gap-4 py-4">
+                        <div className="grid grid-cols-4 items-center gap-4">
+                          <Label htmlFor="name" className="text-right">
+                            Nome
+                          </Label>
+                          <Input
+                            id="name"
+                            onFocus={() => (watch("name") ? true : false)}
+                            className="col-span-3"
+                            {...register("name")}
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <SheetFooter>
-                      <SheetClose asChild>
-                        <Button type="submit" style={{ background: "#1b4c70" }}>
-                          {isLoading ? "A criar..." : "Criar"}
-                        </Button>
-                      </SheetClose>
-                    </SheetFooter>
-                  </form>
-                </SheetContent>
-              </Sheet>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </C.ButtonContainer>
+                      <SheetFooter>
+                        <SheetClose asChild>
+                          <Button type="submit" style={{ background: "#1b4c70" }}>
+                            {isLoading ? "A criar..." : "Criar"}
+                          </Button>
+                        </SheetClose>
+                      </SheetFooter>
+                    </form>
+                  </SheetContent>
+                </Sheet>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </C.ButtonContainer>
+      )}
     </C.Container>
   );
 };
