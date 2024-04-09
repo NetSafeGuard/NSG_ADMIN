@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { Group } from "@/@types/Group";
+import { Group, EditData } from "@/@types/Group";
 import { api } from "@/services/api";
 import { toast } from "sonner";
 
@@ -9,6 +9,7 @@ interface GroupsContextType {
   Create: (data: Group) => Promise<any>
   Del: (data: Group) => Promise<any>
   isLoading: boolean;
+  addStudent: (data: EditData, groupname: string) => Promise<any>
 }
 
 export const GroupsContext = createContext({} as GroupsContextType);
@@ -102,8 +103,55 @@ export const GroupsProvider = ({ children }: any) => {
     });
   };
 
+  const addStudent = async (data: EditData, groupname: string) => {
+    return new Promise((resolve, reject) => {
+      if (isLoading) return;
+      setLoading(true);
+
+      api
+        .post("/group/student", {
+          groupname: groupname,
+          name: data.name,
+          email: data.email,
+          routerip: data.routerip,
+          studentid: data.studentid,
+        })
+        .then((response) => {
+          toast.dismiss();
+          toast.success("Estudante adicionado", {
+            description:
+              "O estudante " + data.name + " foi adicionado com sucesso.",
+            duration: 2000,
+          });
+          resolve(response);
+        })
+        .catch((error) => {
+          if (!error.response)
+            return toast("Problemas ao adicionar", {
+              description:
+                "Parece que houve um problema ao adicionar, tente novamente mais tarde.",
+              duration: 5000,
+            });
+          toast("Problemas ao adicionar", {
+            description:
+              error.response.data.message.length > 0
+                ? error.response.data.message
+                : "Contacte um administrador",
+            duration: 5000,
+          });
+          reject(error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    });
+  }
+
+  const Update = async (data: Group) => {
+  }
+
   return (
-    <GroupsContext.Provider value={{ groups, setGroups, Create, isLoading, Del }}>
+    <GroupsContext.Provider value={{ groups, setGroups, Create, isLoading, Del, addStudent }}>
       {children}
     </GroupsContext.Provider>
   );
