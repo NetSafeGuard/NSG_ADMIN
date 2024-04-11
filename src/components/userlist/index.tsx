@@ -19,7 +19,6 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Error } from "@/components/error";
 import { useContext, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -49,8 +48,7 @@ export const StudentsData = ({ students }: Props) => {
     register,
     handleSubmit,
     watch,
-    reset,
-    formState: { errors },
+    reset
   } = useForm<EditData>({
     resolver: yupResolver(DataSchema),
   });
@@ -109,7 +107,6 @@ export const StudentsData = ({ students }: Props) => {
                       <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="name" className="text-right flex gap-1">
                           Nome
-                          {errors.username && <Error error={"*"} />}
                         </Label>
                         <Input
                           id="name"
@@ -126,7 +123,6 @@ export const StudentsData = ({ students }: Props) => {
                           className="text-right flex gap-1"
                         >
                           Email
-                          {errors.email && <Error error={"*"} />}
                         </Label>
                         <Input
                           id="email"
@@ -144,7 +140,6 @@ export const StudentsData = ({ students }: Props) => {
                           className="text-right flex gap-1"
                         >
                           Nº de aluno
-                          {errors.avatar && <Error error={"*"} />}
                         </Label>
                         <Input
                           id="studentid"
