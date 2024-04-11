@@ -110,9 +110,9 @@ export const StudentsData = ({ students }: Props) => {
                         </Label>
                         <Input
                           id="name"
-                          onFocus={() => (watch("username") ? true : false)}
+                          onFocus={() => (watch("name") ? true : false)}
                           className="col-span-3"
-                          {...register("username")}
+                          {...register("name")}
                           defaultValue={user.name}
                           maxLength={40}
                         />
@@ -143,12 +143,12 @@ export const StudentsData = ({ students }: Props) => {
                         </Label>
                         <Input
                           id="studentid"
-                          onFocus={() => (watch("avatar") ? true : false)}
+                          onFocus={() => (watch("studentid") ? true : false)}
                           className="col-span-3"
                           type="text"
                           maxLength={200}
                           defaultValue={user.studentid}
-                          {...register("avatar")}
+                          {...register("studentid")}
                         />
                       </div>
                       <div className="grid grid-cols-4 items-center gap-4">
@@ -157,12 +157,12 @@ export const StudentsData = ({ students }: Props) => {
                         </Label>
                         <Input 
                           id="router"
-                          onFocus={() => (watch("router") ? true : false)}
+                          onFocus={() => (watch("routerip") ? true : false)}
                           className="col-span-3"
                           type="text"
                           maxLength={200}
                           defaultValue={user.routerip}
-                          {...register("router")}
+                          {...register("routerip")}
                         />
                       </div>
                     </div>
