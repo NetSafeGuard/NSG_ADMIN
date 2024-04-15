@@ -1,13 +1,10 @@
+import { useContext, useState } from "react";
 import * as C from "./style";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { PlusIcon } from "@radix-ui/react-icons";
-import { IoTrashOutline } from "react-icons/io5";
+import { IoTrashOutline, IoPersonAdd } from "react-icons/io5";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,7 +13,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
 import {
   Dialog,
   DialogContent,
@@ -26,10 +22,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
 import {
   Sheet,
   SheetClose,
@@ -40,18 +34,16 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import {useContext, useState} from "react";
-import {GroupsContext} from "@/contextapi/groups.context.tsx";
+import { GroupsContext } from "@/contextapi/groups.context.tsx";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { CreateData, Group } from "@/@types/Group";
+import { CreateData, CreateGroup, Group, Student } from "@/@types/Group";
 import { StudentsData } from "@/components/userlist";
-import { IoIosPersonAdd } from "react-icons/io";
 import { UserHook } from "@/services/hooks/UserHook";
 
 export const GroupsPage = () => {
-  const {groups, Create, isLoading, Del, addStudent} = useContext(GroupsContext);
+  const { groups, Create, isLoading, Del, addStudent } = useContext(GroupsContext);
   const [open, setOpen] = useState(false);
   const [editedGroupName, setEditedGroupName] = useState<string | null>(null);
   const { user } = UserHook();
@@ -67,32 +59,28 @@ export const GroupsPage = () => {
     studentid: yup.string().required(),
   });
 
-  const CreateGroup = (data: Group) => {
+  const CreateGroup = (data: CreateGroup) => {
     Create(data).then(() => {
       reset();
     });
   };
 
   const deleteGroup = (data: Group) => {
-    Del(data)
+    Del(data);
   };
 
   const CreateStudent = (groupname: string) => (data: CreateData) => {
     addStudent(data, groupname).then(() => {
       setOpen(false);
-    }).finally(() => reset2())
+    }).finally(() => reset2());
   };
-
-  interface Create {
-    name: string
-  }
 
   const {
     register,
     handleSubmit,
     watch,
     reset,
-  } = useForm<Create>({
+  } = useForm<CreateGroup>({
     resolver: yupResolver(DataSchema),
   });
 
@@ -101,116 +89,108 @@ export const GroupsPage = () => {
     handleSubmit: handleSubmit2,
     watch: watch2,
     reset: reset2,
-  } = useForm<Group>({
+  } = useForm<Student>({
     resolver: yupResolver(DataSchema2),
   });
 
   return (
     <C.Container>
       <C.Title>Grupos</C.Title>
-      {groups.map((group) => (
-          <Collapsible
-              className="w-[full] space-y-2"
-          >
-            <div className="flex items-center justify-between space-x-4 px-4">
-              <h4 className="text-sm font-semibold">
-                {group.name}
-              </h4>
-              <div className="flex items-center">
-                <CollapsibleTrigger asChild>
-                  <Button variant="ghost" size="sm">
-                    <CaretSortIcon className="h-4 w-4" />
-                    <span className="sr-only">Toggle</span>
+      {groups.map((group, index) => (
+        <Collapsible key={index} className="w-full space-y-2">
+          <div className="flex items-center justify-between space-x-4 px-4">
+            <h4 className="text-sm font-semibold">{group.name}</h4>
+            <div className="flex items-center">
+              <CollapsibleTrigger asChild>
+                <Button variant="ghost" size="sm">
+                  <CaretSortIcon className="h-4 w-4" />
+                  <span className="sr-only">Toggle</span>
+                </Button>
+              </CollapsibleTrigger>
+              {user.role === "ADMIN" && (
+                <div className="w-6" onClick={() => deleteGroup(group)}>
+                  <IoTrashOutline size={12} className="cursor-pointer hover:text-red-800" />
+                </div>
+              )}
+              <Dialog open={open} onOpenChange={setOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="ghost" size="sm" onClick={() => setEditedGroupName(group.name)}>
+                    <IoPersonAdd size={12} />
                   </Button>
-                </CollapsibleTrigger>
-                {user.role == "ADMIN" && (
-                  <div className="w-6" onClick={()=> deleteGroup(group)}>
-                    <IoTrashOutline size={12} className="cursor-pointer hover:text-red-800"/>
-                  </div>
-                )}
-
-                <Dialog open={open} onOpenChange={setOpen}>
-                  <DialogTrigger asChild>
-                    <Button variant="ghost" size="sm" onClick={() => setEditedGroupName(group.name)}>
-                      <IoIosPersonAdd size={12} />
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[425px]">
-                    <DialogHeader>
-                      <DialogTitle>Adicionar Estudannte</DialogTitle>
-                      <DialogDescription>
-                        Adicione um estudante ao grupo. Clique em Criar para salvar as
-                        alterações.
-                      </DialogDescription>
-                    </DialogHeader>
-                    <form onSubmit={handleSubmit2(CreateStudent(editedGroupName!))}>
-                      <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="name" className="text-right flex gap-1">
-                            Nome
-                          </Label>
-                          <Input
-                            id="name"
-                            onFocus={() => (watch2("name") ? true : false)}
-                            className="col-span-3"
-                            {...register2("name")}
-                          />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="email" className="text-right flex gap-1">
-                            Email
-                          </Label>
-                          <Input
-                            id="email"
-                            onFocus={() => (watch2("email") ? true : false)}
-                            className="col-span-3"
-                            type="email"
-                            {...register2("email")}
-                          />
-                        </div>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Adicionar Estudannte</DialogTitle>
+                    <DialogDescription>
+                      Adicione um estudante ao grupo. Clique em Criar para salvar as alterações.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <form onSubmit={handleSubmit2(CreateStudent(editedGroupName!))}>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-right flex gap-1">
+                          Nome
+                        </Label>
+                        <Input
+                          id="name"
+                          onFocus={() => (watch2("name") ? true : false)}
+                          className="col-span-3"
+                          {...register2("name")}
+                        />
                       </div>
-                      <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="routerip" className="text-right flex gap-1">
-                            Router IP
-                          </Label>
-                          <Input
-                            id="routerip"
-                            onFocus={() => (watch2("routerip") ? true : false)}
-                            className="col-span-3"
-                            {...register2("routerip")}
-                          />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="studentid" className="text-right flex gap-1">
-                            Student ID
-                          </Label>
-                          <Input
-                            id="studentid"
-                            onFocus={() => (watch2("studentid") ? true : false)}
-                            className="col-span-3"
-                            {...register2("studentid")}
-                          />
-                        </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="email" className="text-right flex gap-1">
+                          Email
+                        </Label>
+                        <Input
+                          id="email"
+                          onFocus={() => (watch2("email") ? true : false)}
+                          className="col-span-3"
+                          type="email"
+                          {...register2("email")}
+                        />
                       </div>
-                      <DialogFooter>
-                        <Button type="submit" style={{ background: "#1b4c70" }}>
-                          Criar
-                        </Button>
-                      </DialogFooter>
-                    </form>
-                  </DialogContent>
-                </Dialog>
-              </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="routerip" className="text-right flex gap-1">
+                          Router IP
+                        </Label>
+                        <Input
+                          id="routerip"
+                          onFocus={() => (watch2("routerip") ? true : false)}
+                          className="col-span-3"
+                          {...register2("routerip")}
+                        />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="studentid" className="text-right flex gap-1">
+                          Student ID
+                        </Label>
+                        <Input
+                          id="studentid"
+                          onFocus={() => (watch2("studentid") ? true : false)}
+                          className="col-span-3"
+                          {...register2("studentid")}
+                        />
+                      </div>
+                    </div>
+                    <DialogFooter>
+                      <Button type="submit" style={{ background: "#1b4c70" }}>
+                        Criar
+                      </Button>
+                    </DialogFooter>
+                  </form>
+                </DialogContent>
+              </Dialog>
             </div>
-            <CollapsibleContent className="w-full mx-4">
-              <StudentsData students={group.students}/>
-            </CollapsibleContent>
-          </Collapsible>
+          </div>
+          <CollapsibleContent className="w-full mx-4">
+            <StudentsData students={group.students} />
+          </CollapsibleContent>
+        </Collapsible>
       ))}
-      {user.role == "ADMIN" && (
+      {user.role === "ADMIN" && (
         <C.ButtonContainer>
-          <DropdownMenu >
+          <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline">
                 <PlusIcon />
@@ -229,9 +209,7 @@ export const GroupsPage = () => {
                   <SheetContent className="w-[500px] sm:[100%] mt-8">
                     <SheetHeader>
                       <SheetTitle>Criar Grupo</SheetTitle>
-                      <SheetDescription>
-                        Preencha os campos abaixo para criar um grupo
-                      </SheetDescription>
+                      <SheetDescription>Preencha os campos abaixo para criar um grupo</SheetDescription>
                     </SheetHeader>
                     <form onSubmit={handleSubmit(CreateGroup)}>
                       <div className="grid gap-4 py-4">

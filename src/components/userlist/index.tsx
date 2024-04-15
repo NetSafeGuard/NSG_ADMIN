@@ -24,7 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { GroupsContext } from "@/contextapi/groups.context";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Student, EditData, CreateData } from "@/@types/Group";
+import { Student, CreateData } from "@/@types/Group";
 
 type Props = {
   students: Student[];
@@ -49,7 +49,7 @@ export const StudentsData = ({ students }: Props) => {
     handleSubmit,
     watch,
     reset,
-  } = useForm<EditData>({
+  } = useForm<CreateData>({
     resolver: yupResolver(DataSchema),
   });
 

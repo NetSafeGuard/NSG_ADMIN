@@ -131,8 +131,8 @@ export const Button = styled.button<{
   font-style: normal;
   font-weight: 400;
   line-height: 19.992px;
-  cursor: ${({ blocked }) => (blocked ? "not-allowed" : "pointer")};
-  opacity: ${({ blocked }) => (blocked ? "0.5" : "1")};
+  cursor: ${({ blocked }: { blocked: boolean }) => (blocked ? "not-allowed" : "pointer")};
+  opacity: ${({ blocked }: { blocked: boolean }) => (blocked ? "0.5" : "1")};
 
   transition: background-color 0.5s;
   &:hover {

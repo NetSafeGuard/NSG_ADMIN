@@ -4,12 +4,16 @@ export interface Group {
     students: Student[]
 }
 
+export interface CreateGroup {
+    name: string;
+}
+
 export interface Student {
-    studentid: string,
     name: string,
     email: string,
     routerip: string,
-    code: string,
+    studentid: string,
+    code?: string,
 }
 
 export type CreateData = {

@@ -1,12 +1,12 @@
 import { createContext, useState } from "react";
-import { Group, EditData, CreateData } from "@/@types/Group";
+import { Group, EditData, CreateData, CreateGroup } from "@/@types/Group";
 import { api } from "@/services/api";
 import { toast } from "sonner";
 
 interface GroupsContextType {
   groups: Group[];
   setGroups: (value: Group[]) => void;
-  Create: (data: Group) => Promise<any>;
+  Create: (data: CreateGroup) => Promise<any>;
   Del: (data: Group) => Promise<any>;
   isLoading: boolean;
   addStudent: (data: CreateData, groupname: string) => Promise<any>;
@@ -19,7 +19,7 @@ export const GroupsProvider = ({ children }: any) => {
   const [groups, setGroups] = useState<Group[]>([]);
   const [isLoading, setLoading] = useState(false);
 
-  const Create = async (data: Group) => {
+  const Create = async (data: CreateGroup) => {
     return new Promise((resolve, reject) => {
       if (isLoading) return;
       setLoading(true);
