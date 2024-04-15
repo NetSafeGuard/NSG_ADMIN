@@ -5,16 +5,21 @@ export interface Group {
 }
 
 export interface Student {
-    studentid: string
-    name: string
+    studentid: string,
+    name: string,
     email: string,
     routerip: string,
-    code: string
+    code: string,
 }
 
-export type EditData = {
-    studentid: string
-    name: string
+export type CreateData = {
+    studentid: string,
+    name: string,
     email: string,
     routerip: string,
+};
+
+export type EditData = {
+    key: string,
+    value: string,
 };

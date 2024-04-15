@@ -83,12 +83,16 @@ export const GroupsPage = () => {
     }).finally(() => reset2())
   };
 
+  interface Create {
+    name: string
+  }
+
   const {
     register,
     handleSubmit,
     watch,
     reset,
-  } = useForm<Group>({
+  } = useForm<Create>({
     resolver: yupResolver(DataSchema),
   });
 

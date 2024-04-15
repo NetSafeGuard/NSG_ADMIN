@@ -1,15 +1,16 @@
 import { createContext, useState } from "react";
-import { Group, EditData } from "@/@types/Group";
+import { Group, EditData, CreateData } from "@/@types/Group";
 import { api } from "@/services/api";
 import { toast } from "sonner";
 
 interface GroupsContextType {
   groups: Group[];
   setGroups: (value: Group[]) => void;
-  Create: (data: Group) => Promise<any>
-  Del: (data: Group) => Promise<any>
+  Create: (data: Group) => Promise<any>;
+  Del: (data: Group) => Promise<any>;
   isLoading: boolean;
-  addStudent: (data: EditData, groupname: string) => Promise<any>
+  addStudent: (data: CreateData, groupname: string) => Promise<any>;
+  Update: (data: EditData[], email: string) => Promise<any>;
 }
 
 export const GroupsContext = createContext({} as GroupsContextType);
@@ -103,7 +104,7 @@ export const GroupsProvider = ({ children }: any) => {
     });
   };
 
-  const addStudent = async (data: EditData, groupname: string) => {
+  const addStudent = async (data: CreateData, groupname: string) => {
     return new Promise((resolve, reject) => {
       if (isLoading) return;
       setLoading(true);
@@ -147,11 +148,49 @@ export const GroupsProvider = ({ children }: any) => {
     });
   }
 
-  const Update = async (data: Group) => {
+  const Update = async (data: EditData[], email: string) => {
+    return new Promise((resolve, reject) => {
+      if (isLoading) return;
+      setLoading(true);
+
+      api
+        .put("/group/student", {
+          editedInputs: data,
+          email
+        })
+        .then((response) => {
+          toast.dismiss();
+          toast.success("Estudante adicionado", {
+            description:
+              "O estudante de email " + email + " foi editado com sucesso.",
+            duration: 2000,
+          });
+          resolve(response);
+        })
+        .catch((error) => {
+          if (!error.response)
+            return toast("Problemas ao editar", {
+              description:
+                "Parece que houve um problema ao editar, tente novamente mais tarde.",
+              duration: 5000,
+            });
+          toast("Problemas ao adicionar", {
+            description:
+              error.response.data.message.length > 0
+                ? error.response.data.message
+                : "Contacte um administrador",
+            duration: 5000,
+          });
+          reject(error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    });
   }
 
   return (
-    <GroupsContext.Provider value={{ groups, setGroups, Create, isLoading, Del, addStudent }}>
+    <GroupsContext.Provider value={{ groups, setGroups, Create, isLoading, Del, addStudent, Update }}>
       {children}
     </GroupsContext.Provider>
   );

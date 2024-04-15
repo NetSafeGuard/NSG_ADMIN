@@ -22,9 +22,9 @@ import * as yup from "yup";
 import { useContext, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AuthContext } from "@/contextapi/global.context";
+import { GroupsContext } from "@/contextapi/groups.context";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Student,EditData } from "@/@types/Group";
+import { Student, EditData, CreateData } from "@/@types/Group";
 
 type Props = {
   students: Student[];
@@ -42,23 +42,34 @@ export const StudentsData = ({ students }: Props) => {
     routerip: yup.string().required(),
   });
 
-  const Context = useContext(AuthContext);
+  const Context = useContext(GroupsContext);
 
   const {
     register,
     handleSubmit,
     watch,
-    reset
+    reset,
   } = useForm<EditData>({
     resolver: yupResolver(DataSchema),
   });
 
-  const Edit = (data: EditData) => {
-    console.log(data)
-  };
+  const Edit = (data: CreateData) => {
+    let editedInputs = Object.keys(data).filter(
+      (key) => data[key as keyof CreateData] !== editedUser?.[key as keyof CreateData]
+    ).map((key) => {
+      return {
+        key,
+        value: data[key as keyof CreateData],
+      }
+    });
 
-  const deleteUser = () => {
-  };
+    Context.Update(editedInputs, editedUser?.email as string).then(() => {
+      reset();
+      setOpen(false);
+    });
+  }
+
+  const deleteUser = () => {};
 
   return (
     <Table>
@@ -76,9 +87,7 @@ export const StudentsData = ({ students }: Props) => {
           <TableRow key={user.email}>
             <TableCell>{user.studentid}</TableCell>
 
-            <TableCell>
-              {user.name}
-            </TableCell>
+            <TableCell>{user.name}</TableCell>
             <TableCell>{user.email}</TableCell>
             <TableCell>193.113.25.13</TableCell>
             <TableCell className="text-right">
@@ -172,7 +181,7 @@ export const StudentsData = ({ students }: Props) => {
                         type="button"
                         style={{ background: "#f5766f" }}
                       >
-                        {Context.isLoading2 ? "A Apagar..." : "Apagar"}
+                      Apagar
                       </Button>
                       <Button type="submit" style={{ background: "#1b4c70" }}>
                         {Context.isLoading ? "A editar..." : "Editar"}
@@ -187,4 +196,4 @@ export const StudentsData = ({ students }: Props) => {
       </TableBody>
     </Table>
   );
-}
+};
