@@ -45,7 +45,7 @@ import {GroupsContext} from "@/contextapi/groups.context.tsx";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { EditData, Group } from "@/@types/Group";
+import { CreateData, Group } from "@/@types/Group";
 import { StudentsData } from "@/components/userlist";
 import { IoIosPersonAdd } from "react-icons/io";
 import { UserHook } from "@/services/hooks/UserHook";
@@ -77,7 +77,7 @@ export const GroupsPage = () => {
     Del(data)
   };
 
-  const CreateStudent = (groupname: string) => (data: EditData) => {
+  const CreateStudent = (groupname: string) => (data: CreateData) => {
     addStudent(data, groupname).then(() => {
       setOpen(false);
     }).finally(() => reset2())
