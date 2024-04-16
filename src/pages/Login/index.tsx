@@ -22,9 +22,9 @@ export const LoginPage = () => {
 
   const navigate = useNavigate();
 
-  const unlisten = onUpdaterEvent((event) => {
-    console.log('Event:', event)
-  });
+  onUpdaterEvent((event) => {
+    console.log('Updater event:', event)
+  })
 
   useEffect(() => {
     (async () => {
