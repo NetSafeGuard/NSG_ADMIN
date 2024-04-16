@@ -52,7 +52,7 @@
       "active": true,
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDEzMUVBOEI2RDBFOTE2QkIKUldTN0Z1blF0cWdlRTlqeDhDZjJhUmx5eDRkSUNvL3JUM1ZDcStPUFptWVAza1ZGQlVieDVsSEIK",
       "endpoints": [
-        "http://localhost:3000/api/v1/update?current_version={{current_version}}&target={{target}}&arch={{arch}}"
+        "https://api.netsafeguard.cloud/api/v1/update?current_version={{current_version}}&target={{target}}&arch={{arch}}"
       ],
       "windows": {
         "installMode": "basicUi"
