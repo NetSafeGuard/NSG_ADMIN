@@ -25,6 +25,7 @@ import { Label } from "@/components/ui/label";
 import { GroupsContext } from "@/contextapi/groups.context";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { Student, CreateData } from "@/@types/Group";
+import { UserHook } from "@/services/hooks/UserHook";
 
 type Props = {
   students: Student[];
@@ -34,6 +35,7 @@ export const StudentsData = ({ students }: Props) => {
   const [AnimationParent] = useAutoAnimate();
   const [open, setOpen] = useState(false);
   const [editedUser, setEditedUser] = useState<Student | null>(null);
+  const client = UserHook();
 
   const DataSchema = yup.object().shape({
     studentid: yup.string().required(),
@@ -79,6 +81,9 @@ export const StudentsData = ({ students }: Props) => {
           <TableHead>Nome de aluno</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Router IP</TableHead>
+          {client.user.role == "ADMIN" &&
+            <TableHead>Código</TableHead>
+          }
           <TableHead className="text-right">Editar</TableHead>
         </TableRow>
       </TableHeader>
@@ -89,7 +94,10 @@ export const StudentsData = ({ students }: Props) => {
 
             <TableCell>{user.name}</TableCell>
             <TableCell>{user.email}</TableCell>
-            <TableCell>193.113.25.13</TableCell>
+            <TableCell>{user.routerip}</TableCell>
+            {client.user.role == "ADMIN" &&
+              <TableCell>{user.code}</TableCell>
+            }
             <TableCell className="text-right">
               <Dialog open={open && editedUser === user} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
