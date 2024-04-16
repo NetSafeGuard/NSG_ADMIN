@@ -10,16 +10,45 @@ import { Loading } from "../../components/loading";
 import { Spinner } from "../../components/spinner";
 import { Error } from "../../components/error";
 import { useNavigate } from "react-router-dom";
+import {
+  checkUpdate,
+  installUpdate,
+  onUpdaterEvent,
+} from '@tauri-apps/api/updater'
+import { relaunch } from '@tauri-apps/api/process'
 
 export const LoginPage = () => {
   const { Login, Verify, isLoading, isGlobalLoading } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
+  const unlisten = onUpdaterEvent((event) => {
+    console.log('Event:', event)
+  });
+
   useEffect(() => {
-    setTimeout(() => {
-      Verify();
-    }, 3000);
+    (async () => {
+      try {
+        const { shouldUpdate, manifest } = await checkUpdate()
+      
+        if (shouldUpdate) {
+          console.log(
+            `Installing update ${manifest?.version}, ${manifest?.date}, ${manifest?.body}`
+          )
+      
+          installUpdate().then(() => {
+            console.log('Update installed')
+            relaunch()
+          })
+        }
+      } catch (error) {
+        console.error(error)
+      }
+  
+      setTimeout(() => {
+        Verify();
+      }, 3000);
+    })()
   }, []);
 
   const {

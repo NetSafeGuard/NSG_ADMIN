@@ -3,13 +3,23 @@ import close from '../../assets/close.png';
 import maximize from '../../assets/maximize.png';
 import minimize from '../../assets/minimize.png';
 import { appWindow } from '@tauri-apps/api/window';
+import { getVersion } from '@tauri-apps/api/app';
+import { useState, useEffect } from 'react';
 
 export const TitleBar = () => {
+    const [version, setVersion] = useState<string | null>(null)
+
+    useEffect(() => {
+        getVersion().then((version) => {
+            setVersion(version)
+        })
+    }, [])
+
     return (
         <C.MainContent>
             <C.TitleBarContainer data-tauri-drag-region>
                 <div>
-                    <C.TitleBarTitle>NetSafeGuard</C.TitleBarTitle>
+                    <C.TitleBarTitle>NetSafeGuard v{version}</C.TitleBarTitle>
                 </div>
 
                 <C.ButtonContainer>
