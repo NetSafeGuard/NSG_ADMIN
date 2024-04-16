@@ -73,7 +73,7 @@ export const LoginPage = () => {
           <C.SignInIcon>
             <RiLoginCircleLine color={"#788BA5"} size={30} />
           </C.SignInIcon>
-          <C.FormTitle>Bem vindo(a) novamente!</C.FormTitle>
+          <C.FormTitle>Bem vindo(a) novamente!Versão 0.0.1</C.FormTitle>
           <C.FormDescription>
             Use os dados fornecidos para entrar
           </C.FormDescription>
