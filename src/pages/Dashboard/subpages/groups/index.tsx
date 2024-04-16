@@ -99,7 +99,9 @@ export const GroupsPage = () => {
       {groups.map((group, index) => (
         <Collapsible key={index} className="w-full space-y-2">
           <div className="flex items-center justify-between space-x-4 px-4">
-            <h4 className="text-sm font-semibold">{group.name}</h4>
+            <CollapsibleTrigger asChild>
+              <h4 className="text-sm font-semibold hover:cursor-pointer">{group.name}</h4>
+            </CollapsibleTrigger>
             <div className="flex items-center">
               <CollapsibleTrigger asChild>
                 <Button variant="ghost" size="sm">
