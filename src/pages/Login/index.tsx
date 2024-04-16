@@ -30,7 +30,6 @@ export const LoginPage = () => {
     (async () => {
       try {
         const { shouldUpdate, manifest } = await checkUpdate()
-      
         if (shouldUpdate) {
           console.log(
             `Installing update ${manifest?.version}, ${manifest?.date}, ${manifest?.body}`
@@ -73,7 +72,7 @@ export const LoginPage = () => {
           <C.SignInIcon>
             <RiLoginCircleLine color={"#788BA5"} size={30} />
           </C.SignInIcon>
-          <C.FormTitle>Bem vindo(a) novamente!Versão 0.0.1</C.FormTitle>
+          <C.FormTitle>Bem vindo(a) novamente!</C.FormTitle>
           <C.FormDescription>
             Use os dados fornecidos para entrar
           </C.FormDescription>

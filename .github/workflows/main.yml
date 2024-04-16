@@ -2,7 +2,7 @@ name: Publish Release
 on:
   push:
     tags:
-      - "v*"
+      - "*.*.*"
   workflow_dispatch:
 
 env:
@@ -21,7 +21,7 @@ jobs:
           # NOTE: if commits subjects are standardized, you can filter the git log based on feat: and fix:
           # and then replace "feat:" with "New: " and "fix:" with "Fixed "
           # when AI gets good, we can also summarized commits into a bullet point list
-          PREV_TAG=$(git tag --list v* | tail -n2 | head -n1)
+          PREV_TAG=$(git tag --list "*.*.*" | tail -n2 | head -n1)
           echo "changelog=$(git log $PREV_TAG...${{ github.ref_name }} --pretty=format:"- %s")" >> $GITHUB_OUTPUT
     outputs:
       changelog: ${{ steps.build_changelog.outputs.changelog }}
@@ -74,4 +74,4 @@ jobs:
             ${{needs.changelog.outputs.changelog}}
             See the assets to download this version and install.
           releaseDraft: true
-          prerelease: false
+          prerelease: false 
