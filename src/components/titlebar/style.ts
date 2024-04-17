@@ -7,8 +7,8 @@ export const MainContent = styled.main`
 `;
 
 export const TitleBarContainer = styled.div`
-  position: fixed; // Adicionado aqui
-  top: 0; // Adicionado aqui
+  position: fixed;
+  top: 0;
   width: 100vw;
   height: 32px;
   background-color: #f8f8f8;
@@ -21,7 +21,7 @@ export const TitleBarContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  z-index: 1000; // Adicionado aqui
+  z-index: 1000;
 `;
 
 export const TitleBarTitle = styled.div`
@@ -54,5 +54,12 @@ export const Button = styled.div<ButtonProps>`
 
   &:hover {
     background: ${(props: ButtonProps) => (props.close ? "#EF2525" : "#f0f0f0;")};
+
+    ${(props: ButtonProps) => props.close && `
+      img {
+        // transform img to white
+        filter: invert(100%);
+      }
+    `
   }
 `;
