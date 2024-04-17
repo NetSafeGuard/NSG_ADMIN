@@ -33,15 +33,9 @@ export const UpdaterPage = () => {
                         date: manifest?.date,
                         body: manifest?.body
                     })
-                    
-                    console.log(
-                    `Installing update ${manifest?.version}, ${manifest?.date}, ${manifest?.body}`
-                    )
                 
-                    installUpdate().then(() => {
-                      console.log('Update installed')
-                      relaunch()
-                    })
+                    await installUpdate()
+                    await relaunch()
                 }
                 else {
                     navigate("/login")
