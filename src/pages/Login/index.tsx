@@ -27,27 +27,10 @@ export const LoginPage = () => {
   })
 
   useEffect(() => {
-    (async () => {
-      try {
-        const { shouldUpdate, manifest } = await checkUpdate()
-        if (shouldUpdate) {
-          console.log(
-            `Installing update ${manifest?.version}, ${manifest?.date}, ${manifest?.body}`
-          )
-      
-          installUpdate().then(() => {
-            console.log('Update installed')
-            relaunch()
-          })
-        }
-      } catch (error) {
-        console.error(error)
-      }
   
       setTimeout(() => {
         Verify();
       }, 3000);
-    })()
   }, []);
 
   const {
@@ -72,7 +55,7 @@ export const LoginPage = () => {
           <C.SignInIcon>
             <RiLoginCircleLine color={"#788BA5"} size={30} />
           </C.SignInIcon>
-          <C.FormTitle>Full versão nova :D!</C.FormTitle>
+          <C.FormTitle>Bem Vindo(a) novamente!</C.FormTitle>
           <C.FormDescription>
             Use os dados fornecidos para entrar
           </C.FormDescription>

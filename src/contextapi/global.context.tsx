@@ -32,7 +32,7 @@ export const AuthContext = createContext({} as AuthContextType);
 
 export const Logout = () => {
   localStorage.removeItem("nsg_token");
-  window.location.href = "/";
+  window.location.href = "/login";
 };
 
 export const AuthProvider = ({ children }: ProviderProps) => {

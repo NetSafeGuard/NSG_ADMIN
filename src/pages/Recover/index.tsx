@@ -84,7 +84,7 @@ export const RecoverPage = () => {
           </C.Button>
         </C.Form>
         <C.Back>
-          <C.BackLink onClick={() => navigate("/")}>Voltar</C.BackLink>
+          <C.BackLink onClick={() => navigate("/login")}>Voltar</C.BackLink>
         </C.Back>
       </C.FormContainer>
     </C.LoginContainer>

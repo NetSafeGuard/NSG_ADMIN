@@ -109,7 +109,7 @@ export const DashboardPage = () => {
 
   if (error) return <Loading text={error.message} />;
 
-  if (!user || !user.username) return <Navigate to="/" />;
+  if (!user || !user.username) return <Navigate to="/login" />;
 
   return (
     <C.Container>
