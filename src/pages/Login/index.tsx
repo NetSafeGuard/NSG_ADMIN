@@ -10,21 +10,11 @@ import { Loading } from "../../components/loading";
 import { Spinner } from "../../components/spinner";
 import { Error } from "../../components/error";
 import { useNavigate } from "react-router-dom";
-import {
-  checkUpdate,
-  installUpdate,
-  onUpdaterEvent,
-} from '@tauri-apps/api/updater'
-import { relaunch } from '@tauri-apps/api/process'
 
 export const LoginPage = () => {
   const { Login, Verify, isLoading, isGlobalLoading } = useContext(AuthContext);
 
   const navigate = useNavigate();
-
-  onUpdaterEvent((event) => {
-    console.log('Updater event:', event)
-  })
 
   useEffect(() => {
   
