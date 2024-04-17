@@ -71,7 +71,12 @@ export const StudentsData = ({ students }: Props) => {
     });
   }
 
-  const deleteUser = () => {};
+  const deleteUser = () => {
+    Context.DeleteStudent(editedUser?.email as string).then(() => {
+      reset();
+      setOpen(false);
+    });
+  };
 
   return (
     <Table>
@@ -189,7 +194,7 @@ export const StudentsData = ({ students }: Props) => {
                         type="button"
                         style={{ background: "#f5766f" }}
                       >
-                      Apagar
+                      {Context.isLoading2 ? "A apagar..." : "Apagar"}
                       </Button>
                       <Button type="submit" style={{ background: "#1b4c70" }}>
                         {Context.isLoading ? "A editar..." : "Editar"}

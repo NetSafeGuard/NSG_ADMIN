@@ -11,6 +11,8 @@ interface GroupsContextType {
   isLoading: boolean;
   addStudent: (data: CreateData, groupname: string) => Promise<any>;
   Update: (data: EditData[], email: string) => Promise<any>;
+  DeleteStudent: (email: string) => Promise<any>;
+  isLoading2: boolean;
 }
 
 export const GroupsContext = createContext({} as GroupsContextType);
@@ -18,6 +20,7 @@ export const GroupsContext = createContext({} as GroupsContextType);
 export const GroupsProvider = ({ children }: any) => {
   const [groups, setGroups] = useState<Group[]>([]);
   const [isLoading, setLoading] = useState(false);
+  const [isLoading2, setLoading2] = useState(false);
 
   const Create = async (data: CreateGroup) => {
     return new Promise((resolve, reject) => {
@@ -189,8 +192,49 @@ export const GroupsProvider = ({ children }: any) => {
     });
   }
 
+  const DeleteStudent = async (email: string) => {
+    return new Promise((resolve, reject) => {
+      if (isLoading2) return;
+      setLoading2(true);
+
+      api
+        .delete("/group/student", {
+          data: {
+            email
+          }
+        })
+        .then((response) => {
+          toast.dismiss();
+          toast.success("Estudante apagado", {
+            description:
+              "O estudante de email " + email + " foi apagado com sucesso.",
+            duration: 2000,
+          });
+          resolve(response);
+        })
+        .catch((error) => {
+          if (!error.response)
+            return toast("Problemas ao apagar", {
+              description:
+                "Parece que houve um problema ao apagar, tente novamente mais tarde.",
+              duration: 5000,
+            });
+          toast("Problemas ao apagar", {
+            description:
+              error.response.data.message.length > 0
+                ? error.response.data.message
+                : "Contacte um administrador",
+            duration: 5000,
+          });
+          reject(error);
+        }).finally(() => {
+          setLoading2(false);
+        });
+    });
+  }
+
   return (
-    <GroupsContext.Provider value={{ groups, setGroups, Create, isLoading, Del, addStudent, Update }}>
+    <GroupsContext.Provider value={{ groups, setGroups, Create, isLoading, Del, addStudent, Update, DeleteStudent, isLoading2 }}>
       {children}
     </GroupsContext.Provider>
   );
