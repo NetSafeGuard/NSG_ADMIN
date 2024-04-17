@@ -39,7 +39,11 @@ export const ButtonContainer = styled.div`
   justify-content: space-between;
 `;
 
-export const Button = styled.div`
+interface ButtonProps {
+  close?: boolean;
+}
+
+export const Button = styled.div<ButtonProps>`
   width: 46px;
   height: 32px;
   background: #f8f8f8;
@@ -49,6 +53,6 @@ export const Button = styled.div`
   cursor: pointer;
 
   &:hover {
-    background: #f0f0f0;
+    background: ${(props: ButtonProps) => (props.close ? "#EF2525" : "#f0f0f0;")};
   }
 `;

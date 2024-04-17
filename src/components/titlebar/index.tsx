@@ -42,6 +42,7 @@ export const TitleBar = () => {
                         <img src={maximize} alt="close" />
                     </C.Button>
                     <C.Button
+                        close={true}
                         onClick={async () => await appWindow.close()}
                     >
                         <img src={close} alt="close" />
