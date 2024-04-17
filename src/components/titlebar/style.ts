@@ -57,7 +57,6 @@ export const Button = styled.div<ButtonProps>`
 
     ${(props: ButtonProps) => props.close && `
       img {
-        // transform img to white
         filter: invert(100%);
       }
     `
