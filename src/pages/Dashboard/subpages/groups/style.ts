@@ -26,3 +26,10 @@ export const ButtonContainer = styled.div`
   bottom: 10px;
   left: 80px;
 `;
+
+export const ActivityContainer = styled.div`
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: calc(100vh - 210px);
+  padding-right: 20px;
+`;
