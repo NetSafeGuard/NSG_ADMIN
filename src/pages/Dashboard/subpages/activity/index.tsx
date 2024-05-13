@@ -26,8 +26,12 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useState } from "react";
+import { DateTimePicker } from "@/components/ui/datetimer-picker";
 
 export const ActivityPage = () => {
+  const [date,setDate] = useState();
+
   const activitys = [
     {
       title: "Formulario 1",
@@ -78,7 +82,7 @@ export const ActivityPage = () => {
               <PlusIcon />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56 mb-5 " side="right">
+          <DropdownMenuContent className="w-56 mb-5" side="right">
             <DropdownMenuLabel>Criação de Atividade</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
@@ -89,39 +93,53 @@ export const ActivityPage = () => {
                   </p>
                 </SheetTrigger>
                 <SheetContent className="w-[500px] sm:[100%] mt-8">
-                  <SheetHeader>
-                    <SheetTitle>Criar Atividade</SheetTitle>
-                    <SheetDescription>
-                      Preencha os campos abaixo para criar uma atividade
-                    </SheetDescription>
-                  </SheetHeader>
-                  <div className="grid gap-4 py-4">
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="name" className="text-right">
-                        Name
-                      </Label>
-                      <Input
-                        id="name"
-                        value="Pedro Duarte"
-                        className="col-span-3"
-                      />
+                  <C.ContainerScroll>
+                    <SheetHeader>
+                      <SheetTitle>Criar Atividade</SheetTitle>
+                      <SheetDescription>
+                        Preencha os campos abaixo para criar uma atividade
+                      </SheetDescription>
+                    </SheetHeader>
+                    <div className="grid gap-4 py-4">
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="name" className="text-left">
+                          Titulo
+                        </Label>
+                        <Input
+                          id="name"
+                          value="Pedro Duarte"
+                          className="col-span-3"
+                        />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="username" className="text-left">
+                          Descrição
+                        </Label>
+                        <Input
+                          id="username"
+                          value="@peduarte"
+                          className="col-span-3"
+                        />
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="username" className="text-left">
+                          Data de ínicio
+                        </Label>
+                        <DateTimePicker/>
+                      </div>
+                      <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="username" className="text-left">
+                          Data de término
+                        </Label>
+                        <DateTimePicker/>
+                      </div>
                     </div>
-                    <div className="grid grid-cols-4 items-center gap-4">
-                      <Label htmlFor="username" className="text-right">
-                        Username
-                      </Label>
-                      <Input
-                        id="username"
-                        value="@peduarte"
-                        className="col-span-3"
-                      />
-                    </div>
-                  </div>
-                  <SheetFooter>
-                    <SheetClose asChild>
-                      <Button type="submit">Save changes</Button>
-                    </SheetClose>
-                  </SheetFooter>
+                    <SheetFooter>
+                      <SheetClose asChild>
+                        <Button type="submit">Save changes</Button>
+                      </SheetClose>
+                    </SheetFooter>
+                  </C.ContainerScroll>
                 </SheetContent>
               </Sheet>
               <DropdownMenuItem>

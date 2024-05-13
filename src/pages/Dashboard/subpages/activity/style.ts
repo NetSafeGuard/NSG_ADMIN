@@ -79,3 +79,14 @@ export const ButtonContainer = styled.div`
   bottom: 10px;
   left: 80px;
 `;
+
+
+export const ContainerScroll = styled.div`
+  width: 100%;
+  height: calc(100% - 32px);
+  padding-right: 20px;
+  scroll-behavior: smooth;
+
+  overflow-y: scroll;
+  margin-top: 20px;
+`;
