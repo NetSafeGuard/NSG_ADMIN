@@ -67,8 +67,8 @@
         "width": 1090,
         "height": 624,
         "center": true,
-        "minWidth": 640,
-        "minHeight": 480,
+        "minWidth": 800,
+        "minHeight": 600,
         "decorations": false,
         "transparent": true
       }
