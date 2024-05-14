@@ -1,6 +1,6 @@
 import * as C from "./style";
 import { PlusIcon } from "@radix-ui/react-icons";
-
+import { Locale, format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -26,15 +26,29 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { DateTimePicker } from "@/components/ui/datetimer-picker";
-import { Group } from "@/@types/Group";
 import { useContext } from "react";
 import { GroupsContext } from "@/contextapi/groups.context";
 import { useState } from "react";
+import { 
+  Form,
+  FormField,
+  FormControl,
+  FormItem,
+ } from "@/components/ui/form";
+
+ import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { cn } from "../../../../../@/lib/utils";
+import { Calendar } from "@/components/ui/calendar";
+import { TimePickerDemo } from "@/components/ui/time-picker";
+import { Calendar as CalendarIcon } from "lucide-react";
+import ptLocale from 'date-fns/locale/pt';
 
 export const ActivityPage = () => {
 
@@ -42,28 +56,17 @@ export const ActivityPage = () => {
   const [createActivity, setCreateActivity] = useState(false);
   const {groups} = useContext(GroupsContext);
 
-  type CreateData = {
-    title: string;
-    description: string;
-    date: Date;
-    groups: Group[];
-  };
-
   const DataSchema = yup.object().shape({
-    title: yup.string().required("O título é obrigatório"),
-    description: yup.string().required("A descrição é obrigatória"),
-    date: yup.date().required("A data é obrigatória"),
-    groups: yup.array().required("O grupo é obrigatório"),
+    title: yup.string().required(),
+    description: yup.string().required(),
+    startdate: yup.date().required(),
+    enddate: yup.date().required(),
+    groups: yup.array().of(yup.string()).required(),
   });
 
-  const {
-    control,
-    register,
-    handleSubmit,
-    watch,
-    reset,
-    formState: { errors },
-  } = useForm<CreateData>({
+  type FormSchemaType = yup.InferType<typeof DataSchema>;
+
+  const form = useForm<FormSchemaType>({
     resolver: yupResolver(DataSchema),
   });
 
@@ -78,6 +81,11 @@ export const ActivityPage = () => {
   activitys.sort((a, b) => {
     return b.date.getTime() + a.date.getTime();
   });
+
+  const submit = (data: FormSchemaType) => {
+    console.log(data);
+    form.reset();
+  };
 
   return (
     <C.Container>
@@ -143,69 +151,161 @@ export const ActivityPage = () => {
                 Preencha os campos abaixo para criar uma atividade
               </SheetDescription>
             </SheetHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="name" className="text-left">
-                  Titulo
-                </Label>
-                <Input
-                  id="name"
-                  value="Pedro Duarte"
-                  className="col-span-3"
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="username" className="text-left">
-                  Descrição
-                </Label>
-                <Input
-                  id="username"
-                  value="@peduarte"
-                  className="col-span-3"
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="username" className="text-left">
-                  Data de ínicio
-                </Label>
-                <DateTimePicker/>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="username" className="text-left">
-                  Data de término
-                </Label>
-                <DateTimePicker/>
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4 w-full">
-                <Label htmlFor="role" className="text-right flex gap-1">
-                  Grupos
-                </Label>
-                <Controller
-                  name="groups"
-                  control={control}
-                  render={({ field }) => (
-                    <MultiSelectFormField
-                    className=""
-                    options={groups.map((group) => ({
-                      label: group.name,
-                      value: group.name,
-                    }))}
-                    onValueChange={field.onChange}
-                    placeholder="Selecione os grupos"
-                    variant="inverted"
-                    style={{ width: "230px" }}
-                  />
-                  )}
-                />
-              </div>
-            </div>
-            <SheetFooter>
-              <SheetClose asChild>
-                <Button 
-                style={{ background: "#1b4c70" }}
-                type="submit">Criar atividade</Button>
-              </SheetClose>
-            </SheetFooter>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(submit)}>
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-left">
+                      Titulo
+                    </Label>
+                    <Input
+                      id="name"
+                      className="col-span-3"
+                      {...form.register("title")}
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="username" className="text-left">
+                      Descrição
+                    </Label>
+                    <Input
+                      id="username"
+                      className="col-span-3"
+                      {...form.register("description")}
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="username" className="text-left">
+                      Data de ínicio
+                    </Label>
+                    <FormField
+                      control={form.control}
+                      name="startdate"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col" style={{width: "228.8px"}}>
+                          <Popover>
+                            <FormControl>
+                              <PopoverTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  style={{ maxWidth: "250px" }}
+                                  className={cn(
+                                    "justify-start text-left font-normal",
+                                    !field.value && "text-muted-foreground"
+                                  )}
+                                >
+                                  <CalendarIcon className="mr-2 h-4 w-4" />
+                                  {field.value ? (
+                                    format(field.value, "PPP HH:mm", { locale: ptLocale as unknown as Locale })
+                                  ) : (
+                                    <span>Escolha uma data</span>
+                                  )}
+                                </Button>
+                              </PopoverTrigger>
+                            </FormControl>
+                            <PopoverContent className="w-auto p-0 absolute -right-16 -top-14 overflow-scroll" style={{maxHeight: "250px", scrollbarWidth:"thin" }}>
+                              <Calendar
+                                mode="single"
+                                selected={field.value}
+                                onSelect={field.onChange}
+                                lang="pt"
+                                locale={ptLocale as unknown as Locale}
+                                initialFocus
+                              />
+                              <div className="p-3 border-t border-border">
+                                <TimePickerDemo
+                                  setDate={field.onChange}
+                                  date={field.value}
+                                />
+                              </div>
+                            </PopoverContent>
+                          </Popover>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="username" className="text-left">
+                      Data de término
+                    </Label>
+                    <FormField
+                      control={form.control}
+                      name="enddate"
+                      render={({ field }) => (
+                        <FormItem className="flex flex-col" style={{width: "228.8px"}}>
+                          <Popover>
+                            <FormControl>
+                              <PopoverTrigger asChild>
+                                <Button
+                                  variant="outline"
+                                  style={{ maxWidth: "250px" }}
+                                  className={cn(
+                                    "justify-start text-left font-normal",
+                                    !field.value && "text-muted-foreground"
+                                  )}
+                                >
+                                  <CalendarIcon className="mr-2 h-4 w-4" />
+                                  {field.value ? (
+                                    format(field.value, "PPP HH:mm", { locale: ptLocale as unknown as Locale })
+                                  ) : (
+                                    <span>Escolha uma data</span>
+                                  )}
+                                </Button>
+                              </PopoverTrigger>
+                            </FormControl>
+                            <PopoverContent className="w-auto p-0 absolute -right-16 -top-14 overflow-scroll" style={{maxHeight: "250px", scrollbarWidth:"thin" }}>
+                              <Calendar
+                                mode="single"
+                                selected={field.value}
+                                onSelect={field.onChange}
+                                lang="pt"
+                                locale={ptLocale as unknown as Locale}
+                                initialFocus
+                              />
+                              <div className="p-3 border-t border-border">
+                                <TimePickerDemo
+                                  setDate={field.onChange}
+                                  date={field.value}
+                                />
+                              </div>
+                            </PopoverContent>
+                          </Popover>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4 w-full">
+                    <Label htmlFor="role" className="text-right flex gap-1">
+                      Grupos
+                    </Label>
+                    <Controller
+                      name="groups"
+                      control={form.control}
+                      render={({ field }) => (
+                        <MultiSelectFormField
+                        className=""
+                        options={groups.map((group) => ({
+                          label: group.name,
+                          value: group.name,
+                        }))}
+                        onValueChange={field.onChange}
+                        placeholder="Selecione os grupos"
+                        variant="inverted"
+                        style={{ width: "230px" }}
+                      />
+                      )}
+                    />
+                  </div>
+                </div>
+                <SheetFooter>
+                  <SheetClose asChild>
+                    <Button 
+                    style={{ background: "#1b4c70" }}
+                    type="submit">Criar atividade</Button>
+                  </SheetClose>
+                </SheetFooter>
+              </form>
+            </Form>
           </C.ContainerScroll>
         </SheetContent>
       </Sheet>
