@@ -66,7 +66,7 @@ export const GroupsPage = () => {
   };
 
   const deleteGroup = (data: Group) => {
-    Del(data);
+    Del(data)
   };
 
   const CreateStudent = (groupname: string) => (data: CreateData) => {
@@ -136,7 +136,7 @@ export const GroupsPage = () => {
                           </Label>
                           <Input
                             id="name"
-                            onFocus={() => (watch2("name") ? true : false)}
+                            onFocus={() => (!!watch2("name"))}
                             className="col-span-3"
                             {...register2("name")}
                           />
@@ -147,7 +147,7 @@ export const GroupsPage = () => {
                           </Label>
                           <Input
                             id="email"
-                            onFocus={() => (watch2("email") ? true : false)}
+                            onFocus={() => (!!watch2("email"))}
                             className="col-span-3"
                             type="email"
                             {...register2("email")}
@@ -159,7 +159,7 @@ export const GroupsPage = () => {
                           </Label>
                           <Input
                             id="routerip"
-                            onFocus={() => (watch2("routerip") ? true : false)}
+                            onFocus={() => (!!watch2("routerip"))}
                             className="col-span-3"
                             {...register2("routerip")}
                           />
@@ -170,7 +170,7 @@ export const GroupsPage = () => {
                           </Label>
                           <Input
                             id="studentid"
-                            onFocus={() => (watch2("studentid") ? true : false)}
+                            onFocus={() => (!!watch2("studentid"))}
                             className="col-span-3"
                             {...register2("studentid")}
                           />
@@ -222,7 +222,7 @@ export const GroupsPage = () => {
                             </Label>
                             <Input
                               id="name"
-                              onFocus={() => (watch("name") ? true : false)}
+                              onFocus={() => (!!watch("name"))}
                               className="col-span-3"
                               {...register("name")}
                             />
