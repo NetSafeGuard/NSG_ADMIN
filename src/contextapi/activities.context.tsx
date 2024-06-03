@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import { api } from "@/services/api";
 import { toast } from "sonner";
+
 import { Activity } from "@/@types/Activity";
 
 interface ActivitiesContextType {
