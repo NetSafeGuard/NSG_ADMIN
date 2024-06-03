@@ -49,19 +49,21 @@ import { Calendar } from "@/components/ui/calendar";
 import { TimePickerDemo } from "@/components/ui/time-picker";
 import { Calendar as CalendarIcon } from "lucide-react";
 import ptLocale from 'date-fns/locale/pt';
+import { ActivitiesContext } from "@/contextapi/activities.context";
 
 export const ActivityPage = () => {
 
   const [open,setOpen] = useState(false);
   const [createActivity, setCreateActivity] = useState(false);
   const {groups} = useContext(GroupsContext);
+  const context = useContext(ActivitiesContext);
 
   const DataSchema = yup.object().shape({
     title: yup.string().required(),
     description: yup.string().required(),
     startdate: yup.date().required(),
     enddate: yup.date().required(),
-    groups: yup.array().of(yup.string()).required(),
+    groups: yup.array().of(yup.string()),
   });
 
   type FormSchemaType = yup.InferType<typeof DataSchema>;
@@ -69,6 +71,9 @@ export const ActivityPage = () => {
   const form = useForm<FormSchemaType>({
     resolver: yupResolver(DataSchema),
   });
+
+  // get errors from form and console.log
+  console.log(form.formState.errors);
 
   const activitys = [
     {
@@ -78,12 +83,11 @@ export const ActivityPage = () => {
     },
   ];
 
-  activitys.sort((a, b) => {
-    return b.date.getTime() + a.date.getTime();
-  });
-
   const submit = (data: FormSchemaType) => {
-    console.log(data);
+    context.Create({
+      ...data,
+      groups: data.groups as string[] ?? [] as string[],
+    });
     form.reset();
   };
 
@@ -155,7 +159,7 @@ export const ActivityPage = () => {
               <form onSubmit={form.handleSubmit(submit)}>
                 <div className="grid gap-4 py-4">
                   <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-left">
+                    <Label htmlFor="title" className="text-left">
                       Titulo
                     </Label>
                     <Input
@@ -225,7 +229,7 @@ export const ActivityPage = () => {
                     />
                   </div>
                   <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-left">
+                    <Label htmlFor="enddate" className="text-left">
                       Data de término
                     </Label>
                     <FormField
@@ -283,15 +287,15 @@ export const ActivityPage = () => {
                       control={form.control}
                       render={({ field }) => (
                         <MultiSelectFormField
-                        className=""
-                        options={groups.map((group) => ({
-                          label: group.name,
-                          value: group.name,
-                        }))}
-                        onValueChange={field.onChange}
-                        placeholder="Selecione os grupos"
-                        variant="inverted"
-                        style={{ width: "230px" }}
+                          className=""
+                          options={groups.map((group) => ({
+                            label: group.name,
+                            value: group.name,
+                          }))}
+                          onValueChange={field.onChange}
+                          placeholder="Selecione os grupos"
+                          variant="inverted"
+                          style={{ width: "230px" }}
                       />
                       )}
                     />
@@ -300,8 +304,11 @@ export const ActivityPage = () => {
                 <SheetFooter>
                   <SheetClose asChild>
                     <Button 
-                    style={{ background: "#1b4c70" }}
-                    type="submit">Criar atividade</Button>
+                      style={{ background: "#1b4c70" }}
+                      type="submit"
+                    >
+                      Criar atividade
+                    </Button>
                   </SheetClose>
                 </SheetFooter>
               </form>

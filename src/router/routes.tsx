@@ -6,6 +6,7 @@ import { DashboardPage } from "@/pages/Dashboard";
 import { UsersProvider } from "@/contextapi/users.context";
 import {GroupsProvider} from "@/contextapi/groups.context.tsx";
 import { UpdaterPage } from "@/pages/Updater";
+import { ActivityProvider } from "@/contextapi/activities.context";
 
 export const RoutesList = () => {
   return (
@@ -17,7 +18,9 @@ export const RoutesList = () => {
         element={
           <UsersProvider>
               <GroupsProvider>
+                <ActivityProvider>
                   <DashboardPage />
+                </ActivityProvider>
               </GroupsProvider>
           </UsersProvider>
         }
