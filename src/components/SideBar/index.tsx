@@ -34,7 +34,7 @@ export const SideBar = () => {
               data-tooltip-content="Estatísticas"
               data-tooltip-variant="light"
               data-tooltip-place="right"
-              menuselected={selected === "char" ? true : false}
+              menuselected={selected === "char"}
               onClick={() => setSelected("char")}
             >
               <BiSolidBarChartSquare size={26} color={"A6ABC8"} />
@@ -44,7 +44,7 @@ export const SideBar = () => {
               data-tooltip-content="Grupos"
               data-tooltip-variant="light"
               data-tooltip-place="right"
-              menuselected={selected === "groups" ? true : false}
+              menuselected={selected === "groups"}
               onClick={() => setSelected("groups")}
             >
               <MdGroups size={26} color={"A6ABC8"} />
@@ -54,18 +54,18 @@ export const SideBar = () => {
               data-tooltip-content="Atividades"
               data-tooltip-variant="light"
               data-tooltip-place="right"
-              menuselected={selected === "activity" ? true : false}
+              menuselected={selected === "activity"}
               onClick={() => setSelected("activity")}
             >
               <BiCalendarEvent size={26} color={"A6ABC8"} />
             </C.Icon>
-            {user.role == "ADMIN" && (
+            {user.role === "ADMIN" && (
               <C.Icon
                 data-tooltip-id="my-tooltip"
                 data-tooltip-content="Utilizadores"
                 data-tooltip-variant="light"
                 data-tooltip-place="right"
-                menuselected={selected === "users" ? true : false}
+                menuselected={selected === "users"}
                 onClick={() => setSelected("users")}
               >
                 <FaUserAlt size={21} color={"A6ABC8"} />
@@ -78,7 +78,7 @@ export const SideBar = () => {
               data-tooltip-content="Configurações"
               data-tooltip-variant="light"
               data-tooltip-place="right"
-              menuselected={selected === "settings" ? true : false}
+              menuselected={selected === "settings"}
               onClick={() => setSelected("settings")}
             >
               <AiFillSetting size={26} color={"A6ABC8"} />

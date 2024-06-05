@@ -9,7 +9,7 @@ import { Spinner } from "../../components/spinner";
 import { Error } from "../../components/error";
 import { useNavigate } from "react-router-dom";
 import { RecoverSchema } from "@/schemas/recover.schema";
-import { RecoverData } from "@/@types/RecoverData";
+import type { RecoverData } from "@/@types/RecoverData";
 
 export const RecoverPage = () => {
   const { Recover, Verify, isLoading, isGlobalLoading } =
@@ -76,7 +76,7 @@ export const RecoverPage = () => {
             type="email"
             placeholder="email@gmail.com"
             {...register("email")}
-            onFocus={() => (watch("email") ? true : false)}
+            onFocus={() => (!!watch("email"))}
           />
 
           <C.Button blocked={Delay > 0}>

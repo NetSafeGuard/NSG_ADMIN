@@ -1,6 +1,6 @@
 import useSWR  from 'swr';
 import { api } from '../api';
-import { User } from '@/@types/User';
+import type { User } from '@/@types/User';
 
 const fetcher = (url: string) => api.post(url).then(res => res.data.data.user)
 

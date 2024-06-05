@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "../../../@/lib/utils";
 import React from "react";
 import {
-  TimePickerType,
+  type TimePickerType,
   getArrowByType,
   getDateByType,
   setDateByType,
@@ -77,7 +77,7 @@ const TimePickerInput = React.forwardRef<
       }
       if (e.key >= "0" && e.key <= "9") {
         const newValue = !flag
-          ? "0" + e.key
+          ? `0${e.key}`
           : calculatedValue.slice(1, 2) + e.key;
         if (flag) onRightFocus?.();
         setFlag((prev) => !prev);

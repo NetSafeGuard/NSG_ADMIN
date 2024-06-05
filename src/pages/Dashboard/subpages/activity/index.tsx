@@ -1,6 +1,6 @@
 import * as C from "./style";
 import { PlusIcon } from "@radix-ui/react-icons";
-import { Locale, format } from "date-fns";
+import { type Locale, format } from "date-fns";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -72,7 +72,6 @@ export const ActivityPage = () => {
     resolver: yupResolver(DataSchema),
   });
 
-  // get errors from form and console.log
   console.log(form.formState.errors);
 
   const activitys = [
@@ -99,7 +98,7 @@ export const ActivityPage = () => {
           <>
             {activity.date.getDate() ===
             activitys[index - 1]?.date.getDate() ? (
-              <C.ActivityCard>
+              <C.ActivityCard key={index}>
                 <C.ActivityTitle>{activity.title}</C.ActivityTitle>
                 <C.ActivityDescription>
                   {activity.description}
@@ -107,11 +106,11 @@ export const ActivityPage = () => {
               </C.ActivityCard>
             ) : (
               <>
-                <C.ActivityDate>
+                <C.ActivityDate key={index}>
                   {activity.date.getDate()}{" "}
                   {activity.date.toLocaleString("default", { month: "short" })}.
                 </C.ActivityDate>
-                <C.ActivityCard>
+                <C.ActivityCard key={index}>
                   <C.ActivityTitle>{activity.title}</C.ActivityTitle>
                   <C.ActivityDescription>
                     {activity.description}

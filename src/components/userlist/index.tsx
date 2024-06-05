@@ -24,7 +24,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { GroupsContext } from "@/contextapi/groups.context";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
-import { Student, CreateData } from "@/@types/Group";
+import type { Student, CreateData } from "@/@types/Group";
 import { UserHook } from "@/services/hooks/UserHook";
 
 type Props = {
@@ -56,7 +56,7 @@ export const StudentsData = ({ students }: Props) => {
   });
 
   const Edit = (data: CreateData) => {
-    let editedInputs = Object.keys(data).filter(
+    const editedInputs = Object.keys(data).filter(
       (key) => data[key as keyof CreateData] !== editedUser?.[key as keyof CreateData]
     ).map((key) => {
       return {
@@ -86,7 +86,7 @@ export const StudentsData = ({ students }: Props) => {
           <TableHead>Nome de aluno</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Router IP</TableHead>
-          {client.user.role == "ADMIN" &&
+          {client.user.role === "ADMIN" &&
             <TableHead>Código</TableHead>
           }
           <TableHead className="text-right">Editar</TableHead>
@@ -100,13 +100,13 @@ export const StudentsData = ({ students }: Props) => {
             <TableCell>{user.name}</TableCell>
             <TableCell>{user.email}</TableCell>
             <TableCell>{user.routerip}</TableCell>
-            {client.user.role == "ADMIN" &&
+            {client.user.role === "ADMIN" &&
               <TableCell>{user.code}</TableCell>
             }
             <TableCell className="text-right">
               <Dialog open={open && editedUser === user} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
-                  <button
+                  <Button
                     className="text-[#1b4c70] hover:text-[#2D9CDB] focus:outline-none"
                     onClick={() => {
                       setEditedUser(user);
@@ -115,7 +115,7 @@ export const StudentsData = ({ students }: Props) => {
                     }}
                   >
                     Editar
-                  </button>
+                  </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px]">
                   <DialogHeader>
@@ -132,7 +132,7 @@ export const StudentsData = ({ students }: Props) => {
                         </Label>
                         <Input
                           id="name"
-                          onFocus={() => (watch("name") ? true : false)}
+                          onFocus={() => (!!watch("name"))}
                           className="col-span-3"
                           {...register("name")}
                           defaultValue={user.name}
@@ -148,7 +148,7 @@ export const StudentsData = ({ students }: Props) => {
                         </Label>
                         <Input
                           id="email"
-                          onFocus={() => (watch("email") ? true : false)}
+                          onFocus={() => (!!watch("email"))}
                           className="col-span-3"
                           type="email"
                           defaultValue={user.email}
@@ -165,7 +165,7 @@ export const StudentsData = ({ students }: Props) => {
                         </Label>
                         <Input
                           id="studentid"
-                          onFocus={() => (watch("studentid") ? true : false)}
+                          onFocus={() => (!!watch("studentid"))}
                           className="col-span-3"
                           type="text"
                           maxLength={200}
@@ -179,7 +179,7 @@ export const StudentsData = ({ students }: Props) => {
                         </Label>
                         <Input 
                           id="router"
-                          onFocus={() => (watch("routerip") ? true : false)}
+                          onFocus={() => (!!watch("routerip"))}
                           className="col-span-3"
                           type="text"
                           maxLength={200}

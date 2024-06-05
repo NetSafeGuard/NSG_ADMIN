@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { Group, EditData, CreateData, CreateGroup } from "@/@types/Group";
+import type { Group, EditData, CreateData, CreateGroup } from "@/@types/Group";
 import { api } from "@/services/api";
 import { toast } from "sonner";
 
@@ -36,7 +36,7 @@ export const GroupsProvider = ({ children }: any) => {
 
           toast.success("Grupo criado", {
             description:
-              "O grupo " + data.name + " foi criado com sucesso.",
+              `O grupo ${data.name} foi criado com sucesso.`,
             duration: 2000,
           });
 
@@ -80,7 +80,7 @@ export const GroupsProvider = ({ children }: any) => {
           toast.dismiss();
           toast.info("Grupo apagado", {
             description:
-              "O Grupo " + data.name + " foi apagado com sucesso.",
+              `O Grupo ${data.name} foi apagado com sucesso.`,
             duration: 2000,
           });
           resolve(response);
@@ -124,7 +124,7 @@ export const GroupsProvider = ({ children }: any) => {
           toast.dismiss();
           toast.success("Estudante adicionado", {
             description:
-              "O estudante " + data.name + " foi adicionado com sucesso.",
+              `O estudante ${data.name} foi adicionado com sucesso.`,
             duration: 2000,
           });
           resolve(response);
@@ -165,7 +165,7 @@ export const GroupsProvider = ({ children }: any) => {
           toast.dismiss();
           toast.success("Estudante adicionado", {
             description:
-              "O estudante de email " + email + " foi editado com sucesso.",
+              `O estudante de email ${email} foi editado com sucesso.`,
             duration: 2000,
           });
           resolve(response);
@@ -207,7 +207,7 @@ export const GroupsProvider = ({ children }: any) => {
           toast.dismiss();
           toast.success("Estudante apagado", {
             description:
-              "O estudante de email " + email + " foi apagado com sucesso.",
+              `O estudante de email ${email} foi apagado com sucesso.`,
             duration: 2000,
           });
           resolve(response);

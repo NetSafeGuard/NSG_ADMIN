@@ -60,7 +60,7 @@ export const UpdaterPage = () => {
                             cursor={false}
                             sequence={['.',1000, '..', 1000, '...', 1000]}
                             wrapper="h1"
-                            repeat={Infinity}
+                            repeat={Number.POSITIVE_INFINITY}
                             speed={90}
                         />
                     </C.UpdateText>
@@ -78,7 +78,7 @@ export const UpdaterPage = () => {
                             cursor={false}
                             sequence={['.',1000, '..', 1000, '...', 1000]}
                             wrapper="h2"
-                            repeat={Infinity}
+                            repeat={Number.POSITIVE_INFINITY}
                             speed={90}
                         />
                     </C.UpdateSubText>

@@ -5,10 +5,10 @@ import { MdOutlineSecurity } from "react-icons/md";
 import { StyledCard } from "./style";
 import { UsersContext } from "@/contextapi/users.context";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import { User } from "@/@types/User";
+import type { User } from "@/@types/User";
 import { useContext } from "react";
 import { GroupsContext } from "@/contextapi/groups.context";
-import { Group } from "@/@types/Group";
+import type { Group } from "@/@types/Group";
 
 export const Cards = () => {
   const { users, loaded } = useContext(UsersContext);
@@ -67,7 +67,7 @@ export const Cards = () => {
             <CountUp start={0} end={users ? users.length : 0} duration={4} />
           </div>
           <p className="text-xs text-muted-foreground">
-          {users.length == 0 ? `
+          {users.length === 0 ? `
               Nenhum novo utilizador este mês
             `  
             : 
@@ -105,7 +105,7 @@ export const Cards = () => {
             <CountUp start={0} end={groups.length} duration={3} />
           </div>
           <p className="text-xs text-muted-foreground">
-            {groups.length == 0 ? `
+            {groups.length === 0 ? `
               Nenhum novo grupo este mês
             `  
             : 

@@ -38,7 +38,7 @@ import { GroupsContext } from "@/contextapi/groups.context.tsx";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { CreateData, CreateGroup, Group, Student } from "@/@types/Group";
+import type { CreateData, CreateGroup, Group, Student } from "@/@types/Group";
 import { StudentsData } from "@/components/userlist";
 import { UserHook } from "@/services/hooks/UserHook";
 

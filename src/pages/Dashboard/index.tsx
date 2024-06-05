@@ -13,181 +13,195 @@ import { UsersPage } from "./subpages/users";
 import { SettingsPage } from "./subpages/settings";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import { Error } from "@/components/error";
 import { toast } from "sonner";
 import { ActivityPage } from "./subpages/activity";
 import { UsersContext } from "@/contextapi/users.context";
 import { getSocket } from "@/services/socket";
-import { User } from "@/@types/User";
+import type { User } from "@/@types/User";
 import { GroupsPage } from "./subpages/groups";
-import {Group} from "@/@types/Group.ts";
-import {GroupsContext} from "@/contextapi/groups.context.tsx";
+import type { Group } from "@/@types/Group.ts";
+import { GroupsContext } from "@/contextapi/groups.context.tsx";
+import type { Activity } from "@/@types/Activity";
+import { ActivitiesContext } from "@/contextapi/activities.context";
 
 export const DashboardPage = () => {
-  const { user, isLoading, error } = UserHook();
+	const { user, isLoading, error } = UserHook();
 
-  const { setUsers, loaded, setLoaded } = useContext(UsersContext);
-  const { setGroups } = useContext(GroupsContext);
+	const { setUsers, loaded, setLoaded } = useContext(UsersContext);
+	const { setGroups } = useContext(GroupsContext);
+	const { setActivities } = useContext(ActivitiesContext);
 
-  useEffect(() => {
-    const setupSocket = async () => {
-      const socket = await getSocket();
+	useEffect(() => {
+		const setupSocket = async () => {
+			const socket = await getSocket();
 
-      socket.emit("getData");
-      socket.on("users", (users: User[]) => {
-        setUsers(
-          users.sort((a, b) => {
-            if (a.createdAt > b.createdAt) return -1;
-            if (a.createdAt < b.createdAt) return 1;
-            return 0;
-          })
-        );
-        if (!loaded) setLoaded(true);
-      });
+			socket.emit("getData");
+			socket.on("users", (users: User[]) => {
+				setUsers(
+					users.sort((a, b) => {
+						if (a.createdAt > b.createdAt) return -1;
+						if (a.createdAt < b.createdAt) return 1;
+						return 0;
+					}),
+				);
+				if (!loaded) setLoaded(true);
+			});
 
-      socket.on("groups", (groups: Group[]) => {
-        setGroups(
-            groups.sort((a,b) => {
-              if(a.createdAt > b.createdAt) return -1;
-              if(a.createdAt < b.createdAt) return 1
-              return 0
-            })
-        )
-      });
-    };
+			socket.on("groups", (groups: Group[]) => {
+				setGroups(
+					groups.sort((a, b) => {
+						if (a.createdAt > b.createdAt) return -1;
+						if (a.createdAt < b.createdAt) return 1;
+						return 0;
+					}),
+				);
+			});
 
-    setupSocket();
-  }, []);
+			socket.on("activities", (activities: Activity[]) => {
+				setActivities(
+					activities.sort((a, b) => {
+						if (a.startdate > b.startdate) return -1;
+						if (a.startdate < b.startdate) return 1;
+						return 0;
+					}),
+				);
+			});
+		};
 
-  const Context = useContext(AuthContext);
+		setupSocket();
+	}, [setUsers, setGroups, setActivities, setLoaded, loaded]);
 
-  const DataSchema = yup.object().shape({
-    password: yup.string().required(),
-    repeatpassword: yup.string().required(),
-  });
+	const Context = useContext(AuthContext);
 
-  interface FormValues {
-    password: string;
-    repeatpassword: string;
-  }
+	const DataSchema = yup.object().shape({
+		password: yup.string().required(),
+		repeatpassword: yup.string().required(),
+	});
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<FormValues>({
-    resolver: yupResolver(DataSchema),
-  });
+	interface FormValues {
+		password: string;
+		repeatpassword: string;
+	}
 
-  const handleChange = (e: FormValues) => {
-    if (e.password !== e.repeatpassword)
-      return toast.error("Problema na ativação", {
-        description: "As palavras-passe não coincidem",
-      });
+	const {
+		register,
+		handleSubmit,
+		watch,
+		formState: { errors },
+	} = useForm<FormValues>({
+		resolver: yupResolver(DataSchema),
+	});
 
-    Context.Active({
-      user: user!.email,
-      password: e.password,
-    }).then(() => {
-      user!.activated = true;
-    });
-  };
-  if (isLoading) return <Loading />;
+	const handleChange = (e: FormValues) => {
+		if (e.password !== e.repeatpassword)
+			return toast.error("Problema na ativação", {
+				description: "As palavras-passe não coincidem",
+			});
 
-  if (error) return <Loading text={error.message} />;
+		Context.Active({
+			user: user.email,
+			password: e.password,
+		}).then(() => {
+			user.activated = true;
+		});
+	};
+	if (isLoading) return <Loading />;
 
-  if (!user || !user.username) return <Navigate to="/login" />;
+	if (error) return <Loading text={error.message} />;
 
-  return (
-    <C.Container>
-      {user.activated ? (
-        <>
-          <SideBar />
-          <C.Content>
-            {Context.selected !== "settings" && (
-              <C.Row>
-                <C.ProfileContainer>
-                  <Profile />
-                </C.ProfileContainer>
-              </C.Row>
-            )}
-            <C.Pages>
-              {Context.selected === "char" && <EstatisticasPage />}
-              {Context.selected === "users" && <UsersPage />}
-              {Context.selected == "settings" && <SettingsPage />}
-              {Context.selected == "activity" && <ActivityPage />}
-              {Context.selected == "groups" && <GroupsPage />}
-            </C.Pages>
-          </C.Content>
-        </>
-      ) : (
-        <Dialog open={true}>
-          <DialogContent
-            className="sm:max-w-[425px]"
-            style={{ zIndex: 99999999999 }}
-          >
-            <DialogHeader>
-              <DialogTitle>Ativação de conta</DialogTitle>
-              <DialogDescription>
-                Olá {user.username}, para continuar a usar a aplicação, por
-                favor altere a sua palavra-passe.
-              </DialogDescription>
-            </DialogHeader>
-            <form onSubmit={handleSubmit(handleChange)}>
-              <div className="grid gap-4 py-4">
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="password" className="text-right flex gap-1">
-                    Senha
-                    {errors.password && <Error error={"*"} />}
-                  </Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    onFocus={() => (!!watch("password"))}
-                    placeholder="********"
-                    className="col-span-3"
-                    {...register("password")}
-                    maxLength={20}
-                  />
-                </div>
-                <div className="grid grid-cols-4 items-center gap-4">
-                  <Label htmlFor="rsenha" className="text-right flex gap-1">
-                    R-Senha
-                    {errors.repeatpassword && <Error error={"*"} />}
-                  </Label>
-                  <Input
-                    id="rsenha"
-                    onFocus={() => (!!watch("repeatpassword"))}
-                    className="col-span-3"
-                    type="password"
-                    placeholder="********"
-                    maxLength={20}
-                    {...register("repeatpassword")}
-                  />
-                </div>
-              </div>
-              <DialogFooter>
-                <Button type="submit" style={{ background: "#1b4c70" }}>
-                  {Context.isLoading ? "A definir..." : "Definir"}
-                </Button>
-              </DialogFooter>
-            </form>
-          </DialogContent>
-        </Dialog>
-      )}
-    </C.Container>
-  );
+	if (!user || !user.username) return <Navigate to="/login" />;
+
+	return (
+		<C.Container>
+			{user.activated ? (
+				<>
+					<SideBar />
+					<C.Content>
+						{Context.selected !== "settings" && (
+							<C.Row>
+								<C.ProfileContainer>
+									<Profile />
+								</C.ProfileContainer>
+							</C.Row>
+						)}
+						<C.Pages>
+							{Context.selected === "char" && <EstatisticasPage />}
+							{Context.selected === "users" && <UsersPage />}
+							{Context.selected === "settings" && <SettingsPage />}
+							{Context.selected === "activity" && <ActivityPage />}
+							{Context.selected === "groups" && <GroupsPage />}
+						</C.Pages>
+					</C.Content>
+				</>
+			) : (
+				<Dialog open={true}>
+					<DialogContent
+						className="sm:max-w-[425px]"
+						style={{ zIndex: 99999999999 }}
+					>
+						<DialogHeader>
+							<DialogTitle>Ativação de conta</DialogTitle>
+							<DialogDescription>
+								Olá {user.username}, para continuar a usar a aplicação, por
+								favor altere a sua palavra-passe.
+							</DialogDescription>
+						</DialogHeader>
+						<form onSubmit={handleSubmit(handleChange)}>
+							<div className="grid gap-4 py-4">
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="password" className="text-right flex gap-1">
+										Senha
+										{errors.password && <Error error={"*"} />}
+									</Label>
+									<Input
+										id="password"
+										type="password"
+										onFocus={() => !!watch("password")}
+										placeholder="********"
+										className="col-span-3"
+										{...register("password")}
+										maxLength={20}
+									/>
+								</div>
+								<div className="grid grid-cols-4 items-center gap-4">
+									<Label htmlFor="rsenha" className="text-right flex gap-1">
+										R-Senha
+										{errors.repeatpassword && <Error error={"*"} />}
+									</Label>
+									<Input
+										id="rsenha"
+										onFocus={() => !!watch("repeatpassword")}
+										className="col-span-3"
+										type="password"
+										placeholder="********"
+										maxLength={20}
+										{...register("repeatpassword")}
+									/>
+								</div>
+							</div>
+							<DialogFooter>
+								<Button type="submit" style={{ background: "#1b4c70" }}>
+									{Context.isLoading ? "A definir..." : "Definir"}
+								</Button>
+							</DialogFooter>
+						</form>
+					</DialogContent>
+				</Dialog>
+			)}
+		</C.Container>
+	);
 };

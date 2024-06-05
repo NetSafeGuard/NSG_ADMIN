@@ -1,0 +1,67 @@
+{
+    "$schema": "https://biomejs.dev/schemas/1.8.0/schema.json",
+    "organizeImports": {
+        "enabled": true
+    },
+    "formatter": {
+        "indentStyle": "tab",
+        "lineEnding": "crlf",
+        "indentWidth": 4,
+        "lineWidth": 100
+    },
+    "javascript": {
+        "formatter": {
+            "bracketSpacing": true,
+            "bracketSameLine": true,
+            "arrowParentheses": "asNeeded",
+            "quoteStyle": "single",
+            "semicolons": "always"
+        }
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "correctness": {
+                "useExhaustiveDependencies": {
+                    "level": "off",
+                    "options": {
+                        "hooks": [{
+                            "name": "useEffect",
+                            "stableResult": true
+                        }]
+                    }
+                }
+            },
+            "style": {
+                "noNonNullAssertion": {
+                    "level": "off"
+                }
+            },
+            "suspicious": {
+                "noUnsafeDeclarationMerging": {
+                    "level": "off"
+                },
+                "noShadowRestrictedNames": {
+                    "level": "off"
+                },
+                "noExplicitAny": {
+                    "level": "off"
+                },
+                "noArrayIndexKey": {
+                    "level": "off"
+                }
+            },
+            "a11y": {
+                "useKeyWithClickEvents": {
+                    "level": "off"
+                },
+                "useButtonType": {
+                    "level": "off"
+                },
+                "noSvgWithoutTitle": {
+                    "level": "off"
+                }
+            }
+        }
+    }
+}

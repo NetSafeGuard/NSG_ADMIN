@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 import { api } from "@/services/api";
 import { toast } from "sonner";
 
-import { Activity } from "@/@types/Activity";
+import type { Activity } from "@/@types/Activity";
 
 interface ActivitiesContextType {
   activities: Activity[];
@@ -34,7 +34,7 @@ export const ActivityProvider = ({ children }: any) => {
 
         toast.success("Atividade criado", {
             description:
-            "A atividade " + data.title + " foi criada com sucesso.",
+            `A atividade ${data.title} foi criada com sucesso.`,
             duration: 2000,
         });
 

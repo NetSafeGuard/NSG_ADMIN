@@ -1,5 +1,5 @@
 import { createContext, useState } from "react";
-import { User } from "@/@types/User";
+import type { User } from "@/@types/User";
 
 interface UsersContextType {
   users: User[];

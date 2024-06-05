@@ -4,7 +4,7 @@ import { RiLoginCircleLine } from "react-icons/ri";
 import { LoginSchema } from "../../schemas/login.schema";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { LoginData } from "../../@types/LoginData";
+import type { LoginData } from "../../@types/LoginData";
 import { AuthContext } from "../../contextapi/global.context";
 import { Loading } from "../../components/loading";
 import { Spinner } from "../../components/spinner";
@@ -59,7 +59,7 @@ export const LoginPage = () => {
             type="text"
             placeholder="email@gmail.com"
             {...register("user")}
-            onFocus={() => (watch("user") ? true : false)}
+            onFocus={() => (!!watch("user"))}
           />
 
           <C.Label>
@@ -70,7 +70,7 @@ export const LoginPage = () => {
             type="password"
             placeholder="Palavra-passe"
             {...register("password")}
-            onFocus={() => (watch("password") ? true : false)}
+            onFocus={() => (!!watch("password"))}
           />
 
           <C.Button>{isLoading ? <Spinner /> : "Entrar"}</C.Button>
