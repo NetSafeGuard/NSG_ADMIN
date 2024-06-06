@@ -1,7 +1,7 @@
 export interface Activity {
     title: string;
     description: string;
-    startdate: Date;
-    enddate: Date;
+    startDate: Date;
+    endDate: Date;
     groups: string[];
 }

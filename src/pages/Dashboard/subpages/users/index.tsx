@@ -92,7 +92,7 @@ export const UsersPage = () => {
 				/>
 				<Dialog open={open} onOpenChange={setOpen}>
 					<DialogTrigger asChild>
-						<Button className="w-40 gap-1 inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-accent hover:text-accent-foreground rounded-md px-3 text-xs h-8 border-dashed sm:w-28">
+						<Button className="w-40 gap-1 inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border border-input bg-transparent shadow-sm hover:bg-accent text-accent-foreground rounded-md px-3 text-xs h-8 border-dashed sm:w-28 ">
 							<IoAddCircleOutline size={16} />
 							Add
 						</Button>

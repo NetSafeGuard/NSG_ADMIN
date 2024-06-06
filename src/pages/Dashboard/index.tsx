@@ -72,17 +72,24 @@ export const DashboardPage = () => {
 
 			socket.on("activities", (activities: Activity[]) => {
 				setActivities(
-					activities.sort((a, b) => {
-						if (a.startdate > b.startdate) return -1;
-						if (a.startdate < b.startdate) return 1;
-						return 0;
-					}),
+					activities
+						.sort((a, b) => {
+							if (a.startDate > b.startDate) return -1;
+							if (a.startDate < b.startDate) return 1;
+							return 0;
+						})
+						.map((activity) => {
+							console.log(activity)
+							activity.startDate = new Date(activity.startDate);
+							activity.endDate = new Date(activity.endDate);
+							return activity;
+						}),
 				);
 			});
 		};
 
 		setupSocket();
-	}, [setUsers, setGroups, setActivities, setLoaded, loaded]);
+	}, []);
 
 	const Context = useContext(AuthContext);
 

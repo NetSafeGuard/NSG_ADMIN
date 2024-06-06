@@ -25,8 +25,8 @@ export const ActivityProvider = ({ children }: any) => {
         api.post("/activities/", {
             title: data.title,
             description: data.description,
-            startdate: data.startdate,
-            enddate: data.enddate,
+            startDate: data.startDate,
+            endDate: data.endDate,
             groups: data.groups,
         })
         .then((response) => {

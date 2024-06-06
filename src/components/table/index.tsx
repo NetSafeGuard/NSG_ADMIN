@@ -91,7 +91,7 @@ export const TableData = ({ users }: Props) => {
 					<TableHead>Nome de utilizador</TableHead>
 					<TableHead>Email</TableHead>
 					<TableHead>Criado há</TableHead>
-					<TableHead className="text-right">Editar</TableHead>
+					<TableHead className="text-right pr-6">Editar</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody ref={AnimationParent}>
@@ -137,7 +137,7 @@ export const TableData = ({ users }: Props) => {
 							<Dialog open={open && editedUser === user} onOpenChange={setOpen}>
 								<DialogTrigger asChild>
 									<Button
-										className="text-[#1b4c70] hover:text-[#2D9CDB] focus:outline-none"
+										className="text-[#1b4c70] hover:text-[#2D9CDB] focus:outline-none bg-transparent hover:bg-inherit"
 										onClick={() => {
 											setEditedUser(user);
 											setOpen(true);

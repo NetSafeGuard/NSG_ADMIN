@@ -42,7 +42,7 @@ export const ActivityContainer = styled.div`
 export const ActivityCard = styled.div`
   flex-shrink: 0;
   width: 100%;
-  height: 60px;
+  min-height: 60px;
   background: #ffffff;
   border-radius: 10px;
   display: flex;
@@ -65,6 +65,8 @@ export const ActivityTitle = styled.h1`
   font-size: 15px;
   font-weight: normal;
   color: #333333;
+  word-wrap: break-word;
+  max-width: 100%;
 `;
 
 export const ActivityDescription = styled.h1`
