@@ -25,7 +25,6 @@ import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 import { Error } from "@/components/error";
 import { toast } from "sonner";
 import { ActivityPage } from "./subpages/activity";
@@ -151,7 +150,7 @@ export const DashboardPage = () => {
 				<Dialog open={true}>
 					<DialogContent
 						className="sm:max-w-[425px]"
-						style={{ zIndex: 99999999999 }}
+						style={{ zIndex: 999 }}
 					>
 						<DialogHeader>
 							<DialogTitle>Ativação de conta</DialogTitle>
@@ -205,3 +204,4 @@ export const DashboardPage = () => {
 		</C.Container>
 	);
 };
+
