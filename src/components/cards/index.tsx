@@ -9,10 +9,12 @@ import type { User } from "@/@types/User";
 import { useContext } from "react";
 import { GroupsContext } from "@/contextapi/groups.context";
 import type { Group } from "@/@types/Group";
+import { ActivitiesContext } from "@/contextapi/activities.context";
 
 export const Cards = () => {
   const { users, loaded } = useContext(UsersContext);
   const { groups } = useContext(GroupsContext)
+  const { activities } = useContext(ActivitiesContext)
 
   if (!loaded)
     return (
@@ -37,10 +39,32 @@ export const Cards = () => {
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            <CountUp start={0} end={50} duration={6} />
+            <CountUp start={0} end={activities.length} duration={3} />
           </div>
           <p className="text-xs text-muted-foreground">
-            +20.1% que o mês passado
+            {activities.length === 0 ? `
+              Nenhuma atividade registrada este mês
+            `  
+            : 
+            <>     
+              <span>+</span>       
+              <CountUp 
+                start={0} 
+                end={
+                  activities ? activities.filter((activity) => {
+                    const activityCreateAt = new Date(activity.createdAt);
+                    activityCreateAt.setMonth(activityCreateAt.getMonth() + 1);
+
+                    if (activityCreateAt > new Date()) return true;
+                  }).length
+                  : 0
+                } 
+                duration={3} 
+              /> 
+              <span> nova(s) atividades este mês</span>
+            </>
+            
+          }
           </p>
         </CardContent>
       </StyledCard>
