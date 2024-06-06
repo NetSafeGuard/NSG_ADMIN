@@ -52,7 +52,7 @@ export const Cards = () => {
                 start={0} 
                 end={
                   activities ? activities.filter((activity) => {
-                    const activityCreateAt = new Date(activity.createdAt);
+                    const activityCreateAt = new Date(activity.createdAt!);
                     activityCreateAt.setMonth(activityCreateAt.getMonth() + 1);
 
                     if (activityCreateAt > new Date()) return true;

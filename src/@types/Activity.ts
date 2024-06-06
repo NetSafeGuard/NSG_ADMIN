@@ -4,5 +4,5 @@ export interface Activity {
     startDate: Date;
     endDate: Date;
     groups: string[];
-    createdAt: Date;
+    createdAt?: Date;
 }

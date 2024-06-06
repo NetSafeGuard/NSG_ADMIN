@@ -9,6 +9,7 @@ export const Container = styled.div`
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 3px;
 `;
 
 export const Username = styled.span`

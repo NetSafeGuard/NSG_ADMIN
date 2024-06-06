@@ -71,11 +71,12 @@ export const DashboardPage = () => {
 			});
 
 			socket.on("activities", (activities: Activity[]) => {
+				console.log(activities)
 				setActivities(
 					activities
 						.sort((a, b) => {
-							if (a.startDate > b.startDate) return -1;
-							if (a.startDate < b.startDate) return 1;
+							if (a.startDate > b.startDate) return 1;
+							if (a.startDate < b.startDate) return -1;
 							return 0;
 						})
 						.map((activity) => {

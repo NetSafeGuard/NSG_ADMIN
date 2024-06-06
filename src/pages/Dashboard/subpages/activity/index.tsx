@@ -68,9 +68,9 @@ export const ActivityPage = () => {
 
 	const submit = (data: FormSchemaType) => {
 		context.Create({
-			...data,
-			groups: (data.groups as string[]) ?? ([] as string[]),
-		});
+      ...data,
+      groups: (data.groups as string[]) ?? ([] as string[])
+    });
 		form.reset();
 	};
 
