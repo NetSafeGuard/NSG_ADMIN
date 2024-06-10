@@ -5,4 +5,5 @@ export interface Activity {
     endDate: Date;
     groups: string[];
     createdAt?: Date;
+    redirectUrl: string;
 }

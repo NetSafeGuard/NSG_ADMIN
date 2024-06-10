@@ -55,7 +55,6 @@ export const GroupsPage = () => {
   const DataSchema2 = yup.object().shape({
     name: yup.string().required(),
     email: yup.string().email().required(),
-    routerip: yup.string().required(),
     studentid: yup.string().required(),
   });
 
@@ -151,17 +150,6 @@ export const GroupsPage = () => {
                             className="col-span-3"
                             type="email"
                             {...register2("email")}
-                          />
-                        </div>
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Label htmlFor="routerip" className="text-right flex gap-1">
-                            Router IP
-                          </Label>
-                          <Input
-                            id="routerip"
-                            onFocus={() => (!!watch2("routerip"))}
-                            className="col-span-3"
-                            {...register2("routerip")}
                           />
                         </div>
                         <div className="grid grid-cols-4 items-center gap-4">

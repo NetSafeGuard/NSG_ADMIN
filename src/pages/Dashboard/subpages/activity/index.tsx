@@ -12,7 +12,6 @@ import {
 	DropdownMenuShortcut,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
@@ -41,9 +40,11 @@ import { TimePickerDemo } from '@/components/ui/time-picker';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import ptLocale from 'date-fns/locale/pt';
 import { ActivitiesContext } from '@/contextapi/activities.context';
+import { Activity } from '@/@types/Activity';
 
 export const ActivityPage = () => {
 	const [open, setOpen] = useState(false);
+	const [selected, setSelected] = useState({} as Activity)
 	const [createActivity, setCreateActivity] = useState(false);
 	const { groups } = useContext(GroupsContext);
 	const context = useContext(ActivitiesContext);
@@ -54,6 +55,7 @@ export const ActivityPage = () => {
 		startDate: yup.date().required(),
 		endDate: yup.date().required(),
 		groups: yup.array().of(yup.string()),
+		redirectUrl: yup.string().url(),
 	});
 
 	type FormSchemaType = yup.InferType<typeof DataSchema>;
@@ -69,10 +71,21 @@ export const ActivityPage = () => {
 	const submit = (data: FormSchemaType) => {
 		context.Create({
       ...data,
+      redirectUrl: data.redirectUrl ?? '',
       groups: (data.groups as string[]) ?? ([] as string[])
     });
 		form.reset();
 	};
+
+	const handleActivityClick = (activity: Activity) => setSelected(activity)
+	
+	if(selected.title) return (
+		<C.Container>
+		  <C.Title>{selected.title}</C.Title>
+				
+			<Button onClick={() => setSelected({} as Activity)} style={{ background: '#1b4c70' }}>Voltar</Button>
+		</C.Container>
+	)
 
 	return (
 		<C.Container>
@@ -82,7 +95,7 @@ export const ActivityPage = () => {
 					<>
 						{activity.startDate.getDate() ===
 						activities[index - 1]?.startDate.getDate() ? (
-							<C.ActivityCard key={index}>
+							<C.ActivityCard key={index} onClick={() => handleActivityClick(activity)}>
 								<C.ActivityTitle>{activity.title}</C.ActivityTitle>
 								<C.ActivityDescription>
 									{activity.description}
@@ -96,7 +109,7 @@ export const ActivityPage = () => {
 										month: 'short',
 									})}{' '}
 								</C.ActivityDate>
-								<C.ActivityCard key={index}>
+								<C.ActivityCard key={index} onClick={() => handleActivityClick(activity)}>
 									<C.ActivityTitle>{activity.title}</C.ActivityTitle>
 									<C.ActivityDescription>
 										{activity.description}
@@ -323,6 +336,17 @@ export const ActivityPage = () => {
 													style={{ width: '230px' }}
 												/>
 											)}
+										/>
+									</div>
+									<div className="grid grid-cols-4 items-center gap-4">
+										<Label htmlFor="redirecturl" className="text-left">
+											URL
+										</Label>
+										<Input
+										  type='url'
+											id="redirecturl"
+											className="col-span-3"
+											{...form.register('redirectUrl')}
 										/>
 									</div>
 								</div>

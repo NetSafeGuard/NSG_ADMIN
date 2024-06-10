@@ -36,12 +36,13 @@ export const StudentsData = ({ students }: Props) => {
   const [open, setOpen] = useState(false);
   const [editedUser, setEditedUser] = useState<Student | null>(null);
   const client = UserHook();
+  
+  console.log(students)
 
   const DataSchema = yup.object().shape({
     studentid: yup.string().required(),
     name: yup.string().required(),
     email: yup.string().required(),
-    routerip: yup.string().required(),
   });
 
   const Context = useContext(GroupsContext);
@@ -85,7 +86,6 @@ export const StudentsData = ({ students }: Props) => {
 						<TableHead>Nº de aluno</TableHead>
 						<TableHead>Nome de aluno</TableHead>
 						<TableHead>Email</TableHead>
-						<TableHead>Router IP</TableHead>
 						{client.user.role === 'ADMIN' && <TableHead>Código</TableHead>}
 						<TableHead className="text-right">Editar</TableHead>
 					</TableRow>
@@ -97,7 +97,6 @@ export const StudentsData = ({ students }: Props) => {
 
 							<TableCell>{user.name}</TableCell>
 							<TableCell>{user.email}</TableCell>
-							<TableCell>{user.routerip}</TableCell>
 							{client.user.role === 'ADMIN' && <TableCell>{user.code}</TableCell>}
 							<TableCell className="text-right">
 								<Dialog open={open && editedUser === user} onOpenChange={setOpen}>
@@ -166,22 +165,6 @@ export const StudentsData = ({ students }: Props) => {
 														maxLength={200}
 														defaultValue={user.studentid}
 														{...register('studentid')}
-													/>
-												</div>
-												<div className="grid grid-cols-4 items-center gap-4">
-													<Label
-														htmlFor="router"
-														className="text-right flex gap-1">
-														Router IP
-													</Label>
-													<Input
-														id="router"
-														onFocus={() => !!watch('routerip')}
-														className="col-span-3"
-														type="text"
-														maxLength={200}
-														defaultValue={user.routerip}
-														{...register('routerip')}
 													/>
 												</div>
 											</div>

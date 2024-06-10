@@ -28,6 +28,7 @@ export const ActivityProvider = ({ children }: any) => {
             startDate: data.startDate,
             endDate: data.endDate,
             groups: data.groups,
+            redirectUrl: data.redirectUrl
         })
         .then((response) => {
         toast.dismiss();

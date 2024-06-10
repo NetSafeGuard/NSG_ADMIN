@@ -117,7 +117,6 @@ export const GroupsProvider = ({ children }: any) => {
           groupname: groupname,
           name: data.name,
           email: data.email,
-          routerip: data.routerip,
           studentid: data.studentid,
         })
         .then((response) => {
