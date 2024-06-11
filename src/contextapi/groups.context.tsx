@@ -8,6 +8,7 @@ interface GroupsContextType {
   setGroups: (value: Group[]) => void;
   Create: (data: CreateGroup) => Promise<any>;
   Del: (data: Group) => Promise<any>;
+  editGroup: (old_name: string, new_name: string) => Promise<any>;
   isLoading: boolean;
   addStudent: (data: CreateData, groupname: string) => Promise<any>;
   Update: (data: EditData[], email: string) => Promise<any>;
@@ -106,6 +107,54 @@ export const GroupsProvider = ({ children }: any) => {
         });
     });
   };
+
+  const editGroup = async (old_name: string, new_name: string) => {
+    return new Promise((resolve, reject) => {
+      if (isLoading) return;
+      setLoading(true);
+
+      if(old_name === new_name) return toast("Problemas ao editar", {
+        description:
+          "O nome do grupo não pode ser igual ao nome antigo.",
+        duration: 5000,
+      });
+
+      api
+        .put("/group/", {
+          old_name,
+          new_name
+        })
+        .then((response) => {
+          toast.dismiss();
+          toast.success("Grupo editado", {
+            description:
+              `O Grupo ${old_name} foi editado para ${new_name} com sucesso.`,
+            duration: 2000,
+          });
+          resolve(response);
+        })
+        .catch((error) => {
+          if (!error.response)
+            return toast("Problemas ao editar", {
+              description:
+                "Parece que houve um problema ao editar, tente novamente mais tarde.",
+              duration: 5000,
+            });
+          toast("Problemas ao editar", {
+            description:
+              error.response.data.message.length > 0
+                ? error.response.data.message
+                : "Contacte um administrador",
+            duration: 5000,
+          });
+          reject(error);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    });
+  }
+
 
   const addStudent = async (data: CreateData, groupname: string) => {
     return new Promise((resolve, reject) => {
@@ -233,7 +282,7 @@ export const GroupsProvider = ({ children }: any) => {
   }
 
   return (
-    <GroupsContext.Provider value={{ groups, setGroups, Create, isLoading, Del, addStudent, Update, DeleteStudent, isLoading2 }}>
+    <GroupsContext.Provider value={{ groups, setGroups, Create, isLoading, Del, editGroup, addStudent, Update, DeleteStudent, isLoading2 }}>
       {children}
     </GroupsContext.Provider>
   );

@@ -33,7 +33,7 @@ export const ActivityProvider = ({ children }: any) => {
         .then((response) => {
         toast.dismiss();
 
-        toast.success("Atividade criado", {
+        toast.success("Atividade criada", {
             description:
             `A atividade ${data.title} foi criada com sucesso.`,
             duration: 2000,
