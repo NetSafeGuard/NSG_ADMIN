@@ -7,4 +7,11 @@ export interface Activity {
     createdAt?: Date;
     redirectUrl: string;
     domains: JSON;
+    creator?: Creator
+    id?: number;
+}
+
+export interface Creator {
+    username: string;
+    email: string;
 }

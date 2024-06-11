@@ -40,11 +40,12 @@ import { TimePickerDemo } from '@/components/ui/time-picker';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import ptLocale from 'date-fns/locale/pt';
 import { ActivitiesContext } from '@/contextapi/activities.context';
-import { Activity } from '@/@types/Activity';
+import type { Activity } from '@/@types/Activity';
+import { SingleActivity } from '@/components/activitypage';
 
 export const ActivityPage = () => {
 	const [open, setOpen] = useState(false);
-	const [selected, setSelected] = useState({} as Activity)
+	const [selected, setSelected] = useState({} as Activity);
 	const [createActivity, setCreateActivity] = useState(false);
 	const { groups } = useContext(GroupsContext);
 	const context = useContext(ActivitiesContext);
@@ -70,22 +71,17 @@ export const ActivityPage = () => {
 
 	const submit = (data: FormSchemaType) => {
 		context.Create({
-      ...data,
-      redirectUrl: data.redirectUrl ?? '',
-      groups: (data.groups as string[]) ?? ([] as string[])
-    });
+			...data,
+			redirectUrl: data.redirectUrl ?? '',
+			groups: (data.groups as string[]) ?? ([] as string[]),
+			domains: JSON.parse('[]'),
+		});
 		form.reset();
 	};
 
-	const handleActivityClick = (activity: Activity) => setSelected(activity)
-	
-	if(selected.title) return (
-		<C.Container>
-		  <C.Title>{selected.title}</C.Title>
-				
-			<Button onClick={() => setSelected({} as Activity)} style={{ background: '#1b4c70' }}>Voltar</Button>
-		</C.Container>
-	)
+	const handleActivityClick = (activity: Activity) => setSelected(activity);
+
+	if (selected.title) return <SingleActivity activity={selected} setActivity={setSelected} />;
 
 	return (
 		<C.Container>
@@ -95,7 +91,9 @@ export const ActivityPage = () => {
 					<>
 						{activity.startDate.getDate() ===
 						activities[index - 1]?.startDate.getDate() ? (
-							<C.ActivityCard key={index} onClick={() => handleActivityClick(activity)}>
+							<C.ActivityCard
+								key={index}
+								onClick={() => handleActivityClick(activity)}>
 								<C.ActivityTitle>{activity.title}</C.ActivityTitle>
 								<C.ActivityDescription>
 									{activity.description}
@@ -109,7 +107,9 @@ export const ActivityPage = () => {
 										month: 'short',
 									})}{' '}
 								</C.ActivityDate>
-								<C.ActivityCard key={index} onClick={() => handleActivityClick(activity)}>
+								<C.ActivityCard
+									key={index}
+									onClick={() => handleActivityClick(activity)}>
 									<C.ActivityTitle>{activity.title}</C.ActivityTitle>
 									<C.ActivityDescription>
 										{activity.description}
@@ -343,7 +343,7 @@ export const ActivityPage = () => {
 											URL
 										</Label>
 										<Input
-										  type='url'
+											type="url"
 											id="redirecturl"
 											className="col-span-3"
 											{...form.register('redirectUrl')}
