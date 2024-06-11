@@ -6,4 +6,5 @@ export interface Activity {
     groups: string[];
     createdAt?: Date;
     redirectUrl: string;
+    domains: JSON;
 }

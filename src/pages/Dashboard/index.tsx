@@ -71,7 +71,6 @@ export const DashboardPage = () => {
 			});
 
 			socket.on("activities", (activities: Activity[]) => {
-				console.log(activities)
 				setActivities(
 					activities
 						.sort((a, b) => {
