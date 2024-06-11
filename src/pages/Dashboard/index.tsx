@@ -71,6 +71,7 @@ export const DashboardPage = () => {
 			});
 
 			socket.on("activities", (activities: Activity[]) => {
+
 				setActivities(
 					activities
 						.sort((a, b) => {
@@ -79,9 +80,10 @@ export const DashboardPage = () => {
 							return 0;
 						})
 						.map((activity) => {
-							console.log(activity)
 							activity.startDate = new Date(activity.startDate);
 							activity.endDate = new Date(activity.endDate);
+
+							console.log(activity)
 							return activity;
 						}),
 				);

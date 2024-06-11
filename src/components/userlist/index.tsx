@@ -36,8 +36,7 @@ export const StudentsData = ({ students }: Props) => {
   const [open, setOpen] = useState(false);
   const [editedUser, setEditedUser] = useState<Student | null>(null);
   const client = UserHook();
-  
-  console.log(students)
+
 
   const DataSchema = yup.object().shape({
     studentid: yup.string().required(),

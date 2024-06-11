@@ -46,7 +46,7 @@ import { UserHook } from '@/services/hooks/UserHook';
 export const GroupsPage = () => {
 	const { groups, Create, isLoading, Del, addStudent, editGroup } = useContext(GroupsContext);
 	const [open, setOpen] = useState(false);
-  const [open2, setOpen2] = useState(false);
+  	const [open2, setOpen2] = useState(false);
 	const [editedGroupName, setEditedGroupName] = useState<string | null>(null);
 	const { user } = UserHook();
 

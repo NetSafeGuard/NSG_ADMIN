@@ -28,7 +28,7 @@ import {
 } from '@/components/ui/sheet';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { GroupsContext } from '@/contextapi/groups.context';
 import { useState } from 'react';
 import { Form, FormField, FormControl, FormItem } from '@/components/ui/form';
@@ -50,6 +50,12 @@ export const ActivityPage = () => {
 	const { groups } = useContext(GroupsContext);
 	const context = useContext(ActivitiesContext);
 
+	useEffect(() => {
+		if(selected?.title) {
+			setSelected(context.activities.find(activity => activity.id === selected.id) || {} as Activity);
+		}
+	}, [context.activities])
+
 	const DataSchema = yup.object().shape({
 		title: yup.string().required(),
 		description: yup.string().required(),
@@ -64,8 +70,6 @@ export const ActivityPage = () => {
 	const form = useForm<FormSchemaType>({
 		resolver: yupResolver(DataSchema),
 	});
-
-	console.log(form.formState.errors);
 
 	const { activities } = useContext(ActivitiesContext);
 
