@@ -85,7 +85,9 @@ export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props
 
 			<C.SubTitle>Dominios permitidos</C.SubTitle>
 
-			<TableDomainsData domains={activity.domains} />
+      <C.ActivityContainer>
+			  <TableDomainsData domains={activity.domains} />
+      </C.ActivityContainer>
 
 			<C.ButtonContainer>
 				<DropdownMenu>

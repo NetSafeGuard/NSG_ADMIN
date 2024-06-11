@@ -52,3 +52,11 @@ export const ButtonContainer = styled.div`
   bottom: 10px;
   left: 80px;
 `;
+
+export const ActivityContainer = styled.div`
+  width: 100%;
+  display: flex;
+  overflow-y: hidden;
+  max-height: calc(100vh - 280px);
+  margin-top: 20px;
+`;
