@@ -20,6 +20,18 @@ import {
 } from '@/components/ui/sheet';
 
 import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+
+import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuGroup,
@@ -32,6 +44,7 @@ import { Button } from '@/components/ui/button';
 import { PlusIcon } from '@radix-ui/react-icons';
 import { ActivitiesContext } from '@/contextapi/activities.context';
 import { useContext } from 'react';
+import { IoTrashOutline } from 'react-icons/io5';
 
 interface Props {
 	activity: Activity;
@@ -39,18 +52,22 @@ interface Props {
 }
 
 export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props) => {
-
-  const { isLoading, AddDomain } = useContext(ActivitiesContext);
+	const { isLoading, AddDomain, Delete } = useContext(ActivitiesContext);
 
 	const handleBack = () => {
 		setActivity({} as Activity);
 	};
 
+	const handleDelete = (id: number) => () => {
+		Delete(id).then(() => {
+			setActivity({} as Activity);
+		});
+	}
+
 	const handleAddDomain = (data: Domain) => {
 		AddDomain(activity.id!, data.name).then(() => {
-      reset();
-    });
-
+			reset();
+		});
 	};
 
 	const DataSchema2 = yup.object().shape({
@@ -61,12 +78,7 @@ export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props
 		name: string;
 	}
 
-	const {
-		register,
-		handleSubmit,
-		watch,
-		reset,
-	} = useForm<Domain>({
+	const { register, handleSubmit, watch, reset } = useForm<Domain>({
 		resolver: yupResolver(DataSchema2),
 	});
 
@@ -85,9 +97,35 @@ export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props
 
 			<C.SubTitle>Dominios permitidos</C.SubTitle>
 
-      <C.ActivityContainer>
-			  <TableDomainsData domains={activity.domains} />
-      </C.ActivityContainer>
+			<C.ActivityContainer>
+				<TableDomainsData domains={activity.domains} />
+			</C.ActivityContainer>
+
+			<C.ButtonDeleteContainer>
+				<AlertDialog>
+					<AlertDialogTrigger asChild>
+						<Button variant="outline">
+							<IoTrashOutline />
+						</Button>
+					</AlertDialogTrigger>
+					<AlertDialogContent>
+						<AlertDialogHeader>
+							<AlertDialogTitle>Tem realmente a certeza?</AlertDialogTitle>
+							<AlertDialogDescription>
+								Esta ação fará com que a atividade seja apagada.
+							</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogCancel>Cancelar</AlertDialogCancel>
+							<AlertDialogAction
+								onClick={handleDelete(activity.id!)}
+								style={{ background: '#1b4c70' }}>
+								Confirmar
+							</AlertDialogAction>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
+			</C.ButtonDeleteContainer>
 
 			<C.ButtonContainer>
 				<DropdownMenu>
