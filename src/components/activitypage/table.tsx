@@ -61,6 +61,7 @@ export const TableDomainsData = ({ activityDomains }: Props) => {
 		.then(() => {
 			reset();
 			setOpen(false);
+			setEditedDomain(null);
 		});
 	};
 
@@ -68,6 +69,7 @@ export const TableDomainsData = ({ activityDomains }: Props) => {
 		Context.DeleteDomain(editedDomain!.domain.id).then(() => {
 			reset();
 			setOpen(false);
+			setEditedDomain(null);
 		});
 	};
 
