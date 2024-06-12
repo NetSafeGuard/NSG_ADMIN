@@ -85,7 +85,7 @@ export const Profile = () => {
             <AlertDialogHeader>
               <AlertDialogTitle>Tem realmente a certeza?</AlertDialogTitle>
               <AlertDialogDescription>
-                Esta ação fará com que você seja desconectado da sua conta.
+                Esta ação fará com que seja desconectado da sua conta.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
