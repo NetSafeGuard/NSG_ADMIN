@@ -78,7 +78,7 @@ export const ActivityPage = () => {
 			...data,
 			redirectUrl: data.redirectUrl ?? '',
 			groups: (data.groups as string[]) ?? ([] as string[]),
-			domains: JSON.parse('[]'),
+			activityDomains: [],
 		});
 		form.reset();
 	};
