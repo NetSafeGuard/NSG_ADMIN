@@ -168,6 +168,7 @@ export const GroupsPage = () => {
 															<Input
 																id="name"
 																onFocus={() => !!watch3('name')}
+																defaultValue={group.name}
 																className="col-span-3"
 																{...register3('name')}
 															/>
