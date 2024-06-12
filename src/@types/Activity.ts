@@ -6,7 +6,7 @@ export interface Activity {
     groups: string[];
     createdAt?: Date;
     redirectUrl: string;
-    domains: Domain[];
+    activityDomains: ActivityDomain[];
     creator?: Creator
     id?: number;
 }
@@ -14,6 +14,10 @@ export interface Activity {
 export interface Creator {
     username: string;
     email: string;
+}
+
+export interface ActivityDomain {
+    domain: Domain;
 }
 
 export interface Domain {

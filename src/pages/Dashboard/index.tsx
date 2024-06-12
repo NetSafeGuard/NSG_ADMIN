@@ -71,7 +71,7 @@ export const DashboardPage = () => {
 			});
 
 			socket.on("activities", (activities: Activity[]) => {
-
+							console.log(activities);
 				setActivities(
 					activities
 						.sort((a, b) => {
@@ -83,7 +83,6 @@ export const DashboardPage = () => {
 							activity.startDate = new Date(activity.startDate);
 							activity.endDate = new Date(activity.endDate);
 
-							console.log(activity)
 							return activity;
 						}),
 				);

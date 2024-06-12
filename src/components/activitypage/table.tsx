@@ -39,22 +39,19 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from '@/components/ui/select';
-import type { Domain } from '@/@types/Activity';
+import type { ActivityDomain, Domain } from '@/@types/Activity';
 
 type Props = {
-	domains: Domain[];
+	activityDomains: ActivityDomain[];
 };
 
-export const TableDomainsData = ({ domains }: Props) => {
+export const TableDomainsData = ({ activityDomains }: Props) => {
 	const [AnimationParent] = useAutoAnimate();
 	const [open, setOpen] = useState(false);
-	const [editedUser, setEditedUser] = useState<User | null>(null);
+	const [editedDomain, setEditedDomain] = useState<ActivityDomain | null>(null);
 
 	const DataSchema = yup.object().shape({
-		username: yup.string().required(),
-		email: yup.string().required(),
-		avatar: yup.string().required(),
-		role: yup.string().required(),
+		name: yup.string().required(),
 	});
 
 	const Context = useContext(AuthContext);
@@ -66,23 +63,15 @@ export const TableDomainsData = ({ domains }: Props) => {
 		watch,
 		reset,
 		formState: { errors },
-	} = useForm<EditData>({
+	} = useForm<Domain>({
 		resolver: yupResolver(DataSchema),
 	});
 
-	const Edit = (data: EditData) => {
-		Context.editUser(editedUser!, data).then(() => {
-			setOpen(false);
-			reset();
-		});
+	const Edit = (newData: Domain) => {
+		console.log(newData, editedDomain);
 	};
 
-	const deleteUser = () => {
-		Context.deleteUser(editedUser!).then(() => {
-			setOpen(false);
-			reset();
-		});
-	};
+	const deleteUser = () => {};
 
 	return (
 		<Table>
@@ -93,13 +82,63 @@ export const TableDomainsData = ({ domains }: Props) => {
 				</TableRow>
 			</TableHeader>
 			<TableBody ref={AnimationParent}>
-				{domains.map((domain: Domain, index: number) => (
+				{activityDomains.map((activitydomain: ActivityDomain, index: number) => (
 					<TableRow key={index}>
-						<TableCell>{domain.name}</TableCell>
+						<TableCell>{activitydomain.domain.name}</TableCell>
 						<TableCell className="text-right">
-							<Button className="text-[#1b4c70] hover:text-[#2D9CDB] focus:outline-none bg-transparent hover:bg-inherit">
-								Editar
-							</Button>
+							<Dialog
+								open={open && editedDomain === activitydomain}
+								onOpenChange={setOpen}>
+								<DialogTrigger asChild>
+									<Button
+										className="text-[#1b4c70] hover:text-[#2D9CDB] focus:outline-none bg-transparent hover:bg-inherit"
+										onClick={() => {
+											setEditedDomain(activitydomain);
+											setOpen(true);
+										}}>
+										Editar
+									</Button>
+								</DialogTrigger>
+								<DialogContent className="sm:max-w-[425px]">
+									<DialogHeader>
+										<DialogTitle>Editar Dominio</DialogTitle>
+										<DialogDescription>
+											Clique em editar para salvar as alterações.
+										</DialogDescription>
+									</DialogHeader>
+									<form onSubmit={handleSubmit(Edit)}>
+										<div className="grid gap-4 py-4">
+											<div className="grid grid-cols-4 items-center gap-4">
+												<Label
+													htmlFor="name"
+													className="text-right flex gap-1">
+													Nome
+													{errors.name && <Error error={'*'} />}
+												</Label>
+												<Input
+													id="name"
+													onFocus={() => !!watch('name')}
+													className="col-span-3"
+													{...register('name')}
+													defaultValue={activitydomain.domain.name}
+													maxLength={40}
+												/>
+											</div>
+										</div>
+										<DialogFooter>
+											<Button
+												onClick={() => deleteUser()}
+												type="button"
+												style={{ background: '#f5766f' }}>
+												{Context.isLoading2 ? 'A Apagar...' : 'Apagar'}
+											</Button>
+											<Button type="submit" style={{ background: '#1b4c70' }}>
+												{Context.isLoading ? 'A editar...' : 'Editar'}
+											</Button>
+										</DialogFooter>
+									</form>
+								</DialogContent>
+							</Dialog>
 						</TableCell>
 					</TableRow>
 				))}

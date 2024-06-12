@@ -98,7 +98,7 @@ export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props
 			<C.SubTitle>Dominios permitidos</C.SubTitle>
 
 			<C.ActivityContainer>
-				<TableDomainsData domains={activity.domains} />
+				<TableDomainsData activityDomains={activity.activityDomains} />
 			</C.ActivityContainer>
 
 			<C.ButtonDeleteContainer>
