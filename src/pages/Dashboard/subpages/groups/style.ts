@@ -22,7 +22,7 @@ export const ActivityDescription = styled.h1`
 `;
 
 export const ButtonContainer = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 10px;
   left: 80px;
 `;

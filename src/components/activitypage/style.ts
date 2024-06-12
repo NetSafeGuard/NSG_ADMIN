@@ -48,8 +48,14 @@ export const Description = styled.p`
 
 
 export const ButtonContainer = styled.div`
-  position: absolute;
+  position: fixed;
   bottom: 10px;
+  left: 80px;
+`;
+
+export const ButtonDeleteContainer = styled.div`
+  position: fixed;
+  bottom: 70px;
   left: 80px;
 `;
 
