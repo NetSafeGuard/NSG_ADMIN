@@ -94,7 +94,6 @@ export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props
 			<C.Description>
 				Criado por: <span>{activity.creator!.username}</span>
 			</C.Description>
-
 			<C.SubTitle>Dominios permitidos</C.SubTitle>
 
 			<C.ActivityContainer>

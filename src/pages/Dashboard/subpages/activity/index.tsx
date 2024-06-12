@@ -42,6 +42,7 @@ import ptLocale from 'date-fns/locale/pt';
 import { ActivitiesContext } from '@/contextapi/activities.context';
 import type { Activity } from '@/@types/Activity';
 import { SingleActivity } from '@/components/activitypage';
+import Countdown from '@/components/countdown';
 
 export const ActivityPage = () => {
 	const [open, setOpen] = useState(false);
@@ -51,10 +52,13 @@ export const ActivityPage = () => {
 	const context = useContext(ActivitiesContext);
 
 	useEffect(() => {
-		if(selected?.title) {
-			setSelected(context.activities.find(activity => activity.id === selected.id) || {} as Activity);
+		if (selected?.title) {
+			setSelected(
+				context.activities.find(activity => activity.id === selected.id) ||
+					({} as Activity),
+			);
 		}
-	}, [context.activities])
+	}, [context.activities]);
 
 	const DataSchema = yup.object().shape({
 		title: yup.string().required(),
@@ -99,9 +103,15 @@ export const ActivityPage = () => {
 								key={index}
 								onClick={() => handleActivityClick(activity)}>
 								<C.ActivityTitle>{activity.title}</C.ActivityTitle>
-								<C.ActivityDescription>
-									{activity.description}
-								</C.ActivityDescription>
+								<C.Row>
+									<C.ActivityDescription>
+										{activity.description}
+									</C.ActivityDescription>
+									<Countdown
+										startDate={activity.startDate}
+										endDate={activity.endDate}
+									/>
+								</C.Row>
 							</C.ActivityCard>
 						) : (
 							<>
@@ -115,9 +125,15 @@ export const ActivityPage = () => {
 									key={index}
 									onClick={() => handleActivityClick(activity)}>
 									<C.ActivityTitle>{activity.title}</C.ActivityTitle>
-									<C.ActivityDescription>
-										{activity.description}
-									</C.ActivityDescription>
+									<C.Row>
+										<C.ActivityDescription>
+											{activity.description}
+										</C.ActivityDescription>
+										<Countdown
+											startDate={activity.startDate}
+											endDate={activity.endDate}
+										/>
+									</C.Row>
 								</C.ActivityCard>
 							</>
 						)}

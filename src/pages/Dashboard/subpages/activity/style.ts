@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
@@ -38,6 +38,14 @@ export const ActivityContainer = styled.div`
     width: 5px;
   }
 `;
+
+export const Row = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 
 export const ActivityCard = styled.div`
   flex-shrink: 0;
@@ -81,7 +89,6 @@ export const ButtonContainer = styled.div`
   bottom: 10px;
   left: 80px;
 `;
-
 
 export const ContainerScroll = styled.div`
   width: 100%;
