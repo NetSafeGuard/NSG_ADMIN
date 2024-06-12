@@ -1,4 +1,3 @@
-import type { User } from '@/@types/User';
 import {
 	Table,
 	TableBody,
@@ -7,7 +6,6 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
 	Dialog,
 	DialogContent,
@@ -18,28 +16,16 @@ import {
 	DialogTrigger,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import type { EditData } from '@/@types/EditData';
 import { Error } from '@/components/error';
 import { useContext, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { AuthContext } from '@/contextapi/global.context';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import { Badge } from '@/components/ui/badge';
-import admin from '../../assets/admin.png';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from '@/components/ui/select';
-import type { ActivityDomain, Domain } from '@/@types/Activity';
+import type { ActivityDomain } from '@/@types/Activity';
+import { ActivitiesContext } from '@/contextapi/activities.context';
 
 type Props = {
 	activityDomains: ActivityDomain[];
@@ -54,24 +40,36 @@ export const TableDomainsData = ({ activityDomains }: Props) => {
 		name: yup.string().required(),
 	});
 
-	const Context = useContext(AuthContext);
+	interface DomainData {
+		name: string;
+	}
+
+	const Context = useContext(ActivitiesContext);
 
 	const {
-		control,
 		register,
 		handleSubmit,
 		watch,
 		reset,
 		formState: { errors },
-	} = useForm<Domain>({
+	} = useForm<DomainData>({
 		resolver: yupResolver(DataSchema),
 	});
 
-	const Edit = (newData: Domain) => {
-		console.log(newData, editedDomain);
+	const Edit = (data: DomainData) => {
+		Context.EditDomain(editedDomain!.domain.id, data.name)
+		.then(() => {
+			reset();
+			setOpen(false);
+		});
 	};
 
-	const deleteUser = () => {};
+	const DeleteDomain = () => {
+		Context.DeleteDomain(editedDomain!.domain.id).then(() => {
+			reset();
+			setOpen(false);
+		});
+	};
 
 	return (
 		<Table>
@@ -127,7 +125,7 @@ export const TableDomainsData = ({ activityDomains }: Props) => {
 										</div>
 										<DialogFooter>
 											<Button
-												onClick={() => deleteUser()}
+												onClick={DeleteDomain}
 												type="button"
 												style={{ background: '#f5766f' }}>
 												{Context.isLoading2 ? 'A Apagar...' : 'Apagar'}

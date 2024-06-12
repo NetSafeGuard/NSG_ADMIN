@@ -22,4 +22,5 @@ export interface ActivityDomain {
 
 export interface Domain {
     name: string;
+    id: number;
 }
