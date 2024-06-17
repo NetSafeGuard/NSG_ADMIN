@@ -198,7 +198,7 @@ export const GroupsPage = () => {
 									</DialogTrigger>
 									<DialogContent className="sm:max-w-[425px]">
 										<DialogHeader>
-											<DialogTitle>Adicionar Estudannte</DialogTitle>
+											<DialogTitle>Adicionar Estudante</DialogTitle>
 											<DialogDescription>
 												Adicione um estudante ao grupo. Clique em Criar para
 												salvar as alterações.

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const LoginContainer = styled.div`
   display: flex;
@@ -153,6 +153,7 @@ export const RecoverPasswordLink = styled.a`
   font-weight: 400;
   line-height: 19.992px;
   text-decoration: none;
+  text-align: center;
 
   transition: text-decoration 0.5s, cursor 0.5s;
 
