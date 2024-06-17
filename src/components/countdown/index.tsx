@@ -47,8 +47,8 @@ const Countdown: React.FC<CountdownProps> = ({ startDate, endDate }) => {
 		if (days > 0) return `Começa em ${days} dia${days === 1 ? '' : 's'}`;
 		if (hours > 0) return `Começa em ${hours} hora${hours === 1 ? '' : 's'}`;
 		if (remainingMinutes > 0)
-			return `em ${remainingMinutes} minuto${remainingMinutes === 1 ? '' : 's'}`;
-		return `em ${seconds} segundo${seconds === 1 ? '' : 's'}`;
+			return `Começa em ${remainingMinutes} minuto${remainingMinutes === 1 ? '' : 's'}`;
+			return `Começa em ${seconds} segundo${seconds === 1 ? '' : 's'}`;
 	};
 
 	const [timeLeft, setTimeLeft] = useState<string>(calculateTimeLeft());
