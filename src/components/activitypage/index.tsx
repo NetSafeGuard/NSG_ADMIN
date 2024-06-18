@@ -43,8 +43,10 @@ import {
 import { Button } from '@/components/ui/button';
 import { PlusIcon } from '@radix-ui/react-icons';
 import { ActivitiesContext } from '@/contextapi/activities.context';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { IoTrashOutline } from 'react-icons/io5';
+import { IoMdEye, IoIosEyeOff } from 'react-icons/io';
+import { Tooltip } from 'react-tooltip';
 
 interface Props {
 	activity: Activity;
@@ -53,6 +55,7 @@ interface Props {
 
 export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props) => {
 	const { isLoading, AddDomain, Delete } = useContext(ActivitiesContext);
+	const [viewAlerts, setViewAlerts] = useState<boolean>(false);
 
 	const handleBack = () => {
 		setActivity({} as Activity);
@@ -62,7 +65,7 @@ export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props
 		Delete(id).then(() => {
 			setActivity({} as Activity);
 		});
-	}
+	};
 
 	const handleAddDomain = (data: Domain) => {
 		AddDomain(activity.id!, data.name).then(() => {
@@ -94,16 +97,54 @@ export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props
 			<C.Description>
 				Criado por: <span>{activity.creator!.username}</span>
 			</C.Description>
-			<C.SubTitle>Dominios permitidos</C.SubTitle>
 
-			<C.ActivityContainer>
-				<TableDomainsData activityDomains={activity.activityDomains} />
-			</C.ActivityContainer>
+			{!viewAlerts && (
+				<>
+					<C.SubTitle>Dominios permitidos</C.SubTitle>
+
+					<C.ActivityContainer>
+						<TableDomainsData activityDomains={activity.activityDomains} />
+					</C.ActivityContainer>
+				</>
+			)}
+
+			{viewAlerts && <C.SubTitle>Alertas</C.SubTitle>}
+
+			{activity.startDate <= new Date() && activity.endDate > new Date() && (
+				<C.ButtonDeleteContainer style={{ paddingBottom: '60px' }}>
+					<Tooltip
+						id="my-tooltip"
+						arrowColor="#1b4c70"
+						opacity={0.5}
+						style={{ backgroundColor: '#FFFFFF' }}
+					/>
+					<Button
+						onClick={() => setViewAlerts(!viewAlerts)}
+						variant="outline"
+						data-tooltip-id="my-tooltip"
+						data-tooltip-content={viewAlerts ? 'Ocultar Alertas' : 'Ver Alertas'}
+						data-tooltip-variant="light"
+						data-tooltip-place="right">
+						{viewAlerts ? <IoIosEyeOff /> : <IoMdEye />}
+					</Button>
+				</C.ButtonDeleteContainer>
+			)}
 
 			<C.ButtonDeleteContainer>
 				<AlertDialog>
+					<Tooltip
+						id="my-tooltip2"
+						arrowColor="#1b4c70"
+						opacity={0.5}
+						style={{ backgroundColor: '#FFFFFF' }}
+					/>
 					<AlertDialogTrigger asChild>
-						<Button variant="outline">
+						<Button
+							variant="outline"
+							data-tooltip-id="my-tooltip2"
+							data-tooltip-content="Apagar Atividade"
+							data-tooltip-variant="light"
+							data-tooltip-place="right">
 							<IoTrashOutline />
 						</Button>
 					</AlertDialogTrigger>
@@ -128,8 +169,19 @@ export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props
 
 			<C.ButtonContainer>
 				<DropdownMenu>
+					<Tooltip
+						id="my-tooltip2"
+						arrowColor="#1b4c70"
+						opacity={0.5}
+						style={{ backgroundColor: '#FFFFFF' }}
+					/>
 					<DropdownMenuTrigger asChild>
-						<Button variant="outline">
+						<Button
+							variant="outline"
+							data-tooltip-id="my-tooltip2"
+							data-tooltip-content="Adicionar Dominio"
+							data-tooltip-variant="light"
+							data-tooltip-place="right">
 							<PlusIcon />
 						</Button>
 					</DropdownMenuTrigger>

@@ -32,7 +32,7 @@ import { useContext, useEffect } from 'react';
 import { GroupsContext } from '@/contextapi/groups.context';
 import { useState } from 'react';
 import { Form, FormField, FormControl, FormItem } from '@/components/ui/form';
-
+import {Tooltip} from 'react-tooltip';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '../../../../../@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
@@ -81,12 +81,6 @@ export const ActivityPage = () => {
 	const submit = (data: FormSchemaType) => {
 		const start_date = new Date(data.startDate);
 		const end_date = new Date(data.endDate);
-
-		console.log(
-			start_date > end_date,
-			start_date < new Date(),
-			end_date < new Date(),
-		)
 
 		if (start_date > end_date) {
 			return toast.error('A data de término não pode ser menor que a data de ínicio');
@@ -165,8 +159,19 @@ export const ActivityPage = () => {
 			</C.ActivityContainer>
 			<C.ButtonContainer>
 				<DropdownMenu open={open} onOpenChange={setOpen}>
+					<Tooltip
+						id="my-tooltip2"
+						arrowColor="#1b4c70"
+						opacity={0.5}
+						style={{ backgroundColor: '#FFFFFF' }}
+					/>
 					<DropdownMenuTrigger asChild>
-						<Button variant="outline">
+						<Button
+							variant="outline"
+							data-tooltip-id="my-tooltip2"
+							data-tooltip-content="Criar Atividade"
+							data-tooltip-variant="light"
+							data-tooltip-place="right">
 							<PlusIcon />
 						</Button>
 					</DropdownMenuTrigger>

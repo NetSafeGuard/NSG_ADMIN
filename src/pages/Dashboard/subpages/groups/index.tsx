@@ -42,11 +42,12 @@ import * as yup from 'yup';
 import type { CreateData, CreateGroup, Group, Student } from '@/@types/Group';
 import { StudentsData } from '@/components/userlist';
 import { UserHook } from '@/services/hooks/UserHook';
+import { Tooltip } from 'react-tooltip';
 
 export const GroupsPage = () => {
 	const { groups, Create, isLoading, Del, addStudent, editGroup } = useContext(GroupsContext);
 	const [open, setOpen] = useState(false);
-  	const [open2, setOpen2] = useState(false);
+	const [open2, setOpen2] = useState(false);
 	const [editedGroupName, setEditedGroupName] = useState<string | null>(null);
 	const { user } = UserHook();
 
@@ -70,13 +71,13 @@ export const GroupsPage = () => {
 		Del(data);
 	};
 
-  const renameGroup = (groupname: string) => (data: CreateGroup) => {
-    editGroup(groupname, data.name).then(() => {
-      setOpen2(false);
-    })
-    .finally(() => reset3());
-
-  }
+	const renameGroup = (groupname: string) => (data: CreateGroup) => {
+		editGroup(groupname, data.name)
+			.then(() => {
+				setOpen2(false);
+			})
+			.finally(() => reset3());
+	};
 
 	const CreateStudent = (groupname: string) => (data: CreateData) => {
 		addStudent(data, groupname)
@@ -99,14 +100,14 @@ export const GroupsPage = () => {
 		resolver: yupResolver(DataSchema2),
 	});
 
-  const {
-    register: register3,
-    handleSubmit: handleSubmit3,
-    watch: watch3,
-    reset: reset3,
-  } = useForm<CreateGroup>({
-    resolver: yupResolver(DataSchema),
-  });
+	const {
+		register: register3,
+		handleSubmit: handleSubmit3,
+		watch: watch3,
+		reset: reset3,
+	} = useForm<CreateGroup>({
+		resolver: yupResolver(DataSchema),
+	});
 
 	return (
 		<C.Container>
@@ -270,8 +271,19 @@ export const GroupsPage = () => {
 				{user.role === 'ADMIN' && (
 					<C.ButtonContainer>
 						<DropdownMenu>
+							<Tooltip
+								id="my-tooltip2"
+								arrowColor="#1b4c70"
+								opacity={0.5}
+								style={{ backgroundColor: '#FFFFFF' }}
+							/>
 							<DropdownMenuTrigger asChild>
-								<Button variant="outline">
+								<Button
+									variant="outline"
+									data-tooltip-id="my-tooltip2"
+									data-tooltip-content="Criar Grupo"
+									data-tooltip-variant="light"
+									data-tooltip-place="right">
 									<PlusIcon />
 								</Button>
 							</DropdownMenuTrigger>
