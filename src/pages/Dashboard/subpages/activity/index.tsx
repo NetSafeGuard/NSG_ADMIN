@@ -43,6 +43,7 @@ import { ActivitiesContext } from '@/contextapi/activities.context';
 import type { Activity } from '@/@types/Activity';
 import { SingleActivity } from '@/components/activitypage';
 import Countdown from '@/components/countdown';
+import { toast } from 'sonner';
 
 export const ActivityPage = () => {
 	const [open, setOpen] = useState(false);
@@ -78,6 +79,28 @@ export const ActivityPage = () => {
 	const { activities } = useContext(ActivitiesContext);
 
 	const submit = (data: FormSchemaType) => {
+		const start_date = new Date(data.startDate);
+		const end_date = new Date(data.endDate);
+
+		console.log(
+			start_date > end_date,
+			start_date < new Date(),
+			end_date < new Date(),
+		)
+
+		if (start_date > end_date) {
+			return toast.error('A data de término não pode ser menor que a data de ínicio');
+		}
+
+		if (start_date < new Date()) {
+			return toast.error('A data de ínicio não pode ser menor que a data atual');
+		}
+
+		if(end_date < new Date()) {
+			return toast.error('A data de término não pode ser menor que a data atual');
+		}
+		
+
 		context.Create({
 			...data,
 			redirectUrl: data.redirectUrl ?? '',
