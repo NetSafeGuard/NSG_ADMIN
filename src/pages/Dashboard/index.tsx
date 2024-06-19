@@ -83,6 +83,20 @@ export const DashboardPage = () => {
 							activity.startDate = new Date(activity.startDate);
 							activity.endDate = new Date(activity.endDate);
 							activity.createdAt = new Date(activity.createdAt!);
+							activity.logs = activity.logs.map(log => {
+
+								log.createdAt = new Date(log.createdAt);
+								return log;
+							});
+
+							activity.logs.sort((a, b) => {
+								if (a.priority === 'HIGH' && b.priority !== 'HIGH') return -1;
+								if (a.priority !== 'HIGH' && b.priority === 'HIGH') return 1;
+								if (a.priority === 'MEDIUM' && b.priority === 'LOW') return -1;
+								if (a.priority === 'LOW' && b.priority === 'MEDIUM') return 1;	
+
+								return 0;
+							});
 
 							return activity;
 						}),

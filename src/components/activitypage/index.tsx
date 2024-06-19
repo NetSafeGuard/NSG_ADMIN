@@ -47,6 +47,7 @@ import { useContext, useState } from 'react';
 import { IoTrashOutline } from 'react-icons/io5';
 import { IoMdEye, IoIosEyeOff } from 'react-icons/io';
 import { Tooltip } from 'react-tooltip';
+import { TableLogsData } from './logs';
 
 interface Props {
 	activity: Activity;
@@ -81,6 +82,7 @@ export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props
 		name: string;
 	}
 
+	console.log(12121212121, activity)
 	const { register, handleSubmit, watch, reset } = useForm<Domain>({
 		resolver: yupResolver(DataSchema2),
 	});
@@ -108,7 +110,16 @@ export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props
 				</>
 			)}
 
-			{viewAlerts && <C.SubTitle>Alertas</C.SubTitle>}
+			{viewAlerts && (
+				<>
+					<C.SubTitle>Alertas</C.SubTitle>
+
+					<C.ActivityContainer>
+						<TableLogsData logs={activity.logs} />
+
+					</C.ActivityContainer>
+				</>
+			)}
 
 			{activity.startDate <= new Date() && activity.endDate > new Date() && (
 				<C.ButtonDeleteContainer style={{ paddingBottom: '60px' }}>

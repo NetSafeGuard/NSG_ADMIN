@@ -1,3 +1,5 @@
+import type { Student } from "./Group";
+
 export interface Activity {
     title: string;
     description: string;
@@ -7,6 +9,7 @@ export interface Activity {
     createdAt?: Date;
     redirectUrl: string;
     activityDomains: ActivityDomain[];
+    logs: ActivityLog[];
     creator?: Creator
     id?: number;
 }
@@ -19,6 +22,20 @@ export interface Creator {
 export interface ActivityDomain {
     domain: Domain;
 }
+
+enum Priority {
+    LOW = 'LOW',
+    MEDIUM = 'MEDIUM',
+    HIGH = 'HIGH'
+}
+
+export interface ActivityLog {
+		createdAt: Date;
+		user: Student;
+		action: string;
+		info: string;
+		priority: Priority;
+	}
 
 export interface Domain {
     name: string;
