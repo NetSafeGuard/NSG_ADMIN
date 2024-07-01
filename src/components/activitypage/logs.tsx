@@ -7,10 +7,8 @@ import {
 	TableRow,
 } from '@/components/ui/table';
 
-import { useContext } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import type { ActivityLog } from '@/@types/Activity';
-import { ActivitiesContext } from '@/contextapi/activities.context';
 import { CountUp } from './countup';
 
 type Props = {
