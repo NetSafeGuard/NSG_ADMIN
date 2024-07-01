@@ -99,7 +99,11 @@ export const TableLogsData = ({ activity }: Props) => {
 												) as Checked
 											}
 											onCheckedChange={handleBlock}>
-											Bloqueado
+											{activity.blockedUsers.some(
+												user => user.email === log.user.email,
+											)
+												? 'Desbloquear'
+												: 'Bloquear'}
 										</DropdownMenuCheckboxItem>
 									</DropdownMenuContent>
 								)}
