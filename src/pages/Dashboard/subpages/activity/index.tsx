@@ -100,6 +100,7 @@ export const ActivityPage = () => {
 			redirectUrl: data.redirectUrl ?? '',
 			groups: (data.groups as string[]) ?? ([] as string[]),
 			activityDomains: [],
+			logs: []
 		});
 		form.reset();
 	};
