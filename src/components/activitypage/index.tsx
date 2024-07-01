@@ -82,7 +82,6 @@ export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props
 		name: string;
 	}
 
-	console.log(12121212121, activity)
 	const { register, handleSubmit, watch, reset } = useForm<Domain>({
 		resolver: yupResolver(DataSchema2),
 	});
@@ -99,6 +98,11 @@ export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props
 			<C.Description>
 				Criado por: <span>{activity.creator!.username}</span>
 			</C.Description>
+			{activity.startDate <= new Date() && activity.endDate > new Date() && (
+				<C.Description>
+					Código: <span>{activity.code!}</span>
+				</C.Description>
+			)}
 
 			{!viewAlerts && (
 				<>
@@ -116,12 +120,11 @@ export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props
 
 					<C.ActivityContainer>
 						<TableLogsData logs={activity.logs} />
-
 					</C.ActivityContainer>
 				</>
 			)}
 
-			{activity.startDate <= new Date() && activity.endDate > new Date() && (
+			{activity.startDate <= new Date() && (
 				<C.ButtonDeleteContainer style={{ paddingBottom: '60px' }}>
 					<Tooltip
 						id="my-tooltip"

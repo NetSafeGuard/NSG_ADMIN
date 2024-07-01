@@ -6,23 +6,8 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogFooter,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import { Error } from '@/components/error';
-import { useContext, useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+
+import { useContext } from 'react';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import type { ActivityLog } from '@/@types/Activity';
 import { ActivitiesContext } from '@/contextapi/activities.context';
@@ -36,17 +21,10 @@ export const TableLogsData = ({ logs }: Props) => {
 	const [AnimationParent] = useAutoAnimate();
 
 
-	interface DomainData {
-		name: string;
-	}
-
-	const Context = useContext(ActivitiesContext);
-
-
 	const handleTextColor = (priority: string) => {
-		if (priority === 'HIGH') return 'text-red-500';
-		if (priority === 'MEDIUM') return 'text-orange-500';
-		if (priority === 'LOW') return 'text-green-600';
+		if (priority === 'ALTA') return 'text-red-500';
+		if (priority === 'MEDIA') return 'text-orange-500';
+		if (priority === 'BAIXA') return 'text-green-600';
 	};
 
 	return (

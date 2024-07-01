@@ -90,10 +90,10 @@ export const DashboardPage = () => {
 							});
 
 							activity.logs.sort((a, b) => {
-								if (a.priority === 'HIGH' && b.priority !== 'HIGH') return -1;
-								if (a.priority !== 'HIGH' && b.priority === 'HIGH') return 1;
-								if (a.priority === 'MEDIUM' && b.priority === 'LOW') return -1;
-								if (a.priority === 'LOW' && b.priority === 'MEDIUM') return 1;	
+								if (a.priority === 'ALTA' && b.priority !== 'ALTA') return -1;
+								if (a.priority !== 'MEDIA' && b.priority === 'MEDIA') return 1;
+								if (a.priority === 'BAIXA' && b.priority === 'BAIXA') return -1;
+								if (a.priority === 'BAIXA' && b.priority === 'MEDIA') return 1;	
 
 								return 0;
 							});

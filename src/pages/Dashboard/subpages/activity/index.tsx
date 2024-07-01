@@ -32,7 +32,7 @@ import { useContext, useEffect } from 'react';
 import { GroupsContext } from '@/contextapi/groups.context';
 import { useState } from 'react';
 import { Form, FormField, FormControl, FormItem } from '@/components/ui/form';
-import {Tooltip} from 'react-tooltip';
+import { Tooltip } from 'react-tooltip';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { cn } from '../../../../../@/lib/utils';
 import { Calendar } from '@/components/ui/calendar';
@@ -76,6 +76,27 @@ export const ActivityPage = () => {
 		resolver: yupResolver(DataSchema),
 	});
 
+
+	useEffect(() => {
+		if(form.formState.isSubmitting) {
+			if(form.formState.errors.title) {
+				toast.error('O campo título é obrigatório');
+			}
+			if(form.formState.errors.description) {
+				toast.error('O campo descrição é obrigatório');
+			}
+			if(form.formState.errors.startDate) {
+				toast.error('O campo data de ínicio é obrigatório');
+			}
+			if(form.formState.errors.endDate) {
+				toast.error('O campo data de término é obrigatório');
+			}
+			if(form.formState.errors.redirectUrl) {
+				toast.error('O campo URL é obrigatório');
+			}
+		}
+	}, [form.formState.isSubmitting]);
+
 	const { activities } = useContext(ActivitiesContext);
 
 	const submit = (data: FormSchemaType) => {
@@ -90,17 +111,16 @@ export const ActivityPage = () => {
 			return toast.error('A data de ínicio não pode ser menor que a data atual');
 		}
 
-		if(end_date < new Date()) {
+		if (end_date < new Date()) {
 			return toast.error('A data de término não pode ser menor que a data atual');
 		}
-		
 
 		context.Create({
 			...data,
 			redirectUrl: data.redirectUrl ?? '',
 			groups: (data.groups as string[]) ?? ([] as string[]),
 			activityDomains: [],
-			logs: []
+			logs: [],
 		});
 		form.reset();
 	};

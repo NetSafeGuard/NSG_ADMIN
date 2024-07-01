@@ -10,7 +10,8 @@ export interface Activity {
     redirectUrl: string;
     activityDomains: ActivityDomain[];
     logs: ActivityLog[];
-    creator?: Creator
+    creator?: Creator;
+    code?: string;
     id?: number;
 }
 
@@ -24,9 +25,9 @@ export interface ActivityDomain {
 }
 
 enum Priority {
-    LOW = 'LOW',
-    MEDIUM = 'MEDIUM',
-    HIGH = 'HIGH'
+	ALTA = 'ALTA',
+	MEDIA = 'MEDIA',
+	BAIXA = 'BAIXA',
 }
 
 export interface ActivityLog {
