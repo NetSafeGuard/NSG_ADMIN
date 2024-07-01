@@ -6,18 +6,36 @@ import {
 	TableHeader,
 	TableRow,
 } from '@/components/ui/table';
+import React, { useContext } from 'react';
+
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuCheckboxItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import type { DropdownMenuCheckboxItemProps } from '@radix-ui/react-dropdown-menu';
 
 import { useAutoAnimate } from '@formkit/auto-animate/react';
-import type { ActivityLog } from '@/@types/Activity';
+import type { Activity, ActivityLog } from '@/@types/Activity';
 import { CountUp } from './countup';
+import { SocketContext } from '@/contextapi/socket.context';
 
 type Props = {
-	logs: ActivityLog[];
+	activity: Activity;
 };
 
-export const TableLogsData = ({ logs }: Props) => {
-	const [AnimationParent] = useAutoAnimate();
+type Checked = DropdownMenuCheckboxItemProps['checked'];
 
+export const TableLogsData = ({ activity }: Props) => {
+	const [AnimationParent] = useAutoAnimate();
+	const [selectedLog, setSelectedLog] = React.useState<ActivityLog | null>(null);
+
+	const { socket } = useContext(SocketContext);
+
+	if (!socket) return null;
 
 	const handleTextColor = (priority: string) => {
 		if (priority === 'ALTA') return 'text-red-500';
@@ -25,12 +43,28 @@ export const TableLogsData = ({ logs }: Props) => {
 		if (priority === 'BAIXA') return 'text-green-600';
 	};
 
+	const handleBlock = (checked: Checked) => {
+		if (checked) {
+			socket.emit('toggleBlock', {
+				activityId: activity.id,
+				email: selectedLog?.user.email,
+				remove: false,
+			});
+		} else {
+			socket.emit('toggleBlock', {
+				activityId: activity.id,
+				email: selectedLog?.user.email,
+				remove: true,
+			});
+		}
+	};
+
 	return (
 		<Table>
 			<TableHeader>
 				<TableRow>
 					<TableHead>Hora</TableHead>
-					<TableHead>Nome</TableHead>
+					<TableHead>Email</TableHead>
 					<TableHead>Ação</TableHead>
 					<TableHead>Informações</TableHead>
 					<TableHead>Prioridade</TableHead>
@@ -38,27 +72,39 @@ export const TableLogsData = ({ logs }: Props) => {
 				</TableRow>
 			</TableHeader>
 			<TableBody ref={AnimationParent}>
-				{logs.map((log: ActivityLog, index: number) => (
+				{activity.logs.map((log: ActivityLog, index: number) => (
 					<TableRow key={index}>
 						<TableCell className="w-32">
 							<CountUp startDate={log.createdAt} />
 						</TableCell>
-						<TableCell className='text-left'>
-							{log.user.name}
-						</TableCell>
-						<TableCell>
-							{log.action}
-						</TableCell>
-						<TableCell>
-							{log.info}
-						</TableCell>
+						<TableCell className="text-left">{log.user.email}</TableCell>
+						<TableCell>{log.action}</TableCell>
+						<TableCell>{log.info}</TableCell>
 						<TableCell className={handleTextColor(log.priority)}>
 							{log.priority}
 						</TableCell>
-						<TableHead
-							className="text-center pr-6 cursor-pointer">
-							...
-						</TableHead>
+						<TableCell className="text-center pr-6 cursor-pointer">
+							<DropdownMenu>
+								<DropdownMenuTrigger asChild>
+									<span onClick={() => setSelectedLog(log)}>...</span>
+								</DropdownMenuTrigger>
+								{log === selectedLog && (
+									<DropdownMenuContent className="w-56">
+										<DropdownMenuLabel>Ações</DropdownMenuLabel>
+										<DropdownMenuSeparator />
+										<DropdownMenuCheckboxItem
+											checked={
+												activity.blockedUsers.some(
+													user => user.email === log.user.email,
+												) as Checked
+											}
+											onCheckedChange={handleBlock}>
+											Bloqueado
+										</DropdownMenuCheckboxItem>
+									</DropdownMenuContent>
+								)}
+							</DropdownMenu>
+						</TableCell>
 					</TableRow>
 				))}
 			</TableBody>

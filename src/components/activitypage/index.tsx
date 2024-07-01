@@ -119,7 +119,7 @@ export const SingleActivity: React.FC<Props> = ({ activity, setActivity }: Props
 					<C.SubTitle>Alertas</C.SubTitle>
 
 					<C.ActivityContainer>
-						<TableLogsData logs={activity.logs} />
+						<TableLogsData activity={activity} />
 					</C.ActivityContainer>
 				</>
 			)}

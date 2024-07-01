@@ -29,13 +29,13 @@ import { Error } from '@/components/error';
 import { toast } from 'sonner';
 import { ActivityPage } from './subpages/activity';
 import { UsersContext } from '@/contextapi/users.context';
-import { getSocket } from '@/services/socket';
 import type { User } from '@/@types/User';
 import { GroupsPage } from './subpages/groups';
 import type { Group } from '@/@types/Group.ts';
 import { GroupsContext } from '@/contextapi/groups.context.tsx';
 import type { Activity } from '@/@types/Activity';
 import { ActivitiesContext } from '@/contextapi/activities.context';
+import { SocketContext } from '@/contextapi/socket.context';
 
 export const DashboardPage = () => {
 	const { user, isLoading, error } = UserHook();
@@ -43,69 +43,64 @@ export const DashboardPage = () => {
 	const { setUsers, loaded, setLoaded } = useContext(UsersContext);
 	const { setGroups } = useContext(GroupsContext);
 	const { setActivities } = useContext(ActivitiesContext);
+	const { socket } = useContext(SocketContext);
+
 
 	useEffect(() => {
-		const setupSocket = async () => {
-			const socket = await getSocket();
+		if (!socket || !socket.emit) return;
+		socket.emit('getData');
+		socket.on('users', (users: User[]) => {
+			setUsers(
+				users.sort((a, b) => {
+					if (a.createdAt > b.createdAt) return -1;
+					if (a.createdAt < b.createdAt) return 1;
+					return 0;
+				}),
+			);
+			if (!loaded) setLoaded(true);
+		});
 
-			socket.emit('getData');
-			socket.on('users', (users: User[]) => {
-				setUsers(
-					users.sort((a, b) => {
-						if (a.createdAt > b.createdAt) return -1;
-						if (a.createdAt < b.createdAt) return 1;
+		socket.on('groups', (groups: Group[]) => {
+			setGroups(
+				groups.sort((a, b) => {
+					if (a.createdAt > b.createdAt) return -1;
+					if (a.createdAt < b.createdAt) return 1;
+					return 0;
+				}),
+			);
+		});
+
+		socket.on('activities', (activities: Activity[]) => {
+			setActivities(
+				activities
+					.sort((a, b) => {
+						if (a.startDate > b.startDate) return 1;
+						if (a.startDate < b.startDate) return -1;
 						return 0;
-					}),
-				);
-				if (!loaded) setLoaded(true);
-			});
+					})
+					.map(activity => {
+						activity.startDate = new Date(activity.startDate);
+						activity.endDate = new Date(activity.endDate);
+						activity.createdAt = new Date(activity.createdAt!);
+						activity.logs = activity.logs.map(log => {
+							log.createdAt = new Date(log.createdAt);
+							return log;
+						});
 
-			socket.on('groups', (groups: Group[]) => {
-				setGroups(
-					groups.sort((a, b) => {
-						if (a.createdAt > b.createdAt) return -1;
-						if (a.createdAt < b.createdAt) return 1;
-						return 0;
-					}),
-				);
-			});
+						activity.logs.sort((a, b) => {
+							if (a.priority === 'ALTA' && b.priority !== 'ALTA') return -1;
+							if (a.priority !== 'MEDIA' && b.priority === 'MEDIA') return 1;
+							if (a.priority === 'BAIXA' && b.priority === 'BAIXA') return -1;
+							if (a.priority === 'BAIXA' && b.priority === 'MEDIA') return 1;
 
-			socket.on('activities', (activities: Activity[]) => {
-				console.log(activities);
-				setActivities(
-					activities
-						.sort((a, b) => {
-							if (a.startDate > b.startDate) return 1;
-							if (a.startDate < b.startDate) return -1;
 							return 0;
-						})
-						.map(activity => {
-							activity.startDate = new Date(activity.startDate);
-							activity.endDate = new Date(activity.endDate);
-							activity.createdAt = new Date(activity.createdAt!);
-							activity.logs = activity.logs.map(log => {
+						});
 
-								log.createdAt = new Date(log.createdAt);
-								return log;
-							});
-
-							activity.logs.sort((a, b) => {
-								if (a.priority === 'ALTA' && b.priority !== 'ALTA') return -1;
-								if (a.priority !== 'MEDIA' && b.priority === 'MEDIA') return 1;
-								if (a.priority === 'BAIXA' && b.priority === 'BAIXA') return -1;
-								if (a.priority === 'BAIXA' && b.priority === 'MEDIA') return 1;	
-
-								return 0;
-							});
-
-							return activity;
-						}),
-				);
-			});
-		};
-
-		setupSocket();
-	}, []);
+						return activity;
+					}),
+			);
+		});
+	}, [socket]);
 
 	const Context = useContext(AuthContext);
 

@@ -7,6 +7,7 @@ import { UsersProvider } from "@/contextapi/users.context";
 import {GroupsProvider} from "@/contextapi/groups.context.tsx";
 import { UpdaterPage } from "@/pages/Updater";
 import { ActivityProvider } from "@/contextapi/activities.context";
+import { SocketProvider } from "@/contextapi/socket.context";
 
 export const RoutesList = () => {
   return (
@@ -16,13 +17,15 @@ export const RoutesList = () => {
       <Route
         path="/dashboard"
         element={
-          <UsersProvider>
-              <GroupsProvider>
-                <ActivityProvider>
-                  <DashboardPage />
-                </ActivityProvider>
-              </GroupsProvider>
-          </UsersProvider>
+          <SocketProvider>
+            <UsersProvider>
+                <GroupsProvider>
+                  <ActivityProvider>
+                    <DashboardPage />
+                  </ActivityProvider>
+                </GroupsProvider>
+            </UsersProvider>
+          </SocketProvider>
         }
       />
       <Route path="/recover" element={<RecoverPage />} />

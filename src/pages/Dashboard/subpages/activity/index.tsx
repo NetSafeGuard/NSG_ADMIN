@@ -121,6 +121,7 @@ export const ActivityPage = () => {
 			groups: (data.groups as string[]) ?? ([] as string[]),
 			activityDomains: [],
 			logs: [],
+			blockedUsers: [],
 		});
 		form.reset();
 	};
