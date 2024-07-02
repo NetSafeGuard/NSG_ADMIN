@@ -88,11 +88,8 @@ export const DashboardPage = () => {
 						});
 
 						activity.logs.sort((a, b) => {
-							if (a.priority === 'ALTA' && b.priority !== 'ALTA') return -1;
-							if (a.priority !== 'MEDIA' && b.priority === 'MEDIA') return 1;
-							if (a.priority === 'BAIXA' && b.priority === 'BAIXA') return -1;
-							if (a.priority === 'BAIXA' && b.priority === 'MEDIA') return 1;
-
+							if (a.createdAt > b.createdAt) return -1;
+							if (a.createdAt < b.createdAt) return 1;
 							return 0;
 						});
 

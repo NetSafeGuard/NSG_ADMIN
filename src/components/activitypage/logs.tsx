@@ -64,6 +64,7 @@ export const TableLogsData = ({ activity }: Props) => {
 			<TableHeader>
 				<TableRow>
 					<TableHead>Hora</TableHead>
+					<TableHead>Nome</TableHead>
 					<TableHead>Email</TableHead>
 					<TableHead>Ação</TableHead>
 					<TableHead>Informações</TableHead>
@@ -74,11 +75,12 @@ export const TableLogsData = ({ activity }: Props) => {
 			<TableBody ref={AnimationParent}>
 				{activity.logs.map((log: ActivityLog, index: number) => (
 					<TableRow key={index}>
-						<TableCell className="w-32">
+						<TableCell className="w-32 text-nowrap whitespace-nowrap">
 							<CountUp startDate={log.createdAt} />
 						</TableCell>
-						<TableCell className="text-left">{log.user.email}</TableCell>
-						<TableCell>{log.action}</TableCell>
+						<TableCell className="text-left text-nowrap whitespace-nowrap">{log.user.name}</TableCell>
+						<TableCell className="text-left text-nowrap whitespace-nowrap">{log.user.email}</TableCell>
+						<TableCell className="text-nowrap whitespace-nowrap">{log.action}</TableCell>
 						<TableCell>{log.info}</TableCell>
 						<TableCell className={handleTextColor(log.priority)}>
 							{log.priority}

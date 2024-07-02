@@ -63,6 +63,6 @@ export const ActivityContainer = styled.div`
   width: 100%;
   display: flex;
   overflow-y: hidden;
-  max-height: calc(100vh - 280px);
+  max-height: calc(100vh - 320px);
   margin-top: 20px;
 `;
